@@ -15,7 +15,7 @@ namespace SemanticSimilarity
 
             //Console.WriteLine($"[ASSISTANT]: {completion.Content[0].Text}");
             
-            Console.WriteLine("pro");
+            Console.WriteLine("Open AI API");
         }
     }
 }
