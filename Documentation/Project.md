@@ -10,3 +10,4 @@ This project computes the semantic similarity between textual data using BERT em
 ## Installation
 1. Clone the repository:
    ```bash
+   git clone	https://github.com/naeem23/semantic-similarity-analysis
