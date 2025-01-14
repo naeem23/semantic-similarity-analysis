@@ -1,5 +1,5 @@
-﻿using DotNetEnv;
-using OpenAI.Chat;
+﻿//using DotNetEnv;
+//using OpenAI.Chat;
 
 namespace SemanticSimilarity
 {
@@ -7,14 +7,15 @@ namespace SemanticSimilarity
     {
         static void Main(string[] args)
         {
-            Env.Load();
+            //Env.Load();
 
-            ChatClient client = new(model: "gpt-4o", apiKey: Environment.GetEnvironmentVariable("OPENAI_API_KEY"));
+            //ChatClient client = new(model: "gpt-4o", apiKey: Environment.GetEnvironmentVariable("OPENAI_API_KEY"));
 
-            ChatCompletion completion = client.CompleteChat("Say 'this is a test.'");
+            //ChatCompletion completion = client.CompleteChat("Say 'this is a test.'");
 
-            Console.WriteLine($"[ASSISTANT]: {completion.Content[0].Text}");
-            Console.WriteLine($"project started");
+            //Console.WriteLine($"[ASSISTANT]: {completion.Content[0].Text}");
+            
+            Console.WriteLine("pro");
         }
     }
 }
