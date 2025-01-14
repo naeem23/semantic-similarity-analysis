@@ -32,6 +32,7 @@ namespace SemanticSimilarity
             //first pair of phrases
             string phrase1 = "Angela Merkel";
             string phrase2 = "Government";
+            string phrase3 = "Cristiano Ronaldo";
 
             //generate embeddings for each phrase of first pair 
             OpenAIEmbedding embedding1 = client.GenerateEmbedding(phrase1);
@@ -40,9 +41,14 @@ namespace SemanticSimilarity
             OpenAIEmbedding embedding2 = client.GenerateEmbedding(phrase2);
             ReadOnlyMemory<float> vector2 = embedding2.ToFloats();
 
+            OpenAIEmbedding embedding3 = client.GenerateEmbedding(phrase3);
+            ReadOnlyMemory<float> vector3 = embedding3.ToFloats();
 
-            Console.WriteLine($"High-dimensional numerical representations of {phrase1} is {vector1}");
-            Console.WriteLine($"High-dimensional numerical representations of {phrase2} is {vector2}");
+            double similarityInPhrase1Phrase2 = CalculateCosineSimilarity(vector1 ,vector2);
+            double similarityInPhrase3Phrase2 = CalculateCosineSimilarity(vector3 ,vector2);
+
+            Console.WriteLine($"Similarity in {phrase1} and {phrase2} is {similarityInPhrase1Phrase2}");
+            Console.WriteLine($"Similarity in {phrase3} and {phrase2} is {similarityInPhrase3Phrase2}");
         }
 
 
