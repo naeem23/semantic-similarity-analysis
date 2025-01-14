@@ -4,3 +4,4 @@ This project computes the semantic similarity between textual data using BERT em
 ## Features
 - Tokenization and text preprocessing
 - Embedding generation using pre-trained models
+- Cosine similarity for computing text similarity
