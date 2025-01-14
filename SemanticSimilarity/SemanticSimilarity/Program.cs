@@ -27,7 +27,7 @@ namespace SemanticSimilarity
             //Console.WriteLine($"whisper client {whisperClient}");
 
             //generate text embeddings
-            EmbeddingClient client = new("text-embedding-3-small", Environment.GetEnvironmentVariable("OPENAI_API_KEY"));
+            EmbeddingClient client = new EmbeddingClient("text-embedding-ada-002", Environment.GetEnvironmentVariable("OPENAI_API_KEY"));
             
             //first pair of phrases
             string phrase1 = "Angela Merkel";
@@ -35,20 +35,23 @@ namespace SemanticSimilarity
             string phrase3 = "Cristiano Ronaldo";
 
             //generate embeddings for each phrase of first pair 
-            OpenAIEmbedding embedding1 = client.GenerateEmbedding(phrase1);
+            OpenAIEmbedding embedding1 = await client.GenerateEmbeddingAsync(phrase1);
+            OpenAIEmbedding embedding2 = await client.GenerateEmbeddingAsync(phrase2);
+            OpenAIEmbedding embedding3 = await client.GenerateEmbeddingAsync(phrase3);
+
             ReadOnlyMemory<float> vector1 = embedding1.ToFloats();
-
-            OpenAIEmbedding embedding2 = client.GenerateEmbedding(phrase2);
             ReadOnlyMemory<float> vector2 = embedding2.ToFloats();
-
-            OpenAIEmbedding embedding3 = client.GenerateEmbedding(phrase3);
             ReadOnlyMemory<float> vector3 = embedding3.ToFloats();
 
-            double similarityInPhrase1Phrase2 = CalculateCosineSimilarity(vector1 ,vector2);
-            double similarityInPhrase3Phrase2 = CalculateCosineSimilarity(vector3 ,vector2);
+            float similarityInPhrase1Phrase2 = CosineSimilarity(vector1 ,vector2);
+            float similarityInPhrase3Phrase2 = CosineSimilarity(vector3 ,vector2);
 
             Console.WriteLine($"Similarity in {phrase1} and {phrase2} is {similarityInPhrase1Phrase2}");
+            //0.22698620638210207 with text-embedding-3-small model
+            //0.781814538890557 with text-embedding-ada-002 model
             Console.WriteLine($"Similarity in {phrase3} and {phrase2} is {similarityInPhrase3Phrase2}");
+            //0.15764999859482054 with text-embedding-3-small model
+            //0.7536560297012329 with text-embedding-ada-002 model
         }
 
 
@@ -69,5 +72,21 @@ namespace SemanticSimilarity
             return dotProduct / (magnitude1 * magnitude2);
         }
 
+        //another function to calculate cosine similarity
+        static float CosineSimilarity(ReadOnlyMemory<float> vectorA, ReadOnlyMemory<float> vectorB)
+        {
+            float dotProduct = 0;
+            float magnitudeA = 0;
+            float magnitudeB = 0;
+
+            for (int i = 0; i < vectorA.Length; i++) 
+            {
+                dotProduct += vectorA.Span[i] * vectorB.Span[i];
+                magnitudeA += vectorA.Span[i] * vectorA.Span[i];
+                magnitudeB += vectorB.Span[i] * vectorB.Span[i];
+            }
+
+            return dotProduct / (MathF.Sqrt(magnitudeA) * MathF.Sqrt(magnitudeB));
+        }
     }
 }
