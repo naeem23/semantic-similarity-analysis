@@ -14,6 +14,7 @@ namespace SemanticSimilarity
             ChatCompletion completion = client.CompleteChat("Say 'this is a test.'");
 
             Console.WriteLine($"[ASSISTANT]: {completion.Content[0].Text}");
+            Console.WriteLine($"project started");
         }
     }
 }
