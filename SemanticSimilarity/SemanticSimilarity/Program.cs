@@ -45,5 +45,23 @@ namespace SemanticSimilarity
             Console.WriteLine($"High-dimensional numerical representations of {phrase2} is {vector2}");
         }
 
+
+        //function to calculate cosine similarity
+        static double CalculateCosineSimilarity(ReadOnlyMemory<float> vector1, ReadOnlyMemory<float> vector2)
+        {
+            float[] vec1 = vector1.ToArray();
+            float[] vec2 = vector2.ToArray();
+
+            //calculate dot product 
+            double dotProduct = vec1.Zip(vec2, (v1, v2) => v1 * v2).Sum();
+
+            //calculate magnitude (norms)
+            double magnitude1 = Math.Sqrt(vec1.Sum(v => v * v));
+            double magnitude2 = Math.Sqrt(vec2.Sum(v => v * v));
+
+            //return cosine similarity
+            return dotProduct / (magnitude1 * magnitude2);
+        }
+
     }
 }
