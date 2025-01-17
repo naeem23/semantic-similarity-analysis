@@ -17,7 +17,7 @@ public class OpenAIClient
     public async Task<string> GetEmbedding(string text, string model = "text-embedding-ada-002")
     {
         var client = new RestClient($"{BaseUrl}/embeddings");
-        //var request = new RestRequest(Method.Post);
+        var request = new RestRequest(Method.Post); // Updated Syntax
         request.AddHeader("Authorization", $"Bearer {_apiKey}");
         request.AddHeader("Content-Type", "application/json");
 
