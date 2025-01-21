@@ -28,30 +28,23 @@ namespace SemanticSimilarity
 
             //generate text embeddings
             EmbeddingClient client = new EmbeddingClient("text-embedding-ada-002", Environment.GetEnvironmentVariable("OPENAI_API_KEY"));
-            
-            //first pair of phrases
-            string phrase1 = "Angela Merkel";
-            string phrase2 = "Government";
-            string phrase3 = "Cristiano Ronaldo";
 
-            //generate embeddings for each phrase of first pair 
-            OpenAIEmbedding embedding1 = await client.GenerateEmbeddingAsync(phrase1);
-            OpenAIEmbedding embedding2 = await client.GenerateEmbeddingAsync(phrase2);
-            OpenAIEmbedding embedding3 = await client.GenerateEmbeddingAsync(phrase3);
+            //accept user input for comparison:
+            Console.WriteLine("Enter first text:");
+            string input1 = Console.ReadLine();
+            Console.WriteLine("Enter second text:");
+            string input2 = Console.ReadLine();
+
+            //generate embeddings
+            OpenAIEmbedding embedding1 = await client.GenerateEmbeddingAsync(input1);
+            OpenAIEmbedding embedding2 = await client.GenerateEmbeddingAsync(input2);
 
             ReadOnlyMemory<float> vector1 = embedding1.ToFloats();
             ReadOnlyMemory<float> vector2 = embedding2.ToFloats();
-            ReadOnlyMemory<float> vector3 = embedding3.ToFloats();
 
-            float similarityInPhrase1Phrase2 = CosineSimilarity(vector1 ,vector2);
-            float similarityInPhrase3Phrase2 = CosineSimilarity(vector3 ,vector2);
+            float similarity = CosineSimilarity(vector1 ,vector2);
 
-            Console.WriteLine($"Similarity in {phrase1} and {phrase2} is {similarityInPhrase1Phrase2}");
-            //0.22698620638210207 with text-embedding-3-small model
-            //0.781814538890557 with text-embedding-ada-002 model
-            Console.WriteLine($"Similarity in {phrase3} and {phrase2} is {similarityInPhrase3Phrase2}");
-            //0.15764999859482054 with text-embedding-3-small model
-            //0.7536560297012329 with text-embedding-ada-002 model
+            Console.WriteLine($"Similarity in \"{input1}\" and \"{input2}\" is {similarity}");
         }
 
 
