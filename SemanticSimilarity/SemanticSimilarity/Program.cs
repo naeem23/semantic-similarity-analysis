@@ -86,9 +86,16 @@ namespace SemanticSimilarity
             string document1 = File.ReadAllText(docPath1);
             string document2 = File.ReadAllText(docPath2);
 
-            Console.WriteLine(document1);
-            Console.WriteLine("\n\n\n");
-            Console.WriteLine(document2);
+            //generate embeddings
+            OpenAIEmbedding embedding1 = await client.GenerateEmbeddingAsync(document1);
+            OpenAIEmbedding embedding2 = await client.GenerateEmbeddingAsync(document2);
+
+            ReadOnlyMemory<float> vector1 = embedding1.ToFloats();
+            ReadOnlyMemory<float> vector2 = embedding2.ToFloats();
+
+            float similarity = CosineSimilarity(vector1, vector2);
+
+            Console.WriteLine($"Similarity in two files is {similarity}");
         }
 
         //function to calculate cosine similarity
