@@ -47,33 +47,48 @@ namespace SemanticSimilarity
             //Console.WriteLine($"Similarity in \"{input1}\" and \"{input2}\" is {similarity}");
 
             // Optional: Handle multiple comparisons
-            Console.WriteLine("\nDo you want to compare multiple texts? (y/n)");
-            if (Console.ReadLine().Trim().ToLower() == "y")
-            {
-                Console.WriteLine("Enter texts separated by commas:");
-                string[] texts = Console.ReadLine().Split(",").Select(x => x.Trim()).ToArray();
+            //Console.WriteLine("\nDo you want to compare multiple texts? (y/n)");
+            //if (Console.ReadLine().Trim().ToLower() == "y")
+            //{
+            //    Console.WriteLine("Enter texts separated by commas:");
+            //    string[] texts = Console.ReadLine().Split(",").Select(x => x.Trim()).ToArray();
 
-                //Generate embedding for all inputs
-                List<ReadOnlyMemory<float>> embeddings = new List<ReadOnlyMemory<float>>();
+            //    //Generate embedding for all inputs
+            //    List<ReadOnlyMemory<float>> embeddings = new List<ReadOnlyMemory<float>>();
 
-                foreach (string text in texts)
-                {
-                    OpenAIEmbedding embedding = await client.GenerateEmbeddingAsync(text);
-                    ReadOnlyMemory<float> vector = embedding.ToFloats();
-                    embeddings.Add(vector);
-                }
+            //    foreach (string text in texts)
+            //    {
+            //        OpenAIEmbedding embedding = await client.GenerateEmbeddingAsync(text);
+            //        ReadOnlyMemory<float> vector = embedding.ToFloats();
+            //        embeddings.Add(vector);
+            //    }
 
-                // Calculate pairwise similarity and display results
-                Console.WriteLine("\nPairwise Similarity:");
-                for (int i = 0; i < texts.Length; i++)
-                {
-                    for (int j = i + 1; j < texts.Length; j++)
-                    {
-                        float pairwiseSimilarity = CosineSimilarity(embeddings[i], embeddings[j]);
-                        Console.WriteLine($"Similarity between \"{texts[i]}\" and \"{texts[j]}\" is {pairwiseSimilarity:F4}");
-                    }
-                }
-            }
+            //    // Calculate pairwise similarity and display results
+            //    Console.WriteLine("\nPairwise Similarity:");
+            //    for (int i = 0; i < texts.Length; i++)
+            //    {
+            //        for (int j = i + 1; j < texts.Length; j++)
+            //        {
+            //            float pairwiseSimilarity = CosineSimilarity(embeddings[i], embeddings[j]);
+            //            Console.WriteLine($"Similarity between \"{texts[i]}\" and \"{texts[j]}\" is {pairwiseSimilarity:F4}");
+            //        }
+            //    }
+            //}
+
+            //reading document 
+            Console.WriteLine("Enter the path to the first document:");
+            string docPath1 = Console.ReadLine();
+
+            Console.WriteLine("Enter the path of the second document:");
+            string docPath2 = Console.ReadLine();
+
+            //Read the document content 
+            string document1 = File.ReadAllText(docPath1);
+            string document2 = File.ReadAllText(docPath2);
+
+            Console.WriteLine(document1);
+            Console.WriteLine("\n\n\n");
+            Console.WriteLine(document2);
         }
 
         //function to calculate cosine similarity
