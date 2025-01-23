@@ -3,6 +3,7 @@ using OpenAI;
 using OpenAI.Audio;
 using OpenAI.Chat;
 using OpenAI.Embeddings;
+using SemanticSimilarity.Utilites;
 
 namespace SemanticSimilarity
 {
@@ -30,50 +31,50 @@ namespace SemanticSimilarity
             EmbeddingClient client = new EmbeddingClient("text-embedding-ada-002", Environment.GetEnvironmentVariable("OPENAI_API_KEY"));
 
             //accept user input for comparison:
-            //Console.WriteLine("Enter first text:");
-            //string input1 = Console.ReadLine();
-            //Console.WriteLine("Enter second text:");
-            //string input2 = Console.ReadLine();
+            Console.WriteLine("Enter first text:");
+            string input1 = Console.ReadLine();
+            Console.WriteLine("Enter second text:");
+            string input2 = Console.ReadLine();
 
-            ////generate embeddings
-            //OpenAIEmbedding embedding1 = await client.GenerateEmbeddingAsync(input1);
-            //OpenAIEmbedding embedding2 = await client.GenerateEmbeddingAsync(input2);
+            //generate embeddings
+            OpenAIEmbedding embedding1 = await client.GenerateEmbeddingAsync(input1);
+            OpenAIEmbedding embedding2 = await client.GenerateEmbeddingAsync(input2);
 
-            //ReadOnlyMemory<float> vector1 = embedding1.ToFloats();
-            //ReadOnlyMemory<float> vector2 = embedding2.ToFloats();
+            ReadOnlyMemory<float> vector1 = embedding1.ToFloats();
+            ReadOnlyMemory<float> vector2 = embedding2.ToFloats();
 
-            //float similarity = CosineSimilarity(vector1 ,vector2);
+            float similarity = SimilarityHelper.CalcCosineSimilarityMethod2(vector1, vector2);
 
-            //Console.WriteLine($"Similarity in \"{input1}\" and \"{input2}\" is {similarity}");
+            Console.WriteLine($"Similarity in \"{input1}\" and \"{input2}\" is {similarity}");
 
             // Optional: Handle multiple comparisons
-            //Console.WriteLine("\nDo you want to compare multiple texts? (y/n)");
-            //if (Console.ReadLine().Trim().ToLower() == "y")
-            //{
-            //    Console.WriteLine("Enter texts separated by commas:");
-            //    string[] texts = Console.ReadLine().Split(",").Select(x => x.Trim()).ToArray();
+            Console.WriteLine("\nDo you want to compare multiple texts? (y/n)");
+            if (Console.ReadLine().Trim().ToLower() == "y")
+            {
+                Console.WriteLine("Enter texts separated by commas:");
+                string[] texts = Console.ReadLine().Split(",").Select(x => x.Trim()).ToArray();
 
-            //    //Generate embedding for all inputs
-            //    List<ReadOnlyMemory<float>> embeddings = new List<ReadOnlyMemory<float>>();
+                //Generate embedding for all inputs
+                List<ReadOnlyMemory<float>> embeddings = new List<ReadOnlyMemory<float>>();
 
-            //    foreach (string text in texts)
-            //    {
-            //        OpenAIEmbedding embedding = await client.GenerateEmbeddingAsync(text);
-            //        ReadOnlyMemory<float> vector = embedding.ToFloats();
-            //        embeddings.Add(vector);
-            //    }
+                foreach (string text in texts)
+                {
+                    OpenAIEmbedding embedding = await client.GenerateEmbeddingAsync(text);
+                    ReadOnlyMemory<float> vector = embedding.ToFloats();
+                    embeddings.Add(vector);
+                }
 
-            //    // Calculate pairwise similarity and display results
-            //    Console.WriteLine("\nPairwise Similarity:");
-            //    for (int i = 0; i < texts.Length; i++)
-            //    {
-            //        for (int j = i + 1; j < texts.Length; j++)
-            //        {
-            //            float pairwiseSimilarity = CosineSimilarity(embeddings[i], embeddings[j]);
-            //            Console.WriteLine($"Similarity between \"{texts[i]}\" and \"{texts[j]}\" is {pairwiseSimilarity:F4}");
-            //        }
-            //    }
-            //}
+                // Calculate pairwise similarity and display results
+                Console.WriteLine("\nPairwise Similarity:");
+                for (int i = 0; i < texts.Length; i++)
+                {
+                    for (int j = i + 1; j < texts.Length; j++)
+                    {
+                        float pairwiseSimilarity = SimilarityHelper.CalcCosineSimilarityMethod2(embeddings[i], embeddings[j]);
+                        Console.WriteLine($"Similarity between \"{texts[i]}\" and \"{texts[j]}\" is {pairwiseSimilarity:F4}");
+                    }
+                }
+            }
 
             //reading document 
             Console.WriteLine("Enter the path to the first document:");
@@ -87,49 +88,15 @@ namespace SemanticSimilarity
             string document2 = File.ReadAllText(docPath2);
 
             //generate embeddings
-            OpenAIEmbedding embedding1 = await client.GenerateEmbeddingAsync(document1);
-            OpenAIEmbedding embedding2 = await client.GenerateEmbeddingAsync(document2);
+            OpenAIEmbedding embedding3 = await client.GenerateEmbeddingAsync(document1);
+            OpenAIEmbedding embedding4 = await client.GenerateEmbeddingAsync(document2);
 
-            ReadOnlyMemory<float> vector1 = embedding1.ToFloats();
-            ReadOnlyMemory<float> vector2 = embedding2.ToFloats();
+            ReadOnlyMemory<float> vector3 = embedding3.ToFloats();
+            ReadOnlyMemory<float> vector4 = embedding4.ToFloats();
 
-            float similarity = CosineSimilarity(vector1, vector2);
+            float similarity34 = SimilarityHelper.CalcCosineSimilarityMethod2(vector3, vector4);
 
-            Console.WriteLine($"Similarity in two files is {similarity}");
-        }
-
-        //function to calculate cosine similarity
-        static double CalculateCosineSimilarity(ReadOnlyMemory<float> vector1, ReadOnlyMemory<float> vector2)
-        {
-            float[] vec1 = vector1.ToArray();
-            float[] vec2 = vector2.ToArray();
-
-            //calculate dot product 
-            double dotProduct = vec1.Zip(vec2, (v1, v2) => v1 * v2).Sum();
-
-            //calculate magnitude (norms)
-            double magnitude1 = Math.Sqrt(vec1.Sum(v => v * v));
-            double magnitude2 = Math.Sqrt(vec2.Sum(v => v * v));
-
-            //return cosine similarity
-            return dotProduct / (magnitude1 * magnitude2);
-        }
-
-        //another function to calculate cosine similarity
-        static float CosineSimilarity(ReadOnlyMemory<float> vectorA, ReadOnlyMemory<float> vectorB)
-        {
-            float dotProduct = 0;
-            float magnitudeA = 0;
-            float magnitudeB = 0;
-
-            for (int i = 0; i < vectorA.Length; i++) 
-            {
-                dotProduct += vectorA.Span[i] * vectorB.Span[i];
-                magnitudeA += vectorA.Span[i] * vectorA.Span[i];
-                magnitudeB += vectorB.Span[i] * vectorB.Span[i];
-            }
-
-            return dotProduct / (MathF.Sqrt(magnitudeA) * MathF.Sqrt(magnitudeB));
+            Console.WriteLine($"Similarity in two files is {similarity34}");
         }
     }
 }
