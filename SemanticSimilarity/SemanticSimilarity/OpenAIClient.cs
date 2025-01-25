@@ -18,7 +18,7 @@ public class OpenAIClient
     {
         var client = new RestClient($"{BaseUrl}/embeddings");
         //var request = new RestRequest(Method.Post); // Updated Syntax
-        var request = new RestRequest();  //calling post method different way
+        var request = new RestRequest();  //calling post method different way Hit API
         request.Method = Method.Post;
 
                 request.AddHeader("Authorization", $"Bearer {_apiKey}");
