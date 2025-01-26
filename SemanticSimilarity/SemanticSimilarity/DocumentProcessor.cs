@@ -14,3 +14,8 @@ public class DocumentProcessor
     {
         _apiKey = apiKey;
     }
+// Load text from a document file (TXT)
+    public string LoadDocument(string filePath)
+    {
+        return File.ReadAllText(filePath);
+    }
