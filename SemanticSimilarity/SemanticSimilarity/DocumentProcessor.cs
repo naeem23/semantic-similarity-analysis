@@ -42,3 +42,34 @@ public class DocumentProcessor
             input = text,
             model = model
         };
+   request.AddJsonBody(body);
+
+        var response = await client.ExecuteAsync(request);
+        if (!response.IsSuccessful)
+        {
+            throw new Exception($"Error: {response.StatusDescription}\n{response.Content}");
+        }
+
+        var jsonResponse = JsonConvert.DeserializeObject<dynamic>(response.Content);
+        var embedding = jsonResponse["data"][0]["embedding"].ToObject<List<double>>();
+        return embedding;
+    }
+
+    // Calculate cosine similarity
+    public double CalculateCosineSimilarity(List<double> vectorA, List<double> vectorB)
+    {
+        if (vectorA.Count != vectorB.Count)
+            throw new ArgumentException("Vectors must be of the same length.");
+
+        double dotProduct = 0.0, magnitudeA = 0.0, magnitudeB = 0.0;
+
+        for (int i = 0; i < vectorA.Count; i++)
+        {
+            dotProduct += vectorA[i] * vectorB[i];
+            magnitudeA += Math.Pow(vectorA[i], 2);
+            magnitudeB += Math.Pow(vectorB[i], 2);
+        }
+
+        return dotProduct / (Math.Sqrt(magnitudeA) * Math.Sqrt(magnitudeB));
+    }
+}
