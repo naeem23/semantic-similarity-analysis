@@ -20,3 +20,28 @@ public class OpenAIClient
         //var request = new RestRequest(Method.Post); // Updated Syntax
         var request = new RestRequest();
         request.Method = Method.Post;
+        request.AddHeader("Authorization", $"Bearer {_apiKey}");
+
+       var request = new RestRequest();  //calling post method different way Hit API
+       request.Method = Method.Post;
+
+               request.AddHeader("Authorization", $"Bearer {_apiKey}");
+
+       request.AddHeader("Content-Type", "application/json");
+
+       var body = new
+       {
+           input = text,
+           model = model
+       };
+
+       request.AddJsonBody(body);
+
+       var response = await client.ExecuteAsync(request);
+       if (response.IsSuccessful)
+       {
+           return response.Content;
+       }
+
+       throw new Exception($"Error: {response.StatusDescription}\n{response.Content}");
+   }
