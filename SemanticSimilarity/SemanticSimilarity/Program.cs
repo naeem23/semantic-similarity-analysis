@@ -1,19 +1,21 @@
-﻿using DotNetEnv;
-using OpenAI.Chat;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace SemanticSimilarity
+class Program
 {
-    internal class Program
+    static async Task Main(string[] args)
     {
-        static void Main(string[] args)
+        try // Semantic Similarity Score
         {
-            Env.Load();
+            string apiKey = "Null"; //Put OpenAI Key here
+            var openAIClient = new OpenAIClient(apiKey);
 
-            ChatClient client = new(model: "gpt-4o", apiKey: Environment.GetEnvironmentVariable("OPENAI_API_KEY"));
+            Console.WriteLine("Enter the first text:");
+            string text1 = Console.ReadLine();
 
-            ChatCompletion completion = client.CompleteChat("Say 'this is a test.'");
-
-            Console.WriteLine($"[ASSISTANT]: {completion.Content[0].Text}");
-        }
-    }
-}
+            Console.WriteLine("\nEnter the second text:");
+            string text2 = Console.ReadLine();
