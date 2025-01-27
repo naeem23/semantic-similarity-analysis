@@ -29,3 +29,15 @@ class Program
                    .Split(new char[] { ' ', '.', ',', '!', '?' }, StringSplitOptions.RemoveEmptyEntries)
         );
     }
+ static double CalculateJaccardSimilarity(HashSet<string> set1, HashSet<string> set2)
+    {
+        // Find intersection of the two sets
+        var intersection = set1.Intersect(set2).Count();
+
+        // Find union of the two sets
+        var union = set1.Union(set2).Count();
+
+        // Calculate Jaccard Similarity
+        return (double)intersection / union;
+    }
+}
