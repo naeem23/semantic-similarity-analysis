@@ -1,0 +1,17 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Enter the first sentence:");
+        string sentence1 = Console.ReadLine();
+
+        Console.WriteLine("Enter the second sentence:");
+        string sentence2 = Console.ReadLine();
+
+        // Tokenize both sentences into sets of unique words
+        var tokens1 = Tokenize(sentence1);
+        var tokens2 = Tokenize(sentence2);
