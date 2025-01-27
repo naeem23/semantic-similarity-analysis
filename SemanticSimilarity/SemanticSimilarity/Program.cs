@@ -11,7 +11,7 @@ class Program
     {
         try // Semantic Similarity Score
         {
-            string apiKey = "Null"; //Put OpenAI Key here
+            string apiKey = "OpenAiKey"; //Put OpenAI Key here
             var openAIClient = new OpenAIClient(apiKey);
 
             Console.WriteLine("Enter the first text:");
