@@ -12,3 +12,11 @@ namespace TextSimilarityTests
             float[] vector1 = { 1, 2, 3 };
             float[] vector2 = { 4, 5, 6 };
             double expectedSimilarity = 0.9746318461970762;  // Pre-calculated similarity for these vectors
+  // Act
+            var result = Program.CosineSimilarity(vector1, vector2);
+
+            // Assert
+            Assert.Equal(expectedSimilarity, result, 6); // Allow 6 decimal places of precision
+        }
+    }
+}
