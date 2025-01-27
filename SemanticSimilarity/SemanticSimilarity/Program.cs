@@ -36,3 +36,10 @@ class Program
     Console.WriteLine("An error occurred:");
     Console.WriteLine(ex.Message);
 }
+        static List<double> ParseEmbedding(string jsonResponse)
+    {
+        var json = JObject.Parse(jsonResponse);
+        var embeddings = json["data"][0]["embedding"].ToObject<List<double>>();
+        return embeddings;
+    }
+}
