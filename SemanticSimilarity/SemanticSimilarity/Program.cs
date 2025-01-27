@@ -30,3 +30,9 @@ class Program
             double similarity = openAIClient.CalculateCosineSimilarity(embedding1, embedding2);
             Console.WriteLine($"\nSemantic Similarity Score: {similarity}");
 }
+
+        catch (Exception ex)
+{
+    Console.WriteLine("An error occurred:");
+    Console.WriteLine(ex.Message);
+}
