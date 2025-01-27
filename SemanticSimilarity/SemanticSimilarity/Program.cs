@@ -19,3 +19,14 @@ class Program
 
             Console.WriteLine("\nEnter the second text:");
             string text2 = Console.ReadLine();
+            Console.WriteLine("Calculating embeddings...");
+            
+            string embeddingResponse1 = await openAIClient.GetEmbedding(text1);
+            string embeddingResponse2 = await openAIClient.GetEmbedding(text2);
+
+            List<double> embedding1 = ParseEmbedding(embeddingResponse1);
+            List<double> embedding2 = ParseEmbedding(embeddingResponse2);
+        
+            double similarity = openAIClient.CalculateCosineSimilarity(embedding1, embedding2);
+            Console.WriteLine($"\nSemantic Similarity Score: {similarity}");
+}
