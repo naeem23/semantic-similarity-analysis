@@ -1,0 +1,14 @@
+using Xunit;
+using TextSimilarity;
+
+namespace TextSimilarityTests
+{
+    public class SimilarityTests
+    {
+        [Fact]
+        public void TestCosineSimilarity_CalculatesCorrectSimilarity()
+        {
+            // Arrange
+            float[] vector1 = { 1, 2, 3 };
+            float[] vector2 = { 4, 5, 6 };
+            double expectedSimilarity = 0.9746318461970762;  // Pre-calculated similarity for these vectors
