@@ -15,3 +15,17 @@ class Program
         // Tokenize both sentences into sets of unique words
         var tokens1 = Tokenize(sentence1);
         var tokens2 = Tokenize(sentence2);
+ // Calculate Jaccard Similarity
+        double similarity = CalculateJaccardSimilarity(tokens1, tokens2);
+
+        Console.WriteLine($"Jaccard Similarity: {similarity}");
+    }
+
+    static HashSet<string> Tokenize(string sentence)
+    {
+        // Split the sentence into words, convert to lowercase, and remove duplicates
+        return new HashSet<string>(
+            sentence.ToLower()
+                   .Split(new char[] { ' ', '.', ',', '!', '?' }, StringSplitOptions.RemoveEmptyEntries)
+        );
+    }
