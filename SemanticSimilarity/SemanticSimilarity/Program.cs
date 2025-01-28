@@ -12,6 +12,13 @@ namespace SemanticSimilarity
         static async Task Main(string[] args)
         {
             Env.Load();
+            var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
+            if (string.IsNullOrEmpty(apiKey))
+            {
+                throw new InvalidOperationException("API key cannot be null or empty. Please set the OPENAI_API_KEY environment variable.");
+            }
+            var model = "text-embedding-3-small";
+            var generator = new EmbeddingGenerator(apiKey, model);
 
             var documentPaths = InputHelper.GetFilePaths();
             var textContents = InputHelper.GetTextFileContent(documentPaths);
@@ -19,7 +26,9 @@ namespace SemanticSimilarity
             Console.WriteLine("Contents of text files:");
             foreach (var content in textContents)
             {
-                Console.WriteLine(content);
+                var embedding = await generator.GenerateEmbeddingsAsync(content);
+                Console.WriteLine($"Generated Embeddings: {embedding}");
+                Console.WriteLine("=========================================");
             }
 
             //try
@@ -37,40 +46,6 @@ namespace SemanticSimilarity
             //{
             //    Console.WriteLine($"Error: {ex.Message}");
             //}
-
-            //ChatClient client = new(model: "gpt-4o", apiKey: Environment.GetEnvironmentVariable("OPENAI_API_KEY"));
-
-            //ChatCompletion completion = client.CompleteChat("Say 'this is a test.'");
-
-            //Console.WriteLine($"[ASSISTANT]: {completion.Content[0].Text}");
-
-            //OpenAIClient client = new(Environment.GetEnvironmentVariable("OPENAI_API_KEY"));
-
-            //AudioClient ttsClient = client.GetAudioClient("tts-1");
-            //AudioClient whisperClient = client.GetAudioClient("whisper-1");
-
-            //Console.WriteLine($"tts client {ttsClient}");
-            //Console.WriteLine($"whisper client {whisperClient}");
-
-            ////generate text embeddings
-            //EmbeddingClient client = new EmbeddingClient("text-embedding-ada-002", Environment.GetEnvironmentVariable("OPENAI_API_KEY"));
-
-            ////accept user input for comparison:
-            //Console.WriteLine("Enter first text:");
-            //string input1 = Console.ReadLine();
-            //Console.WriteLine("Enter second text:");
-            //string input2 = Console.ReadLine();
-
-            ////generate embeddings
-            //OpenAIEmbedding embedding1 = await client.GenerateEmbeddingAsync(input1);
-            //OpenAIEmbedding embedding2 = await client.GenerateEmbeddingAsync(input2);
-
-            //ReadOnlyMemory<float> vector1 = embedding1.ToFloats();
-            //ReadOnlyMemory<float> vector2 = embedding2.ToFloats();
-
-            //float similarity = SimilarityHelper.CalcCosineSimilarityMethod2(vector1, vector2);
-
-            //Console.WriteLine($"Similarity in \"{input1}\" and \"{input2}\" is {similarity}");
 
             //// Optional: Handle multiple comparisons
             //Console.WriteLine("\nDo you want to compare multiple texts? (y/n)");
