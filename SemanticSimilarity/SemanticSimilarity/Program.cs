@@ -13,21 +13,25 @@ namespace SemanticSimilarity
         {
             Env.Load();
 
-            try
-            {
-                var contents = InputHelper.TextInputHandler();
-                Console.WriteLine("\nYou have entered the following articles:\n");
+            var documentPaths = InputHelper.GetFilePaths();
 
-                for (int i = 0; i < contents.Count; i++)
-                {
-                    Console.WriteLine($"Article {i + 1}:\n{contents[i]}");
-                    Console.WriteLine(new string('-', 50));
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-            }
+            Console.WriteLine(documentPaths);
+
+            //try
+            //{
+            //    var contents = InputHelper.TextInputHandler();
+            //    Console.WriteLine("\nYou have entered the following articles:\n");
+
+            //    for (int i = 0; i < contents.Count; i++)
+            //    {
+            //        Console.WriteLine($"Article {i + 1}:\n{contents[i]}");
+            //        Console.WriteLine(new string('-', 50));
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine($"Error: {ex.Message}");
+            //}
 
             //ChatClient client = new(model: "gpt-4o", apiKey: Environment.GetEnvironmentVariable("OPENAI_API_KEY"));
 

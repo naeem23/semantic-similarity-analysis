@@ -59,5 +59,22 @@ namespace SemanticSimilarity.Utilites
                 }
             }
         }
+
+        public static List<string> GetFilePaths()
+        {
+            Console.WriteLine("Please enter document path separated by new line:");
+
+            var paths = new List<string>();
+            string? path;
+
+            while((path = Console.ReadLine()) != string.Empty)
+            {
+                if (!string.IsNullOrEmpty(path))
+                {
+                    paths.Add(path);
+                }
+            }
+            return paths;
+        }
     }
 }
