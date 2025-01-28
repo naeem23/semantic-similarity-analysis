@@ -14,8 +14,13 @@ namespace SemanticSimilarity
             Env.Load();
 
             var documentPaths = InputHelper.GetFilePaths();
+            var textContents = InputHelper.GetTextFileContent(documentPaths);
 
-            Console.WriteLine(documentPaths);
+            Console.WriteLine("Contents of text files:");
+            foreach (var content in textContents)
+            {
+                Console.WriteLine(content);
+            }
 
             //try
             //{

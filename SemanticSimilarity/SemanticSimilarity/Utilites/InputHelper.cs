@@ -1,6 +1,7 @@
 ﻿using OpenAI.Embeddings;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -75,6 +76,32 @@ namespace SemanticSimilarity.Utilites
                 }
             }
             return paths;
+        }
+
+        public static List<string> GetTextFileContent(List<string> documentPaths) 
+        { 
+            var contents = new List<string>();
+
+            foreach (var path in documentPaths)
+            {
+                if (!File.Exists(path))
+                {
+                    throw new FileNotFoundException($"The file '{path}' does not exist.");
+                }
+
+                if (Path.GetExtension(path).ToLower() != ".txt") 
+                {
+                    throw new InvalidDataException($"The file '{path}' is not a text file.");
+                }
+
+                var content = File.ReadAllText(path);
+                if (!string.IsNullOrWhiteSpace(content))
+                {
+                    contents.Add(content);
+                }
+            }
+
+            return contents;
         }
     }
 }
