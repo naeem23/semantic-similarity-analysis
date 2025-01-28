@@ -19,14 +19,14 @@ class SemanticSimilarityAcrossDomains
         var wordPairs = new List<(string, string)>
         {
             // Politics Domain
-            ("Angela", "government"),
+            ("Nawaz", "government"),
             // Sports Domain
-            ("Cristiano", "goal"),
+            ("Messi", "goal"),
             // Nature Domain
-            ("sunny", "rainy"),
+            ("Windy", "cloudy"),
             // Cross-Domain Comparisons
-            ("Cristiano", "government"),
-            ("Angela", "goal")
+            ("Messi", "government"),
+            ("Nawaz", "goal")
         };
 
         // Write results to a CSV file
