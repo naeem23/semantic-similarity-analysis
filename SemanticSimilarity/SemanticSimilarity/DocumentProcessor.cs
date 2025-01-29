@@ -1,4 +1,5 @@
 using System;
+using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +15,14 @@ public class DocumentProcessor
     {
         _apiKey = apiKey;
     }
-// Load text from a document file (TXT)
+
+    // Load text from a document file (TXT)
     public string LoadDocument(string filePath)
     {
         return File.ReadAllText(filePath);
     }
-  // Preprocess the document text
+
+    // Preprocess the document text
     public string PreprocessText(string text)
     {
         text = text.ToLower();
@@ -42,7 +45,8 @@ public class DocumentProcessor
             input = text,
             model = model
         };
-   request.AddJsonBody(body);
+
+        request.AddJsonBody(body);
 
         var response = await client.ExecuteAsync(request);
         if (!response.IsSuccessful)
