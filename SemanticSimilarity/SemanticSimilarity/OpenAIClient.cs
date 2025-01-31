@@ -21,7 +21,7 @@ public class OpenAIClient
         var request = new RestRequest();
         request.Method = Method.Post;
 
-        // request.AddHeader("Authorization", $"Bearer {_apiKey}");
+        // request.AddHeader("Authorization", $"Bearer {_apiKey}"); // REMOVE
         //var request = new RestRequest();  //calling post method different way Hit API
 
         request.Method = Method.Post;
