@@ -5,6 +5,8 @@ VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SemanticSimilarity", "SemanticSimilarity\SemanticSimilarity.csproj", "{E7AD131C-7576-4A57-B8A6-C69CD016DD33}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject", "UnitTestProject\UnitTestProject.csproj", "{DF29C45F-2774-481F-AE9C-D1F4BCBC059C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{E7AD131C-7576-4A57-B8A6-C69CD016DD33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7AD131C-7576-4A57-B8A6-C69CD016DD33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7AD131C-7576-4A57-B8A6-C69CD016DD33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF29C45F-2774-481F-AE9C-D1F4BCBC059C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF29C45F-2774-481F-AE9C-D1F4BCBC059C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF29C45F-2774-481F-AE9C-D1F4BCBC059C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF29C45F-2774-481F-AE9C-D1F4BCBC059C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
