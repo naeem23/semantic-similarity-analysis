@@ -38,4 +38,7 @@ namespace SemanticSimilarityAPI.Controllers
             float magnitude2 = (float)Math.Sqrt(vector2.Sum(x => x * x));
             return magnitude1 == 0 || magnitude2 == 0 ? 0 : dotProduct / (magnitude1 * magnitude2);
         }
-
+        public class TextData
+        {
+            public string Text { get; set; }
+        }
