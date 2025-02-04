@@ -27,3 +27,13 @@ namespace SemanticSimilarity.Tests
 
             similarity.Should().BeLessThan(0.4f);
         }
+ [Fact]
+        public void ComputeSimilarity_EmptyInput_ThrowsException()
+        {
+            Action act = () => SimilarityAnalyzer.ComputeSimilarity("", "Some text");
+
+            act.Should().Throw<ArgumentException>()
+                .WithMessage("Input texts cannot be empty.");
+        }
+    }
+}
