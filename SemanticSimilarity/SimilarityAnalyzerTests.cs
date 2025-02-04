@@ -18,4 +18,12 @@ namespace SemanticSimilarity.Tests
             similarity.Should().BeGreaterThan(0.7f);
         }
 
-        
+        public void ComputeSimilarity_DissimilarTexts_ReturnsLowScore()
+        {
+            string text1 = "Cristiano Ronaldo is a famous footballer.";
+            string text2 = "Government policies impact economic growth.";
+
+            float similarity = SimilarityAnalyzer.ComputeSimilarity(text1, text2);
+
+            similarity.Should().BeLessThan(0.4f);
+        }
