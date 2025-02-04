@@ -36,4 +36,6 @@ namespace SemanticSimilarityAPI.Controllers
             float dotProduct = vector1.Zip(vector2, (a, b) => a * b).Sum();
             float magnitude1 = (float)Math.Sqrt(vector1.Sum(x => x * x));
             float magnitude2 = (float)Math.Sqrt(vector2.Sum(x => x * x));
+            return magnitude1 == 0 || magnitude2 == 0 ? 0 : dotProduct / (magnitude1 * magnitude2);
+        }
 
