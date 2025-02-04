@@ -42,3 +42,8 @@ namespace SemanticSimilarityAPI.Controllers
         {
             public string Text { get; set; }
         }
+        public class TransformedTextData : TextData
+        {
+            public float[] Features { get; set; }
+        }
+    }
