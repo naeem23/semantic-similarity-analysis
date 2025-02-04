@@ -20,3 +20,12 @@ namespace SemanticSimilarityAPI.Controllers
             float similarityScore = ComputeTextSimilarity(request.Text1, request.Text2);
             return Ok(new { similarityScore });
         }
+        private static float ComputeTextSimilarity(string text1, string text2)
+        {
+            var data = new[] { new TextData { Text = text1 }, new TextData { Text = text2 } };
+            var dataView = mlContext.Data.LoadFromEnumerable(data);
+
+            var pipeline = mlContext.Transforms.Text.FeaturizeText("Features", nameof(TextData.Text));
+            var model = pipeline.Fit(dataView);
+            var transformedData = model.Transform(dataView);
+            var features = mlContext.Data.CreateEnumerable<TransformedTextData>(transformedData, reuseRowObject: false).ToArray();
