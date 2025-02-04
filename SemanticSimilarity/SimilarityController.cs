@@ -29,3 +29,5 @@ namespace SemanticSimilarityAPI.Controllers
             var model = pipeline.Fit(dataView);
             var transformedData = model.Transform(dataView);
             var features = mlContext.Data.CreateEnumerable<TransformedTextData>(transformedData, reuseRowObject: false).ToArray();
+            return ComputeCosineSimilarity(features[0].Features, features[1].Features);
+        }
