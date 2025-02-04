@@ -31,3 +31,9 @@ namespace SemanticSimilarityAPI.Controllers
             var features = mlContext.Data.CreateEnumerable<TransformedTextData>(transformedData, reuseRowObject: false).ToArray();
             return ComputeCosineSimilarity(features[0].Features, features[1].Features);
         }
+        private static float ComputeCosineSimilarity(float[] vector1, float[] vector2)
+        {
+            float dotProduct = vector1.Zip(vector2, (a, b) => a * b).Sum();
+            float magnitude1 = (float)Math.Sqrt(vector1.Sum(x => x * x));
+            float magnitude2 = (float)Math.Sqrt(vector2.Sum(x => x * x));
+
