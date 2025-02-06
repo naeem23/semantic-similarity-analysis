@@ -1,4 +1,4 @@
-﻿using DotNetEnv;
+using DotNetEnv;
 using OpenAI;
 using OpenAI.Audio;
 using OpenAI.Chat;
