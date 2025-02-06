@@ -11,23 +11,37 @@ namespace SemanticSimilarity
     {
         static async Task Main(string[] args)
         {
+            //load environment file 
             Env.Load();
+
+            //get OpenAI api key if null or empty throw error
             var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
             if (string.IsNullOrEmpty(apiKey))
             {
                 throw new InvalidOperationException("API key cannot be null or empty. Please set the OPENAI_API_KEY environment variable.");
             }
+
+            //set OpenAI api model "text-embedding-3-small/text-embedding-3-large/text-embedding-ada-002"
             var model = "text-embedding-3-small";
+
+            // Initialize the EmbeddingGenerator class with the provided API key and model.
             var generator = new EmbeddingGenerator(apiKey, model);
 
+            //get document paths from user 
             var documentPaths = InputHelper.GetFilePaths();
+
+            //get content of the documents 
             var textContents = InputHelper.GetTextFileContent(documentPaths);
 
-            Console.WriteLine("Contents of text files:");
+            //embedding value for keyword "Climate"
+            var keywordEmbedding = await generator.GenerateEmbeddingsAsync("Climate");
+
+            //generate embedding for document content and calculate similarity with keyword 
             foreach (var content in textContents)
             {
                 var embedding = await generator.GenerateEmbeddingsAsync(content);
-                Console.WriteLine($"Generated Embeddings: {embedding}");
+                float similarity = SimilarityHelper.CalcCosineSimilarityMethod2(embedding, keywordEmbedding);
+                Console.WriteLine($"Similarity is {similarity}");
                 Console.WriteLine("=========================================");
             }
 
@@ -75,28 +89,6 @@ namespace SemanticSimilarity
             //        }
             //    }
             //}
-
-            ////reading document 
-            //Console.WriteLine("Enter the path to the first document:");
-            //string docPath1 = Console.ReadLine();
-
-            //Console.WriteLine("Enter the path of the second document:");
-            //string docPath2 = Console.ReadLine();
-
-            ////Read the document content 
-            //string document1 = File.ReadAllText(docPath1);
-            //string document2 = File.ReadAllText(docPath2);
-
-            ////generate embeddings
-            //OpenAIEmbedding embedding3 = await client.GenerateEmbeddingAsync(document1);
-            //OpenAIEmbedding embedding4 = await client.GenerateEmbeddingAsync(document2);
-
-            //ReadOnlyMemory<float> vector3 = embedding3.ToFloats();
-            //ReadOnlyMemory<float> vector4 = embedding4.ToFloats();
-
-            //float similarity34 = SimilarityHelper.CalcCosineSimilarityMethod2(vector3, vector4);
-
-            //Console.WriteLine($"Similarity in two files is {similarity34}");
         }
     }
 }
