@@ -20,6 +20,20 @@ namespace SemanticSimilarity
             {
                 throw new InvalidOperationException("API key cannot be null or empty. Please set the OPENAI_API_KEY environment variable.");
             }
+        }
+
+        static async Task Naeem(string[] args)
+        {
+
+            //load environment file 
+            Env.Load();
+
+            //get OpenAI api key if null or empty throw error
+            var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
+            if (string.IsNullOrEmpty(apiKey))
+            {
+                throw new InvalidOperationException("API key cannot be null or empty. Please set the OPENAI_API_KEY environment variable.");
+            }
 
             //set OpenAI api model "text-embedding-3-small/text-embedding-3-large/text-embedding-ada-002"
             var model = "text-embedding-3-small";
