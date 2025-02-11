@@ -95,5 +95,16 @@ namespace SemanticSimilarity.Utilites
 
             return fileContents;
         }
+
+        // Function to read reference keywords file and split by new line
+        //Author: Naeem23
+        public static async Task<List<string>> ReadRefKeywordsAsync(string filePath)
+        {
+            if (!File.Exists(filePath))
+                throw new FileNotFoundException($"File not found: {filePath}");
+
+            var content = await File.ReadAllTextAsync(filePath);
+            return content.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries).ToList();
+        }
     }
 }
