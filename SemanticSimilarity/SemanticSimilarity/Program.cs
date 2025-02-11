@@ -24,7 +24,6 @@ namespace SemanticSimilarity
             await Ahad(apiKey);
         }
 
-
         //ahad
         static async Task Ahad(string apiKey)
         {
@@ -104,42 +103,44 @@ namespace SemanticSimilarity
 
         }
 
-        static async Task Naeem(string[] args)
+        static async Task Naeem(string apiKey)
         {
-
-            //load environment file 
-            Env.Load();
-
-            //get OpenAI api key if null or empty throw error
-            var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
-            if (string.IsNullOrEmpty(apiKey))
-            {
-                throw new InvalidOperationException("API key cannot be null or empty. Please set the OPENAI_API_KEY environment variable.");
-            }
-
             //set OpenAI api model "text-embedding-3-small/text-embedding-3-large/text-embedding-ada-002"
             var model = "text-embedding-3-small";
 
             // Initialize the EmbeddingGenerator class with the provided API key and model.
             var generator = new EmbeddingGenerator(apiKey, model);
 
-            //get document paths from user 
-            var documentPaths = InputHelper.GetFilePaths();
+            // Read all files
+            string sourceFilePaths = "Input/Sources";
+            string refKeywordsFilePath = "Input/reference_keywords.txt";
+            var sourceContents = await InputHelper.ReadAllFilesInFolderAsync(sourceFilePaths);
 
-            //get content of the documents 
-            var textContents = InputHelper.GetTextFileContent(documentPaths);
+            // Read and split reference keywords file
+            var refKeywords = await InputHelper.ReadRefKeywordsAsync(refKeywordsFilePath);
 
-            //embedding value for keyword "Climate"
-            var keywordEmbedding = await generator.GenerateEmbeddingsAsync("Climate");
+            // Generate embeddings
+            var sourceContentEmbeddings = sourceContents.Select(async text => await generator.GenerateEmbeddingsAsync(text)).ToList();
+            var categoryEmbeddings = refKeywords.Select(async text => await generator.GenerateEmbeddingsAsync(text)).ToList();
+            //end reading all files 
 
-            //generate embedding for document content and calculate similarity with keyword 
-            foreach (var content in textContents)
-            {
-                var embedding = await generator.GenerateEmbeddingsAsync(content);
-                float similarity = SimilarityHelper.CalcCosineSimilarityMethod2(embedding, keywordEmbedding);
-                Console.WriteLine($"Similarity is {similarity}");
-                Console.WriteLine("=========================================");
-            }
+            ////get document paths from user 
+            //var documentPaths = InputHelper.GetFilePaths();
+
+            ////get content of the documents 
+            //var textContents = InputHelper.GetTextFileContent(documentPaths);
+
+            ////embedding value for keyword "Climate"
+            //var keywordEmbedding = await generator.GenerateEmbeddingsAsync("Climate");
+
+            ////generate embedding for document content and calculate similarity with keyword 
+            //foreach (var content in textContents)
+            //{
+            //    var embedding = await generator.GenerateEmbeddingsAsync(content);
+            //    float similarity = SimilarityHelper.CalcCosineSimilarityMethod2(embedding, keywordEmbedding);
+            //    Console.WriteLine($"Similarity is {similarity}");
+            //    Console.WriteLine("=========================================");
+            //}
 
             //try
             //{

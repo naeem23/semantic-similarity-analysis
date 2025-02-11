@@ -10,6 +10,7 @@ namespace SemanticSimilarity.Utilites
 {
     public static class InputHelper
     {
+        //Collect source and reference content from user
         public static List<string> TextInputHandler()
         {
             var contents = new List<string>();
@@ -61,6 +62,7 @@ namespace SemanticSimilarity.Utilites
             }
         }
 
+        //Get source and reference files path  
         public static List<string> GetFilePaths()
         {
             Console.WriteLine("Please enter document path separated by new line:");
@@ -78,6 +80,7 @@ namespace SemanticSimilarity.Utilites
             return paths;
         }
 
+        //Get .txt file content 
         public static List<string> GetTextFileContent(List<string> documentPaths) 
         { 
             var contents = new List<string>();
@@ -102,6 +105,33 @@ namespace SemanticSimilarity.Utilites
             }
 
             return contents;
+        }
+
+        //Function to real all .txt files from a directory  
+        //author: Naeem
+        public static async Task<List<string>> ReadAllFilesInFolderAsync(string folderPath)
+        {
+            var files = Directory.GetFiles(folderPath, "*.txt");
+            var fileContents = new List<string>();
+
+            foreach (var file in files)
+            {
+                string content = await File.ReadAllTextAsync(file);
+                fileContents.Add(content);
+            }
+
+            return fileContents;
+        }
+
+        // Function to read reference keywords file and split by new line
+        //Author: Naeem23
+        public static async Task<List<string>> ReadRefKeywordsAsync(string filePath)
+        {
+            if (!File.Exists(filePath))
+                throw new FileNotFoundException($"File not found: {filePath}");
+
+            var content = await File.ReadAllTextAsync(filePath);
+            return content.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries).ToList();
         }
     }
 }
