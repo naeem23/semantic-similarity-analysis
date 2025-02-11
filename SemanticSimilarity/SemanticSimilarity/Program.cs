@@ -112,6 +112,20 @@ namespace SemanticSimilarity
             // Initialize the EmbeddingGenerator class with the provided API key and model.
             var generator = new EmbeddingGenerator(apiKey, model);
 
+
+            // Read all files
+            string sourceFilePaths = "Input/Sources";
+            string refKeywordsFilePath = "Input/reference_keywords.txt";
+            var sourceContents = await InputHelper.ReadAllFilesInFolderAsync(sourceFilePaths);
+
+            // Read and split reference keywords file
+            var refKeywords = await InputHelper.ReadRefKeywordsAsync(refKeywordsFilePath);
+
+            // Generate embeddings
+            var sourceContentEmbeddings = sourceContents.Select(async text => await generator.GenerateEmbeddingsAsync(text)).ToList();
+            var categoryEmbeddings = refKeywords.Select(async text => await generator.GenerateEmbeddingsAsync(text)).ToList();
+            //end reading all files 
+
             ////get document paths from user 
             //var documentPaths = InputHelper.GetFilePaths();
 

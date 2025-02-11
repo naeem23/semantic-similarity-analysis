@@ -79,32 +79,5 @@ namespace SemanticSimilarity.Utilites
 
             return dotProduct / (Math.Sqrt(magnitudeA) * Math.Sqrt(magnitudeB));
         }
-
-        //Function to real all .txt files from a directory  
-        //author: Naeem
-        public static async Task<List<string>> ReadAllFilesInFolderAsync(string folderPath)
-        {
-            var files = Directory.GetFiles(folderPath, "*.txt");
-            var fileContents = new List<string>();
-
-            foreach (var file in files)
-            {
-                string content = await File.ReadAllTextAsync(file);
-                fileContents.Add(content);
-            }
-
-            return fileContents;
-        }
-
-        // Function to read reference keywords file and split by new line
-        //Author: Naeem23
-        public static async Task<List<string>> ReadRefKeywordsAsync(string filePath)
-        {
-            if (!File.Exists(filePath))
-                throw new FileNotFoundException($"File not found: {filePath}");
-
-            var content = await File.ReadAllTextAsync(filePath);
-            return content.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries).ToList();
-        }
     }
 }
