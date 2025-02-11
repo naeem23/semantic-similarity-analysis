@@ -21,7 +21,8 @@ namespace SemanticSimilarity
                 throw new InvalidOperationException("API key cannot be null or empty. Please set the OPENAI_API_KEY environment variable.");
             }
 
-            await Ahad(apiKey);
+           // await Ahad(apiKey);
+            await Faraz(apiKey);
         }
 
 
@@ -139,6 +140,63 @@ namespace SemanticSimilarity
                 float similarity = SimilarityHelper.CalcCosineSimilarityMethod2(embedding, keywordEmbedding);
                 Console.WriteLine($"Similarity is {similarity}");
                 Console.WriteLine("=========================================");
+            }
+
+            static async Task Main(string[] args)
+            {
+                // Load environment file
+                Env.Load();
+
+                // Get OpenAI API key
+                var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
+                if (string.IsNullOrEmpty(apiKey))
+                {
+                    throw new InvalidOperationException("API key cannot be null or empty. Please set the OPENAI_API_KEY environment variable.");
+                }
+
+                // Initialize DocumentProcessor
+                var documentProcessor = new DocumentProcessor(apiKey);
+
+                // Example: Compare documents
+                Console.WriteLine("Enter the path of the first document:");
+                string doc1Path = Console.ReadLine()?.Trim('"'); // Remove quotes from input
+
+                Console.WriteLine("Enter the path of the second document:");
+                string doc2Path = Console.ReadLine()?.Trim('"'); // Remove quotes from input
+
+                try
+                {
+                    string doc1Content = documentProcessor.LoadDocument(doc1Path);
+                    string doc2Content = documentProcessor.LoadDocument(doc2Path);
+
+                    Console.WriteLine("Processing documents...");
+
+                    // Preprocess the documents
+                    string processedDoc1 = documentProcessor.PreprocessText(doc1Content);
+                    string processedDoc2 = documentProcessor.PreprocessText(doc2Content);
+
+                    // Generate embeddings
+                    List<double> embedding1 = await documentProcessor.GetEmbeddingAsync(processedDoc1);
+                    List<double> embedding2 = await documentProcessor.GetEmbeddingAsync(processedDoc2);
+
+                    // Calculate similarity
+                    double similarityScore = documentProcessor.CalculateCosineSimilarity(embedding1, embedding2);
+
+                    // Display results
+                    Console.WriteLine($"\nSemantic Similarity Score: {similarityScore:F4}");
+
+                    // Interpret results
+                    if (similarityScore > 0.8)
+                        Console.WriteLine("Documents are highly related.");
+                    else if (similarityScore > 0.5)
+                        Console.WriteLine("Documents are somewhat related.");
+                    else
+                        Console.WriteLine("Documents are not related.");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"An error occurred: {ex.Message}");
+                }
             }
 
             //try

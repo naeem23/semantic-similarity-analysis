@@ -1,11 +1,6 @@
-using System;
-using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
 using Newtonsoft.Json;
 using RestSharp;
-using System.Threading.Tasks;
+
 public class DocumentProcessor
 {
     private readonly string _apiKey;
@@ -19,6 +14,19 @@ public class DocumentProcessor
     // Load text from a document file (TXT)
     public string LoadDocument(string filePath)
     {
+        if (string.IsNullOrEmpty(filePath))
+        {
+            throw new ArgumentException("File path cannot be null or empty.");
+        }
+
+        // Remove quotes from the file path
+        filePath = filePath.Trim('"');
+
+        if (!File.Exists(filePath))
+        {
+            throw new FileNotFoundException($"File not found: {filePath}");
+        }
+
         return File.ReadAllText(filePath);
     }
 
@@ -27,7 +35,7 @@ public class DocumentProcessor
     {
         text = text.ToLower();
         text = new string(text.Where(c => !char.IsPunctuation(c)).ToArray());
-        text = text.Replace("\n", " ").Replace("\r", " ");
+        text = text.Replace("\n", ").Replace("\r", " ");
         return text;
     }
 
