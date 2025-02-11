@@ -23,10 +23,5 @@ namespace SemanticSimilarity.Utilites
 
             return embedding.ToFloats();
         }
-
-        public async Task<ReadOnlyMemory<float>> GenerateEmbeddingsWithHttpClient (string content)
-        {
-            //write a function to generate embedding using api call --- Ahad
-        }
     }
 }

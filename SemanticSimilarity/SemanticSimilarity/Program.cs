@@ -22,42 +22,31 @@ namespace SemanticSimilarity
             }
         }
 
-        static async Task Naeem(string[] args)
+        static async Task Naeem(string apiKey)
         {
-
-            //load environment file 
-            Env.Load();
-
-            //get OpenAI api key if null or empty throw error
-            var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
-            if (string.IsNullOrEmpty(apiKey))
-            {
-                throw new InvalidOperationException("API key cannot be null or empty. Please set the OPENAI_API_KEY environment variable.");
-            }
-
             //set OpenAI api model "text-embedding-3-small/text-embedding-3-large/text-embedding-ada-002"
             var model = "text-embedding-3-small";
 
             // Initialize the EmbeddingGenerator class with the provided API key and model.
             var generator = new EmbeddingGenerator(apiKey, model);
 
-            //get document paths from user 
-            var documentPaths = InputHelper.GetFilePaths();
+            ////get document paths from user 
+            //var documentPaths = InputHelper.GetFilePaths();
 
-            //get content of the documents 
-            var textContents = InputHelper.GetTextFileContent(documentPaths);
+            ////get content of the documents 
+            //var textContents = InputHelper.GetTextFileContent(documentPaths);
 
-            //embedding value for keyword "Climate"
-            var keywordEmbedding = await generator.GenerateEmbeddingsAsync("Climate");
+            ////embedding value for keyword "Climate"
+            //var keywordEmbedding = await generator.GenerateEmbeddingsAsync("Climate");
 
-            //generate embedding for document content and calculate similarity with keyword 
-            foreach (var content in textContents)
-            {
-                var embedding = await generator.GenerateEmbeddingsAsync(content);
-                float similarity = SimilarityHelper.CalcCosineSimilarityMethod2(embedding, keywordEmbedding);
-                Console.WriteLine($"Similarity is {similarity}");
-                Console.WriteLine("=========================================");
-            }
+            ////generate embedding for document content and calculate similarity with keyword 
+            //foreach (var content in textContents)
+            //{
+            //    var embedding = await generator.GenerateEmbeddingsAsync(content);
+            //    float similarity = SimilarityHelper.CalcCosineSimilarityMethod2(embedding, keywordEmbedding);
+            //    Console.WriteLine($"Similarity is {similarity}");
+            //    Console.WriteLine("=========================================");
+            //}
 
             //try
             //{
