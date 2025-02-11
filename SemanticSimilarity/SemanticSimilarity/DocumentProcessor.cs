@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using RestSharp;
 using Xceed.Words.NET;
 using UglyToad.PdfPig;
+using CsvHelper;
 
 public class DocumentProcessor
 {

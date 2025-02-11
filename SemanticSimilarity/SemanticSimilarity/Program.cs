@@ -4,6 +4,8 @@ using OpenAI.Audio;
 using OpenAI.Chat;
 using OpenAI.Embeddings;
 using SemanticSimilarity.Utilites;
+using CsvHelper;
+using System.Globalization;
 
 namespace SemanticSimilarity
 {
@@ -21,7 +23,7 @@ namespace SemanticSimilarity
                 throw new InvalidOperationException("API key cannot be null or empty. Please set the OPENAI_API_KEY environment variable.");
             }
 
-           // await Ahad(apiKey);
+            // await Ahad(apiKey);
             await Faraz(apiKey);
         }
 
@@ -142,106 +144,116 @@ namespace SemanticSimilarity
                 //Console.WriteLine("=========================================");
             //}
 
-            static async Task Faraz(string[] args)
-            {
-                // Load environment file
-                Env.Load();
+  
+static async Task Main(string[] args)
+        {
+            // Load environment file
+            Env.Load();
 
             // Get OpenAI API key
             var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
             if (string.IsNullOrEmpty(apiKey))
-                {
-                    throw new InvalidOperationException("API key cannot be null or empty. Please set the OPENAI_API_KEY environment variable.");
-                }
+            {
+                throw new InvalidOperationException("API key cannot be null or empty. Please set the OPENAI_API_KEY environment variable.");
+            }
 
             // Initialize DocumentProcessor
-            var processor = new DocumentProcessor(apiKey);
+            var documentProcessor = new DocumentProcessor(apiKey);
 
-            // Example: Compare documents
+            // Get document paths from user
             Console.WriteLine("Enter the path of the first document:");
             string doc1Path = Console.ReadLine()?.Trim('"');
 
             Console.WriteLine("Enter the path of the second document:");
-            string doc2Path = Console.ReadLine()
-                try
-                {
-                    string doc1Content = documentProcessor.LoadDocument(doc1Path);
-                    string doc2Content = documentProcessor.LoadDocument(doc2Path);
+            string doc2Path = Console.ReadLine()?.Trim('"');
 
-                    Console.WriteLine("Processing documents...");
+            try
+            {
+                // Load and preprocess documents
+                string doc1Content = documentProcessor.LoadDocument(doc1Path);
+                string doc2Content = documentProcessor.LoadDocument(doc2Path);
 
-                    // Preprocess the documents
-                    string processedDoc1 = documentProcessor.PreprocessText(doc1Content);
-                    string processedDoc2 = documentProcessor.PreprocessText(doc2Content);
+                string processedDoc1 = documentProcessor.PreprocessText(doc1Content);
+                string processedDoc2 = documentProcessor.PreprocessText(doc2Content);
 
-                    // Generate embeddings
-                    List<double> embedding1 = await documentProcessor.GetEmbeddingAsync(processedDoc1);
-                    List<double> embedding2 = await documentProcessor.GetEmbeddingAsync(processedDoc2);
+                // Generate embeddings
+                List<double> embedding1 = await documentProcessor.GetEmbeddingAsync(processedDoc1);
+                List<double> embedding2 = await documentProcessor.GetEmbeddingAsync(processedDoc2);
 
-                    // Calculate similarity
-                    double similarityScore = documentProcessor.CalculateCosineSimilarity(embedding1, embedding2);
+                // Calculate similarity
+                double similarityScore = documentProcessor.CalculateCosineSimilarity(embedding1, embedding2);
 
-                    // Display results
-                    Console.WriteLine($"\nSemantic Similarity Score: {similarityScore:F4}");
-
-                    // Interpret results
-                    if (similarityScore > 0.8)
-                        Console.WriteLine("Documents are highly related.");
-                    else if (similarityScore > 0.5)
-                        Console.WriteLine("Documents are somewhat related.");
-                    else
-                        Console.WriteLine("Documents are not related.");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"An error occurred: {ex.Message}");
-                }
+                // Create a list of similarity results
+                var results = new List<SimilarityResult>
+        {
+            new SimilarityResult
+            {
+                Document1 = doc1Path,
+                Document2 = doc2Path,
+                SimilarityScore = similarityScore
             }
+        };
 
-            //try
-            //{
-            //    var contents = InputHelper.TextInputHandler();
-            //    Console.WriteLine("\nYou have entered the following articles:\n");
+                // Write results to CSV
+                string csvFilePath = "similarity_results.csv";
+                using (var writer = new StreamWriter(csvFilePath))
+                using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                {
+                    csv.WriteRecords(results);
+                }
 
-            //    for (int i = 0; i < contents.Count; i++)
-            //    {
-            //        Console.WriteLine($"Article {i + 1}:\n{contents[i]}");
-            //        Console.WriteLine(new string('-', 50));
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine($"Error: {ex.Message}");
-            //}
-
-            //// Optional: Handle multiple comparisons
-            //Console.WriteLine("\nDo you want to compare multiple texts? (y/n)");
-            //if (Console.ReadLine().Trim().ToLower() == "y")
-            //{
-            //    Console.WriteLine("Enter texts separated by commas:");
-            //    string[] texts = Console.ReadLine().Split(",").Select(x => x.Trim()).ToArray();
-
-            //    //Generate embedding for all inputs
-            //    List<ReadOnlyMemory<float>> embeddings = new List<ReadOnlyMemory<float>>();
-
-            //    foreach (string text in texts)
-            //    {
-            //        OpenAIEmbedding embedding = await client.GenerateEmbeddingAsync(text);
-            //        ReadOnlyMemory<float> vector = embedding.ToFloats();
-            //        embeddings.Add(vector);
-            //    }
-
-            //    // Calculate pairwise similarity and display results
-            //    Console.WriteLine("\nPairwise Similarity:");
-            //    for (int i = 0; i < texts.Length; i++)
-            //    {
-            //        for (int j = i + 1; j < texts.Length; j++)
-            //        {
-            //            float pairwiseSimilarity = SimilarityHelper.CalcCosineSimilarityMethod2(embeddings[i], embeddings[j]);
-            //            Console.WriteLine($"Similarity between \"{texts[i]}\" and \"{texts[j]}\" is {pairwiseSimilarity:F4}");
-            //        }
-            //    }
-            //}
+                Console.WriteLine($"Similarity results saved to {csvFilePath}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
         }
     }
 }
+
+        //try
+        //{
+        //    var contents = InputHelper.TextInputHandler();
+        //    Console.WriteLine("\nYou have entered the following articles:\n");
+
+        //    for (int i = 0; i < contents.Count; i++)
+        //    {
+        //        Console.WriteLine($"Article {i + 1}:\n{contents[i]}");
+        //        Console.WriteLine(new string('-', 50));
+        //    }
+        //}
+        //catch (Exception ex)
+        //{
+        //    Console.WriteLine($"Error: {ex.Message}");
+        //}
+
+        //// Optional: Handle multiple comparisons
+        //Console.WriteLine("\nDo you want to compare multiple texts? (y/n)");
+        //if (Console.ReadLine().Trim().ToLower() == "y")
+        //{
+        //    Console.WriteLine("Enter texts separated by commas:");
+        //    string[] texts = Console.ReadLine().Split(",").Select(x => x.Trim()).ToArray();
+
+        //    //Generate embedding for all inputs
+        //    List<ReadOnlyMemory<float>> embeddings = new List<ReadOnlyMemory<float>>();
+
+        //    foreach (string text in texts)
+        //    {
+        //        OpenAIEmbedding embedding = await client.GenerateEmbeddingAsync(text);
+        //        ReadOnlyMemory<float> vector = embedding.ToFloats();
+        //        embeddings.Add(vector);
+        //    }
+
+        //    // Calculate pairwise similarity and display results
+        //    Console.WriteLine("\nPairwise Similarity:");
+        //    for (int i = 0; i < texts.Length; i++)
+        //    {
+        //        for (int j = i + 1; j < texts.Length; j++)
+        //        {
+        //            float pairwiseSimilarity = SimilarityHelper.CalcCosineSimilarityMethod2(embeddings[i], embeddings[j]);
+        //            Console.WriteLine($"Similarity between \"{texts[i]}\" and \"{texts[j]}\" is {pairwiseSimilarity:F4}");
+        //        }
+        //    }
+        //}
+   
