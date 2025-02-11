@@ -1,3 +1,4 @@
+ML 24/25-09 Semantic Similarity Analysis of Textual Data
 In this project, students must leverage OpenAI's GPT to create embeddings for a set of documents. The solution should utilize the OpenAI NuGet package, as demonstrated in this example: OpenAI Samples. The primary objective of this project is to explore and quantify the semantic similarity between various levels of textual data, including words, phrases, sentences, paragraphs, and entire documents. The analysis will focus on measuring and comparing semantic relationships, leveraging examples with well-known entities and terms to highlight key insights.
 
 Key Objectives:
