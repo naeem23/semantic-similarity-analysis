@@ -14,12 +14,14 @@ namespace SemanticSimilarity.Utilites
         private readonly string _apiKey;
         private const string BaseUrl = "https://api.openai.com/v1";
         private EmbeddingClient client;
+
         public EmbeddingGenerator(string apiKey, string model = "text-embedding-3-large") { 
             //this constructor function set _apikey and create embedding client 
 
             _apiKey = apiKey;
             client = new EmbeddingClient(model, apiKey);
         }
+
         public async Task<ReadOnlyMemory<float>> GenerateEmbeddingsAsync(string content)
         {
             //this function will generate embedding using OpenAI package 

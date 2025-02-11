@@ -24,7 +24,6 @@ namespace SemanticSimilarity
             await Ahad(apiKey);
         }
 
-
         //ahad
         static async Task Ahad(string apiKey)
         {
@@ -111,7 +110,6 @@ namespace SemanticSimilarity
 
             // Initialize the EmbeddingGenerator class with the provided API key and model.
             var generator = new EmbeddingGenerator(apiKey, model);
-
 
             // Read all files
             string sourceFilePaths = "Input/Sources";
