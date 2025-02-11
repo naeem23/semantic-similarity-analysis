@@ -9,21 +9,21 @@ namespace SemanticSimilarity
 {
     internal class Program
     {
-       // static async Task Main(string[] args)
+        static async Task Main(string[] args)
         {
             //load environment file 
-         //   Env.Load();
+            Env.Load();
 
             //get OpenAI api key if null or empty throw error
-           // var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
-            //if (string.IsNullOrEmpty(apiKey))
-            //{
-              //  throw new InvalidOperationException("API key cannot be null or empty. Please set the OPENAI_API_KEY environment variable.");
-           // }
+            var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
+            if (string.IsNullOrEmpty(apiKey))
+            {
+                throw new InvalidOperationException("API key cannot be null or empty. Please set the OPENAI_API_KEY environment variable.");
+            }
 
            // await Ahad(apiKey);
-            //await Faraz(apiKey);
-        //}
+            await Faraz(apiKey);
+        }
 
 
         //ahad
@@ -142,28 +142,27 @@ namespace SemanticSimilarity
                 //Console.WriteLine("=========================================");
             //}
 
-            static async Task Main(string[] args)
+            static async Task Faraz(string[] args)
             {
                 // Load environment file
                 Env.Load();
 
-                // Get OpenAI API key
-                var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
-                if (string.IsNullOrEmpty(apiKey))
+            // Get OpenAI API key
+            var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
+            if (string.IsNullOrEmpty(apiKey))
                 {
                     throw new InvalidOperationException("API key cannot be null or empty. Please set the OPENAI_API_KEY environment variable.");
                 }
 
-                // Initialize DocumentProcessor
-                var documentProcessor = new DocumentProcessor(apiKey);
+            // Initialize DocumentProcessor
+            var processor = new DocumentProcessor(apiKey);
 
-                // Example: Compare documents
-                Console.WriteLine("Enter the path of the first document:");
-                string doc1Path = Console.ReadLine()?.Trim('"'); // Remove quotes from input
+            // Example: Compare documents
+            Console.WriteLine("Enter the path of the first document:");
+            string doc1Path = Console.ReadLine()?.Trim('"');
 
-                Console.WriteLine("Enter the path of the second document:");
-                string doc2Path = Console.ReadLine()?.Trim('"'); // Remove quotes from input
-
+            Console.WriteLine("Enter the path of the second document:");
+            string doc2Path = Console.ReadLine()
                 try
                 {
                     string doc1Content = documentProcessor.LoadDocument(doc1Path);
