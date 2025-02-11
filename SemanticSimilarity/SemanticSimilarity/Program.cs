@@ -9,138 +9,138 @@ namespace SemanticSimilarity
 {
     internal class Program
     {
-        static async Task Main(string[] args)
+       // static async Task Main(string[] args)
         {
             //load environment file 
-            Env.Load();
+         //   Env.Load();
 
             //get OpenAI api key if null or empty throw error
-            var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
-            if (string.IsNullOrEmpty(apiKey))
-            {
-                throw new InvalidOperationException("API key cannot be null or empty. Please set the OPENAI_API_KEY environment variable.");
-            }
+           // var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
+            //if (string.IsNullOrEmpty(apiKey))
+            //{
+              //  throw new InvalidOperationException("API key cannot be null or empty. Please set the OPENAI_API_KEY environment variable.");
+           // }
 
            // await Ahad(apiKey);
-            await Faraz(apiKey);
-        }
+            //await Faraz(apiKey);
+        //}
 
 
         //ahad
-        static async Task Ahad(string apiKey)
+        //static async Task Ahad(string apiKey)
         {
-            try // Semantic Similarity Score
+          //  try // Semantic Similarity Score
             {
-                Console.WriteLine("Enter the first text:");
-                string text1 = Console.ReadLine();
+            //    Console.WriteLine("Enter the first text:");
+              //  string text1 = Console.ReadLine();
 
-                Console.WriteLine("\nEnter the second text:");
-                string text2 = Console.ReadLine();
+                //Console.WriteLine("\nEnter the second text:");
+                //string text2 = Console.ReadLine();
 
-                Console.WriteLine("Calculating embeddings...");
+//                Console.WriteLine("Calculating embeddings...");
 
                 //set OpenAI api model "text-embedding-3-small/text-embedding-3-large/text-embedding-ada-002"
-                var model = "text-embedding-3-small";
+  //              var model = "text-embedding-3-small";
 
                 // Initialize the EmbeddingGenerator class with the provided API key and model.
-                var generator = new EmbeddingGenerator(apiKey, model);
+    //            var generator = new EmbeddingGenerator(apiKey, model);
 
-                string embeddingResponse1 = await generator.GetEmbedding(text1);
-                string embeddingResponse2 = await generator.GetEmbedding(text2);
+      //          string embeddingResponse1 = await generator.GetEmbedding(text1);
+        //        string embeddingResponse2 = await generator.GetEmbedding(text2);
 
-                List<double> embedding1 = EmbeddingGenerator.ParseEmbedding(embeddingResponse1);
-                List<double> embedding2 = EmbeddingGenerator.ParseEmbedding(embeddingResponse2);
+          //      List<double> embedding1 = EmbeddingGenerator.ParseEmbedding(embeddingResponse1);
+            //    List<double> embedding2 = EmbeddingGenerator.ParseEmbedding(embeddingResponse2);
 
-                double similarity = SimilarityHelper.CalculateCosineSimilarity3(embedding1, embedding2);
-                Console.WriteLine($"\nSemantic Similarity Score: {similarity}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("An error occurred:");
-                Console.WriteLine(ex.Message);
-            }
+              //  double similarity = SimilarityHelper.CalculateCosineSimilarity3(embedding1, embedding2);
+                //Console.WriteLine($"\nSemantic Similarity Score: {similarity}");
+            //}
+            //catch (Exception ex)
+            //{
+              //  Console.WriteLine("An error occurred:");
+                //Console.WriteLine(ex.Message);
+            //}
 
 
             //Method to Compare Documents me
-            {
-                var documentProcessor = new DocumentProcessor(apiKey);
-                Console.WriteLine("\n");
+            //{
+              //  var documentProcessor = new DocumentProcessor(apiKey);
+              //  Console.WriteLine("\n");
                 // Load documents
-                Console.WriteLine("             ***********************************************");
-                Console.WriteLine("             *******Compare Documents Similarity Score******");
-                Console.WriteLine("             ***********************************************");
+                //Console.WriteLine("             ***********************************************");
+                //Console.WriteLine("             *******Compare Documents Similarity Score******");
+                //Console.WriteLine("             ***********************************************");
 
-                Console.WriteLine("\nEnter the path of the first document:");
-                string doc1Path = Console.ReadLine();
-                string doc1Content = documentProcessor.LoadDocument(doc1Path);
+//                Console.WriteLine("\nEnter the path of the first document:");
+  //              string doc1Path = Console.ReadLine();
+    //            string doc1Content = documentProcessor.LoadDocument(doc1Path);
 
-                Console.WriteLine("\nEnter the path of the second document:");
-                string doc2Path = Console.ReadLine();
-                string doc2Content = documentProcessor.LoadDocument(doc2Path);
+      //          Console.WriteLine("\nEnter the path of the second document:");
+        //        string doc2Path = Console.ReadLine();
+          //      string doc2Content = documentProcessor.LoadDocument(doc2Path);
 
                 // Preprocess the documents
-                string processedDoc1 = documentProcessor.PreprocessText(doc1Content);
-                string processedDoc2 = documentProcessor.PreprocessText(doc2Content);
-
-                Console.WriteLine("Processing documents...");
+            //    string processedDoc1 = documentProcessor.PreprocessText(doc1Content);
+              //  string processedDoc2 = documentProcessor.PreprocessText(doc2Content);
+              
+              //  Console.WriteLine("Processing documents...");
 
                 // Generate embeddings
-                List<double> embedding1 = await documentProcessor.GetEmbeddingAsync(processedDoc1);
-                List<double> embedding2 = await documentProcessor.GetEmbeddingAsync(processedDoc2);
+                //List<double> embedding1 = await documentProcessor.GetEmbeddingAsync(processedDoc1);
+                //List<double> embedding2 = await documentProcessor.GetEmbeddingAsync(processedDoc2);
 
                 // Calculate similarity
-                double similarityScore = documentProcessor.CalculateCosineSimilarity(embedding1, embedding2);
+//                double similarityScore = documentProcessor.CalculateCosineSimilarity(embedding1, embedding2);
 
                 // Display results
-                Console.WriteLine($"\nSemantic Similarity Score: {similarityScore:F4}");
+  //              Console.WriteLine($"\nSemantic Similarity Score: {similarityScore:F4}");
 
                 // Interpret results
-                if (similarityScore > 0.8)
-                    Console.WriteLine("Documents are highly related.");
-                else if (similarityScore > 0.5)
-                    Console.WriteLine("Documents are somewhat related.");
-                else
-                    Console.WriteLine("Documents are not related.");
-            }
+    //            if (similarityScore > 0.8)
+      //              Console.WriteLine("Documents are highly related.");
+        //        else if (similarityScore > 0.5)
+          //          Console.WriteLine("Documents are somewhat related.");
+            //    else
+              //      Console.WriteLine("Documents are not related.");
+           // }
 
-        }
+        //}
 
-        static async Task Naeem(string[] args)
-        {
+        //static async Task Naeem(string[] args)
+        //{
 
             //load environment file 
-            Env.Load();
+          //  Env.Load();
 
             //get OpenAI api key if null or empty throw error
-            var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
-            if (string.IsNullOrEmpty(apiKey))
-            {
-                throw new InvalidOperationException("API key cannot be null or empty. Please set the OPENAI_API_KEY environment variable.");
-            }
+            //var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
+            //if (string.IsNullOrEmpty(apiKey))
+            //{
+              //  throw new InvalidOperationException("API key cannot be null or empty. Please set the OPENAI_API_KEY environment variable.");
+            //}
 
             //set OpenAI api model "text-embedding-3-small/text-embedding-3-large/text-embedding-ada-002"
-            var model = "text-embedding-3-small";
+            //var model = "text-embedding-3-small";
 
             // Initialize the EmbeddingGenerator class with the provided API key and model.
-            var generator = new EmbeddingGenerator(apiKey, model);
+            //var generator = new EmbeddingGenerator(apiKey, model);
 
             //get document paths from user 
-            var documentPaths = InputHelper.GetFilePaths();
+            //var documentPaths = InputHelper.GetFilePaths();
 
             //get content of the documents 
-            var textContents = InputHelper.GetTextFileContent(documentPaths);
+            //var textContents = InputHelper.GetTextFileContent(documentPaths);
 
             //embedding value for keyword "Climate"
-            var keywordEmbedding = await generator.GenerateEmbeddingsAsync("Climate");
+            //var keywordEmbedding = await generator.GenerateEmbeddingsAsync("Climate");
 
             //generate embedding for document content and calculate similarity with keyword 
-            foreach (var content in textContents)
-            {
-                var embedding = await generator.GenerateEmbeddingsAsync(content);
-                float similarity = SimilarityHelper.CalcCosineSimilarityMethod2(embedding, keywordEmbedding);
-                Console.WriteLine($"Similarity is {similarity}");
-                Console.WriteLine("=========================================");
-            }
+            //foreach (var content in textContents)
+            //{
+              //  var embedding = await generator.GenerateEmbeddingsAsync(content);
+                //float similarity = SimilarityHelper.CalcCosineSimilarityMethod2(embedding, keywordEmbedding);
+                //Console.WriteLine($"Similarity is {similarity}");
+                //Console.WriteLine("=========================================");
+            //}
 
             static async Task Main(string[] args)
             {
