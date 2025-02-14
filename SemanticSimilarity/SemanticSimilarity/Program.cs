@@ -1,4 +1,4 @@
-using DotNetEnv;
+﻿using DotNetEnv;
 using OpenAI;
 using OpenAI.Audio;
 using OpenAI.Chat;
@@ -101,6 +101,45 @@ namespace SemanticSimilarity
                 else
                     Console.WriteLine("Documents are not related.");
             }
+
+            //FileProcessor class St
+            {
+                //string apiKey = "your-api-key-here";  // Replace with your OpenAI API key
+                DocumentProcessor processor = new DocumentProcessor(apiKey);
+
+                // Load text from files
+                List<string> names = FileProcessor.LoadFile("H:\\Frankfurt University\\1st Semester\\Software engineering\\SoftwareEngineeringProject\\semantic-similarity-analysis\\SemanticSimilarity\\SemanticSimilarity\\names.txt");
+                List<string> phrases = FileProcessor.LoadFile("H:\\Frankfurt University\\1st Semester\\Software engineering\\SoftwareEngineeringProject\\semantic-similarity-analysis\\SemanticSimilarity\\SemanticSimilarity\\phrases.txt");
+                List<string> documents = FileProcessor.LoadFile("H:\\Frankfurt University\\1st Semester\\Software engineering\\SoftwareEngineeringProject\\semantic-similarity-analysis\\SemanticSimilarity\\SemanticSimilarity\\documents.txt");
+
+                // Compare text in each category
+                await CompareTextPairs(processor, names, "Names");
+                await CompareTextPairs(processor, phrases, "Phrases");
+                await CompareTextPairs(processor, documents, "Documents");
+            }
+
+            static async Task CompareTextPairs(DocumentProcessor processor, List<string> texts, string category)
+            {
+                Console.WriteLine($"\n==== {category} Semantic Similarity ====");
+
+                for (int i = 0; i < texts.Count; i++)
+                {
+                    for (int j = i + 1; j < texts.Count; j++)
+                    {
+                        string text1 = texts[i];
+                        string text2 = texts[j];
+
+                        List<double> vectorA = await processor.GetEmbeddingAsync(text1);
+                        List<double> vectorB = await processor.GetEmbeddingAsync(text2);
+
+                        double similarity = processor.CalculateCosineSimilarity(vectorA, vectorB);
+                        Console.WriteLine($"Comparing: \"{text1}\" ↔ \"{text2}\" → Similarity Score: {similarity:F4}");
+                    }
+                }
+            }
+            //FileProcessor class end
+
+
 
         }
 
