@@ -102,7 +102,7 @@ namespace SemanticSimilarity
                     Console.WriteLine("Documents are not related.");
             }
 
-            //FileProcessor class St
+            //FileProcessor class Start
             {
                 //string apiKey = "your-api-key-here";  // Replace with your OpenAI API key
                 DocumentProcessor processor = new DocumentProcessor(apiKey);
