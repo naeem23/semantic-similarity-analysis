@@ -13,6 +13,7 @@ namespace SemanticSimilarity.Utilites
     {
         public static List<string> LoadFile(string filePath)
         {
+            //Input File Path
             if (!File.Exists(filePath))
             {
                 Console.WriteLine($"Error: File not found - {filePath}");
