@@ -27,7 +27,7 @@ namespace SemanticSimilarity.Utilites
                     }
                 }
 
-                Console.WriteLine($"\n Congratulation!!! Results successfully saved to {fileName}"); //save file
+                Console.WriteLine($"\n Congratulation!!! Results successfully saved to {fileName}"); //save file 
             }
             catch (Exception ex)
             {
