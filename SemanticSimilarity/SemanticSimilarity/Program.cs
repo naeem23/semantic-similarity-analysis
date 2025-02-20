@@ -2,8 +2,13 @@
 using OpenAI;
 using OpenAI.Audio;
 using OpenAI.Chat;
+using System;
 using OpenAI.Embeddings;
 using SemanticSimilarity.Utilites;
+using System.Formats.Asn1;
+using System.IO;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SemanticSimilarity
 {
@@ -102,9 +107,10 @@ namespace SemanticSimilarity
                     Console.WriteLine("Documents are not related.");
             }
 
-            //FileProcessor class Start
+            // other gula akhane add hobe er por thake }selo 3ta reeor komanor jonno barano hoise
             {
-                //string apiKey = "your-api-key-here";  // Replace with your OpenAI API key
+                //string apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");  // Replace with your OpenAI API key
+               // var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
                 DocumentProcessor processor = new DocumentProcessor(apiKey);
 
                 // Load text from files
@@ -112,13 +118,19 @@ namespace SemanticSimilarity
                 List<string> phrases = FileProcessor.LoadFile("H:\\Frankfurt University\\1st Semester\\Software engineering\\SoftwareEngineeringProject\\semantic-similarity-analysis\\SemanticSimilarity\\SemanticSimilarity\\phrases.txt");
                 List<string> documents = FileProcessor.LoadFile("H:\\Frankfurt University\\1st Semester\\Software engineering\\SoftwareEngineeringProject\\semantic-similarity-analysis\\SemanticSimilarity\\SemanticSimilarity\\documents.txt");
 
+                // Store results for CSV
+                List<(string, string, double)> results = new List<(string, string, double)>();
+
                 // Compare text in each category
-                await CompareTextPairs(processor, names, "Names");
-                await CompareTextPairs(processor, phrases, "Phrases");
-                await CompareTextPairs(processor, documents, "Documents");
+                await CompareTextPairs(processor, names, "Names", results);
+                await CompareTextPairs(processor, phrases, "Phrases", results);
+                await CompareTextPairs(processor, documents, "Documents", results);
+
+                // Save results to CSV
+                CsvWriter.SaveResultsToCsv("similarity_results.csv", results);
             }
 
-            static async Task CompareTextPairs(DocumentProcessor processor, List<string> texts, string category)
+            static async Task CompareTextPairs(DocumentProcessor processor, List<string> texts, string category, List<(string, string, double)> results)
             {
                 Console.WriteLine($"\n==== {category} Semantic Similarity ====");
 
@@ -134,96 +146,17 @@ namespace SemanticSimilarity
 
                         double similarity = processor.CalculateCosineSimilarity(vectorA, vectorB);
                         Console.WriteLine($"Comparing: \"{text1}\" ↔ \"{text2}\" → Similarity Score: {similarity:F4}");
+
+                        results.Add((text1, text2, similarity));
                     }
-                }
+
+
+
+
+                }//no cut this line
             }
-            //FileProcessor class end
-
-
-
-        }
-
-        static async Task Naeem(string[] args)
-        {
-
-            //load environment file 
-            Env.Load();
-
-            //get OpenAI api key if null or empty throw error
-            var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
-            if (string.IsNullOrEmpty(apiKey))
-            {
-                throw new InvalidOperationException("API key cannot be null or empty. Please set the OPENAI_API_KEY environment variable.");
-            }
-
-            //set OpenAI api model "text-embedding-3-small/text-embedding-3-large/text-embedding-ada-002"
-            var model = "text-embedding-3-small";
-
-            // Initialize the EmbeddingGenerator class with the provided API key and model.
-            var generator = new EmbeddingGenerator(apiKey, model);
-
-            //get document paths from user 
-            var documentPaths = InputHelper.GetFilePaths();
-
-            //get content of the documents 
-            var textContents = InputHelper.GetTextFileContent(documentPaths);
-
-            //embedding value for keyword "Climate"
-            var keywordEmbedding = await generator.GenerateEmbeddingsAsync("Climate");
-
-            //generate embedding for document content and calculate similarity with keyword 
-            foreach (var content in textContents)
-            {
-                var embedding = await generator.GenerateEmbeddingsAsync(content);
-                float similarity = SimilarityHelper.CalcCosineSimilarityMethod2(embedding, keywordEmbedding);
-                Console.WriteLine($"Similarity is {similarity}");
-                Console.WriteLine("=========================================");
-            }
-
-            //try
-            //{
-            //    var contents = InputHelper.TextInputHandler();
-            //    Console.WriteLine("\nYou have entered the following articles:\n");
-
-            //    for (int i = 0; i < contents.Count; i++)
-            //    {
-            //        Console.WriteLine($"Article {i + 1}:\n{contents[i]}");
-            //        Console.WriteLine(new string('-', 50));
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine($"Error: {ex.Message}");
-            //}
-
-            //// Optional: Handle multiple comparisons
-            //Console.WriteLine("\nDo you want to compare multiple texts? (y/n)");
-            //if (Console.ReadLine().Trim().ToLower() == "y")
-            //{
-            //    Console.WriteLine("Enter texts separated by commas:");
-            //    string[] texts = Console.ReadLine().Split(",").Select(x => x.Trim()).ToArray();
-
-            //    //Generate embedding for all inputs
-            //    List<ReadOnlyMemory<float>> embeddings = new List<ReadOnlyMemory<float>>();
-
-            //    foreach (string text in texts)
-            //    {
-            //        OpenAIEmbedding embedding = await client.GenerateEmbeddingAsync(text);
-            //        ReadOnlyMemory<float> vector = embedding.ToFloats();
-            //        embeddings.Add(vector);
-            //    }
-
-            //    // Calculate pairwise similarity and display results
-            //    Console.WriteLine("\nPairwise Similarity:");
-            //    for (int i = 0; i < texts.Length; i++)
-            //    {
-            //        for (int j = i + 1; j < texts.Length; j++)
-            //        {
-            //            float pairwiseSimilarity = SimilarityHelper.CalcCosineSimilarityMethod2(embeddings[i], embeddings[j]);
-            //            Console.WriteLine($"Similarity between \"{texts[i]}\" and \"{texts[j]}\" is {pairwiseSimilarity:F4}");
-            //        }
-            //    }
-            //}
         }
     }
 }
+
+
