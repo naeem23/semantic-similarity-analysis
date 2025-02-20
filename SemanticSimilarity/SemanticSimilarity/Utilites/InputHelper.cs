@@ -111,6 +111,11 @@ namespace SemanticSimilarity.Utilites
         //author: Naeem
         public static async Task<List<string>> ReadAllFilesInFolderAsync(string folderPath)
         {
+            if (!Directory.Exists(folderPath))
+            {
+                throw new DirectoryNotFoundException($"The directory '{folderPath}' does not exist.");
+            }
+
             var files = Directory.GetFiles(folderPath, "*.txt");
             var fileContents = new List<string>();
 
