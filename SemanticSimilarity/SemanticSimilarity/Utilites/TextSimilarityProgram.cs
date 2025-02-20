@@ -9,7 +9,7 @@ namespace SemanticSimilarity.Utilites
     {
         public static async Task Run()
         {
-            string apiKey = "your-api-key-here";  // Replace with your OpenAI API key
+            string apiKey = "your-api-key-here";  // Replace with your OpenAI API key 
             DocumentProcessor processor = new DocumentProcessor(apiKey);
 
             // Load text from files
