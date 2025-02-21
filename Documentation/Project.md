@@ -13,3 +13,4 @@ This project computes the semantic similarity between textual data using BERT em
    git clone	https://github.com/naeem23/semantic-similarity-analysis
 ##CSV File
 - Export .CSV File
+- A plot was generated from the semantic similarity score value.
