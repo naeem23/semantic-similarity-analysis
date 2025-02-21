@@ -19,7 +19,7 @@ namespace SemanticSimilarity
             //load environment file 
             Env.Load();
 
-            //get OpenAI api key if null or empty throw error
+            //get OpenAI API key if null or empty throw error
             var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY"); //use this structure for all
             if (string.IsNullOrEmpty(apiKey))
             {
