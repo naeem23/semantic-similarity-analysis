@@ -25,7 +25,7 @@ namespace SemanticSimilarity.Utilites
                     double similarity = processor.CalculateCosineSimilarity(vectorA, vectorB);
                     Console.WriteLine($"Comparing: \"{text1}\" ↔ \"{text2}\" → Similarity Score: {similarity:F4}");
 
-                    // ✅ Store the result in the results list
+                    // ✅ Store the result in the results list here
                     results.Add((text1, text2, similarity));
                 }
 
