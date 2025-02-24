@@ -17,5 +17,10 @@ namespace SemanticSimilarity.Utilites
             {
                 for (int j = i + 1; j < texts.Count; j++)
                 {
+                    string text1 = texts[i];
+                    string text2 = texts[j];
+
+                    List<double> vectorA = await processor.GetEmbeddingAsync(text1);
+                    List<double> vectorB = await processor.GetEmbeddingAsync(text2);
                 }
 }
