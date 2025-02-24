@@ -22,13 +22,14 @@ namespace SemanticSimilarity.Utilites
 
                     List<double> vectorA = await processor.GetEmbeddingAsync(text1);
                     List<double> vectorB = await processor.GetEmbeddingAsync(text2);
-                }
-                double similarity = processor.CalculateCosineSimilarity(vectorA, vectorB);
-                Console.WriteLine($"Comparing: \"{text1}\" ↔ \"{text2}\" → Similarity Score: {similarity:F4}");
+                    double similarity = processor.CalculateCosineSimilarity(vectorA, vectorB);
+                    Console.WriteLine($"Comparing: \"{text1}\" ↔ \"{text2}\" → Similarity Score: {similarity:F4}");
 
-                // ✅ Store the result in the results list
-                results.Add((text1, text2, similarity));
-            }
+                    // ✅ Store the result in the results list
+                    results.Add((text1, text2, similarity));
+                }
+
+            
         }
     }
 }
