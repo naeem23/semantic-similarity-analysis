@@ -15,6 +15,7 @@ namespace SemanticSimilarity.Utilites
 
             for (int i = 0; i < texts.Count; i++)
             {
-                //s
-            }
+                for (int j = i + 1; j < texts.Count; j++)
+                {
+                }
 }
