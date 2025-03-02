@@ -23,7 +23,7 @@ namespace SemanticSimilarity.Utilites
                     List<double> vectorA = await processor.GetEmbeddingAsync(text1);
                     List<double> vectorB = await processor.GetEmbeddingAsync(text2);
                      List<double> vectorB = await processor.GetEmbeddingAsync(text3);
-                    double similarity = processor.CalculateCosineSimilarity(vectorA, vectorB);
+                    double similarity = processor.CalculateCosineSimilarity(vectorA, vectorB, vectorC);
                     Console.WriteLine($"Comparing: \"{text1}\" ↔ \"{text2}\" → Similarity Score: {similarity:F4}");
 
                     //Store the result in the results list here
