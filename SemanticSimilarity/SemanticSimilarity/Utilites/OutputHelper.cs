@@ -30,7 +30,8 @@ namespace SemanticSimilarity.Utilites
 
             for (int i = 0; i < refContents.Count; i++)
             {
-                headers[1 + i] = $"{refContents[i]}";
+                //headers[1 + i] = $"{refContents[i]}";
+                headers[1 + i] = refContents[i].Length > 20 ? refContents[i].Substring(0, 20) + "..." : refContents[i];
             }
             csvData.Add(headers);
 
@@ -38,7 +39,7 @@ namespace SemanticSimilarity.Utilites
             for (int i = 0; i < sourceContents.Count; i++)
             {
                 var row = new string[1 + refContents.Count];
-                row[0] = sourceContents[i].Length > 50 ? sourceContents[i].Substring(0,50) + "..." : sourceContents[i];
+                row[0] = sourceContents[i].Length > 20 ? sourceContents[i].Substring(0,20) + "..." : sourceContents[i];
 
                 for (int j = 0; j < refContents.Count; j++)
                 {

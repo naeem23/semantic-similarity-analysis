@@ -115,12 +115,14 @@ namespace SemanticSimilarity
             // Read all files
             string projectRoot = Directory.GetParent(AppContext.BaseDirectory).Parent.Parent.Parent.FullName;
             string sourceFilePaths = Path.Combine(projectRoot, "Input", "Sources");
-            string refKeywordsFilePath = Path.Combine(projectRoot, "Input", "reference_keywords.txt");
+            string refFilePaths = Path.Combine(projectRoot, "Input", "References");
+            //string refKeywordsFilePath = Path.Combine(projectRoot, "Input", "reference_keywords.txt");
 
             var sourceContents = await InputHelper.ReadAllFilesInFolderAsync(sourceFilePaths);
-            var refKeywords = await InputHelper.ReadRefKeywordsAsync(refKeywordsFilePath); // Read and split reference keywords file
+            var refContents = await InputHelper.ReadAllFilesInFolderAsync(refFilePaths);
+            //var refKeywords = await InputHelper.ReadRefKeywordsAsync(refKeywordsFilePath); // Read and split reference keywords file
 
-            await OutputHelper.GenerateOutputAsync(sourceContents, refKeywords, apiKey);
+            await OutputHelper.GenerateOutputAsync(sourceContents, refContents, apiKey);
 
             ////get document paths from user 
             //var documentPaths = InputHelper.GetFilePaths();
