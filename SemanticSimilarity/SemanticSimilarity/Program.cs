@@ -21,7 +21,8 @@ namespace SemanticSimilarity
                 throw new InvalidOperationException("API key cannot be null or empty. Please set the OPENAI_API_KEY environment variable.");
             }
 
-            await Ahad(apiKey);
+            //await Ahad(apiKey);
+            await Naeem(apiKey);
         }
 
         //ahad
@@ -106,23 +107,22 @@ namespace SemanticSimilarity
         static async Task Naeem(string apiKey)
         {
             //set OpenAI api model "text-embedding-3-small/text-embedding-3-large/text-embedding-ada-002"
-            var model = "text-embedding-3-small";
+            //var model = "text-embedding-3-small";
 
             // Initialize the EmbeddingGenerator class with the provided API key and model.
-            var generator = new EmbeddingGenerator(apiKey, model);
+            //var generator = new EmbeddingGenerator(apiKey, model);
 
             // Read all files
-            string sourceFilePaths = "Input/Sources";
-            string refKeywordsFilePath = "Input/reference_keywords.txt";
+            string projectRoot = Directory.GetParent(AppContext.BaseDirectory).Parent.Parent.Parent.FullName;
+            string sourceFilePaths = Path.Combine(projectRoot, "Input", "Sources");
+            string refFilePaths = Path.Combine(projectRoot, "Input", "References");
+            //string refKeywordsFilePath = Path.Combine(projectRoot, "Input", "reference_keywords.txt");
+
             var sourceContents = await InputHelper.ReadAllFilesInFolderAsync(sourceFilePaths);
+            var refContents = await InputHelper.ReadAllFilesInFolderAsync(refFilePaths);
+            //var refKeywords = await InputHelper.ReadRefKeywordsAsync(refKeywordsFilePath); // Read and split reference keywords file
 
-            // Read and split reference keywords file
-            var refKeywords = await InputHelper.ReadRefKeywordsAsync(refKeywordsFilePath);
-
-            // Generate embeddings
-            var sourceContentEmbeddings = sourceContents.Select(async text => await generator.GenerateEmbeddingsAsync(text)).ToList();
-            var categoryEmbeddings = refKeywords.Select(async text => await generator.GenerateEmbeddingsAsync(text)).ToList();
-            //end reading all files 
+            await OutputHelper.GenerateOutputAsync(sourceContents, refContents, apiKey);
 
             ////get document paths from user 
             //var documentPaths = InputHelper.GetFilePaths();

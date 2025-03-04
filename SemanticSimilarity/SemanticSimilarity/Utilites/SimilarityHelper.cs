@@ -39,7 +39,12 @@ namespace SemanticSimilarity.Utilites
                 magnitudeB += vectorB.Span[i] * vectorB.Span[i];
             }
 
-            return dotProduct / (MathF.Sqrt(magnitudeA) * MathF.Sqrt(magnitudeB));
+            // Calculate the cosine similarity
+            float similarity = dotProduct / (MathF.Sqrt(magnitudeA) * MathF.Sqrt(magnitudeB));
+
+            // Round the result to one decimal place before returning
+            //return MathF.Round(similarity, 1);
+            return similarity;
         }
 
         //ahad
