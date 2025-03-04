@@ -1,0 +1,41 @@
+﻿Job Title: Full Stack Developer
+
+Company: Tech Solutions Inc.
+
+Location: Anytown, USA
+
+Job Description:
+Tech Solutions Inc. is seeking a highly skilled Full Stack Developer to join our dynamic team. The ideal candidate will have a strong background in web development, with experience in both front-end and back-end technologies. You will be responsible for developing and maintaining web applications, collaborating with cross-functional teams, and ensuring the delivery of high-quality software solutions.
+
+Responsibilities:
+- Develop and maintain web applications using JavaScript, React, Node.js, and MongoDB.
+- Collaborate with designers and backend developers to create seamless user experiences.
+- Implement RESTful APIs and integrate third-party services.
+- Participate in code reviews and contribute to the improvement of coding standards.
+- Conduct testing and debugging of applications to ensure optimal performance.
+
+Requirements:
+- Bachelor's degree in Computer Science, Information Technology, or a related field.
+- Proven experience as a Full Stack Developer or similar role.
+- Proficiency in JavaScript, React, Node.js, and MongoDB.
+- Strong understanding of web technologies including HTML, CSS, and JavaScript.
+- Experience with version control systems such as Git.
+- Excellent problem-solving skills and attention to detail.
+- Strong communication and teamwork abilities.
+
+Preferred Qualifications:
+- Experience with TypeScript and Angular.
+- Familiarity with cloud platforms such as AWS or Azure.
+- Knowledge of CI/CD pipelines and DevOps practices.
+- Certification in relevant technologies or frameworks.
+
+Benefits:
+- Competitive salary and benefits package.
+- Opportunities for professional growth and development.
+- Collaborative and innovative work environment.
+- Flexible work hours and remote work options.
+
+How to Apply:
+Interested candidates should submit their resume and cover letter to hr@techsolutions.com. Please include "Full Stack Developer Application" in the subject line.
+
+Tech Solutions Inc. is an equal opportunity employer. We celebrate diversity and are committed to creating an inclusive environment for all employees.

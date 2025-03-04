@@ -1,7 +1,7 @@
-﻿using System;
+using RestSharp;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 public class OpenAIClient
@@ -20,32 +20,32 @@ public class OpenAIClient
         //var request = new RestRequest(Method.Post); // Updated Syntax
         var request = new RestRequest();
         request.Method = Method.Post;
+
+        // request.AddHeader("Authorization", $"Bearer {_apiKey}"); // REMOVE
+        //var request = new RestRequest();  //calling post method different way Hit API
+
+        request.Method = Method.Post;
         request.AddHeader("Authorization", $"Bearer {_apiKey}");
+        request.AddHeader("Content-Type", "application/json");
 
-       var request = new RestRequest();  //calling post method different way Hit API
-       request.Method = Method.Post;
+        var body = new
+        {
+            input = text,
+            model = model
+        };
 
-               request.AddHeader("Authorization", $"Bearer {_apiKey}");
+        request.AddJsonBody(body);
 
-       request.AddHeader("Content-Type", "application/json");
+        var response = await client.ExecuteAsync(request);
+        if (response.IsSuccessful)
+        {
+            return response.Content;
+        }
 
-       var body = new
-       {
-           input = text,
-           model = model
-       };
+        throw new Exception($"Error: {response.StatusDescription}\n{response.Content}");
+    }
 
-       request.AddJsonBody(body);
-
-       var response = await client.ExecuteAsync(request);
-       if (response.IsSuccessful)
-       {
-           return response.Content;
-       }
-
-       throw new Exception($"Error: {response.StatusDescription}\n{response.Content}");
-   }
-public double CalculateCosineSimilarity(List<double> vectorA, List<double> vectorB)
+    public double CalculateCosineSimilarity(List<double> vectorA, List<double> vectorB)
     {
         if (vectorA.Count != vectorB.Count)
             throw new ArgumentException("Vectors must be of the same length.");
