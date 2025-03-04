@@ -8,10 +8,11 @@ namespace SemanticSimilarity.Utilites
 {
     public static class SimilarityHelper
     {
+
+        // Calculate cosine similarity: method 1
+        // Author: Naeem
         public static double CalcCosineSimilarityMethod1(ReadOnlyMemory<float> vector1, ReadOnlyMemory<float> vector2)
         {
-            // Implementation for cosine similarity calculation
-
             float[] vec1 = vector1.ToArray();
             float[] vec2 = vector2.ToArray();
 
@@ -26,6 +27,8 @@ namespace SemanticSimilarity.Utilites
             return dotProduct / (magnitude1 * magnitude2);
         }
 
+        // Calculate cosine similarity: method 2
+        // Author: Naeem
         public static float CalcCosineSimilarityMethod2(ReadOnlyMemory<float> vectorA, ReadOnlyMemory<float> vectorB)
         {
             float dotProduct = 0;
@@ -47,7 +50,8 @@ namespace SemanticSimilarity.Utilites
             return similarity;
         }
 
-        //ahad
+        // Calculate Similarity using cosine formula 
+        // Author: Haimonti
         public static double CalculateCosineSimilarity3(List<double> vectorA, List<double> vectorB)
         {
             if (vectorA.Count != vectorB.Count)
@@ -65,4 +69,5 @@ namespace SemanticSimilarity.Utilites
             return dotProduct / (Math.Sqrt(magnitudeA) * Math.Sqrt(magnitudeB));
         }
     }
+}
 }

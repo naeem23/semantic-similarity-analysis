@@ -1,4 +1,5 @@
 using DotNetEnv;
+using Newtonsoft.Json.Linq;
 using OpenAI;
 using OpenAI.Audio;
 using OpenAI.Chat;
@@ -186,6 +187,42 @@ namespace SemanticSimilarity
             //        }
             //    }
             //}
+        }
+
+        
+        static async Task Haimanti (string apiKey)
+        {
+            try // Semantic Similarity Score
+            {
+                var openAIClient = new OpenAIClient(apiKey);
+
+                Console.WriteLine("Enter the first text:");
+                string text1 = Console.ReadLine();
+
+                Console.WriteLine("\nEnter the second text:");
+                string text2 = Console.ReadLine();
+                Console.WriteLine("Calculating embeddings...");
+
+                string embeddingResponse1 = await openAIClient.GetEmbedding(text1);
+                string embeddingResponse2 = await openAIClient.GetEmbedding(text2);
+
+                var model = "text-embedding-3-small";
+
+                // Initialize the EmbeddingGenerator class with the provided API key and model.
+                var generator = new EmbeddingGenerator(apiKey, model);
+
+                List<double> embedding1 = EmbeddingGenerator.ParseEmbedding(embeddingResponse1);
+                List<double> embedding2 = EmbeddingGenerator.ParseEmbedding(embeddingResponse2);
+
+                double similarity = openAIClient.CalculateCosineSimilarity(embedding1, embedding2);
+                Console.WriteLine($"\nSemantic Similarity Score: {similarity}");
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred:");
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }

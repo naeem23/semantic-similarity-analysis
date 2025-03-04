@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Reflection;
 using Newtonsoft.Json.Linq;
+using System.CodeDom.Compiler;
 
 namespace SemanticSimilarity.Utilites
 {
@@ -15,17 +16,16 @@ namespace SemanticSimilarity.Utilites
         private const string BaseUrl = "https://api.openai.com/v1";
         private EmbeddingClient client;
 
+        // Constructor function to set _apikey and create embedding client 
         public EmbeddingGenerator(string apiKey, string model = "text-embedding-3-large") { 
-            //this constructor function set _apikey and create embedding client 
-
             _apiKey = apiKey;
             client = new EmbeddingClient(model, apiKey);
         }
 
+        // Generate embeddings using OpenAI package 
+        // Author: Naeem
         public async Task<ReadOnlyMemory<float>> GenerateEmbeddingsAsync(string content)
         {
-            //this function will generate embedding using OpenAI package 
-
             if (string.IsNullOrWhiteSpace(content))
             {
                 throw new ArgumentException("Content cannot be null or empty");
@@ -36,7 +36,8 @@ namespace SemanticSimilarity.Utilites
             return embedding.ToFloats();
         }
 
-        //ahad
+        // Generate embeddings using api call request
+        // Author: Ahad
         public async Task<string> GetEmbedding(string text, string model = "text-embedding-ada-002")
         {
             var client = new RestClient($"{BaseUrl}/embeddings");
