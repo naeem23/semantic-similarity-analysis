@@ -23,7 +23,8 @@ namespace SemanticSimilarity
             }
 
             //await Ahad(apiKey);
-            await Naeem(apiKey);
+            //await Naeem(apiKey);
+            await Haimanti(apiKey);
         }
 
         //ahad
@@ -225,4 +226,45 @@ namespace SemanticSimilarity
             }
         }
     }
+   
+
+namespace EmbeddedTextSimilarity
+    {
+        class Program
+        {
+            static void Main(string[] args)
+            {
+                Console.WriteLine("Enter first text:");
+                string text1 = Console.ReadLine();
+
+                Console.WriteLine("Enter second text:");
+                string text2 = Console.ReadLine();
+
+                double similarityScore = DiceSimilarity(text1, text2);
+
+                Console.WriteLine($"\nDice Similarity Score: {similarityScore:F4}");
+
+                if (similarityScore > 0.8)
+                    Console.WriteLine("The texts are highly similar.");
+                else if (similarityScore > 0.5)
+                    Console.WriteLine("The texts are somewhat similar.");
+                else
+                    Console.WriteLine("The texts are not similar.");
+            }
+
+            static double DiceSimilarity(string text1, string text2)
+            {
+                // Tokenize and create sets of words
+                HashSet<string> set1 = new HashSet<string>(text1.ToLower().Split(' '));
+                HashSet<string> set2 = new HashSet<string>(text2.ToLower().Split(' '));
+
+                // Find intersection size
+                int intersectionSize = set1.Intersect(set2).Count();
+
+                // Calculate Dice Similarity
+                return (2.0 * intersectionSize) / (set1.Count + set2.Count);
+            }
+        }
+    }
+
 }
