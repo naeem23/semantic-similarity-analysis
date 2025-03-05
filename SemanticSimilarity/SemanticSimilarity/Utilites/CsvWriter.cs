@@ -31,7 +31,7 @@ namespace SemanticSimilarity.Utilites
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error writing CSV file: {ex.Message}");
+                Console.WriteLine($"❌ Error writing CSV file: {ex.Message}");
             }
         }
     }
