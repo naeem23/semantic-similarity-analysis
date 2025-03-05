@@ -265,6 +265,88 @@ namespace EmbeddedTextSimilarity
                 return (2.0 * intersectionSize) / (set1.Count + set2.Count);
             }
         }
+        
+
+namespace EmbeddedTextSimilarity
+        {
+            class Program
+            {
+                static void Main(string[] args)
+                {
+                    Console.WriteLine("Enter first text:");
+                    string text1 = Console.ReadLine();
+
+                    Console.WriteLine("Enter second text:");
+                    string text2 = Console.ReadLine();
+
+                    int distance = LevenshteinDistance(text1, text2);
+                    Console.WriteLine($"\nLevenshtein Distance: {distance}");
+
+                    if (distance == 0)
+                        Console.WriteLine("The texts are identical.");
+                    else if (distance <= 3)
+                        Console.WriteLine("The texts are very similar.");
+                    else
+                        Console.WriteLine("The texts are quite different.");
+                }
+
+                static int LevenshteinDistance(string s1, string s2)
+                {
+                    int len1 = s1.Length;
+                    int len2 = s2.Length;
+                    int[,] dp = new int[len1 + 1, len2 + 1];
+
+                    for (int i = 0; i <= len1; i++)
+                        dp[i, 0] = i;
+                    for (int j = 0; j <= len2; j++)
+                        dp[0, j] = j;
+
+                    for (int i = 1; i <= len1; i++)
+                    {
+                        for (int j = 1; j <= len2; j++)
+                        {
+                            int cost = (s1[i - 1] == s2[j - 1]) ? 0 : 1;
+                            dp[i, j] = Math.Min(
+                                Math.Min(dp[i - 1, j] + 1, dp[i, j - 1] + 1),
+                                dp[i - 1, j - 1] + cost);
+                        }
+                    }
+
+                    return dp[len1, len2];
+                }
+            }
+        }
+
     }
+   
+
+namespace EmbeddedVectorSimilarity
+    {
+        class Program
+        {
+            static void Main(string[] args)
+            {
+                double[] vector1 = { 1.0, 2.0, 3.0 };
+                double[] vector2 = { 2.0, 3.0, 5.0 };
+
+                double distance = ManhattanDistance(vector1, vector2);
+                Console.WriteLine($"\nManhattan Distance: {distance}");
+            }
+
+            static double ManhattanDistance(double[] v1, double[] v2)
+            {
+                if (v1.Length != v2.Length)
+                    throw new ArgumentException("Vectors must be of equal length.");
+
+                double sum = 0;
+                for (int i = 0; i < v1.Length; i++)
+                {
+                    sum += Math.Abs(v1[i] - v2[i]);
+                }
+                return sum;
+            }
+        }
+    }
+
 
 }
