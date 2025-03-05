@@ -14,7 +14,7 @@ namespace SemanticSimilarity.Utilites
 
         static async Task CompareTextPairs(DocumentProcessor processor, List<string> texts, string category, List<(string, string, double)> results)
         {
-            Console.WriteLine($"\n==== {category} Semantic Similarity ====");
+
 
             for (int i = 0; i < texts.Count; i++)
             {
@@ -37,4 +37,3 @@ namespace SemanticSimilarity.Utilites
         }
     }
 }
->>>>>>> 335e1fc9f665045eb88ec976c54a82fa580d1c98
