@@ -107,10 +107,39 @@ namespace SemanticSimilarity
 
         static async Task Naeem(string apiKey)
         {
-            //set OpenAI api model "text-embedding-3-small/text-embedding-3-large/text-embedding-ada-002"
+            /*while (true)
+            {
+                InputHelper.DisplayMenu();
+                int choice = InputHelper.GetUserChoice();
+
+                if (choice == 1)
+                {
+                    Console.WriteLine("\nWord or Phrase Level Comparison");
+                    var (input1, input2) = InputHelper.GetWordOrPhraseInput();
+                    Console.WriteLine($"\nComparing: '{input1}' and '{input2}'");
+                    // Call your embedding and similarity functions here
+                }
+
+                else if (choice == 2)
+                {
+                    Console.WriteLine("\nDocument Level Comparison");
+                    var (file1, file2) = InputHelper.GetFilePathInput();
+                    string content1 = File.ReadAllText(file1);
+                    string content2 = File.ReadAllText(file2);
+                    Console.WriteLine($"\nComparing documents: '{file1}' and '{file2}'");
+                    // Call your embedding and similarity functions here
+                }
+
+                else if (choice == 3)
+                {
+                    Console.WriteLine("Exiting the program. Goodbye!");
+                    break;
+                }
+            }*/
+            ////set OpenAI api model "text-embedding-3-small/text-embedding-3-large/text-embedding-ada-002"
             //var model = "text-embedding-3-small";
 
-            // Initialize the EmbeddingGenerator class with the provided API key and model.
+            //// Initialize the EmbeddingGenerator class with the provided API key and model.
             //var generator = new EmbeddingGenerator(apiKey, model);
 
             // Read all files
@@ -125,69 +154,69 @@ namespace SemanticSimilarity
 
             await OutputHelper.GenerateOutputAsync(sourceContents, refContents, apiKey);
 
-            ////get document paths from user 
-            //var documentPaths = InputHelper.GetFilePaths();
+                ////get document paths from user 
+                //var documentPaths = InputHelper.GetFilePaths();
 
-            ////get content of the documents 
-            //var textContents = InputHelper.GetTextFileContent(documentPaths);
+                ////get content of the documents 
+                //var textContents = InputHelper.GetTextFileContent(documentPaths);
 
-            ////embedding value for keyword "Climate"
-            //var keywordEmbedding = await generator.GenerateEmbeddingsAsync("Climate");
+                ////embedding value for keyword "Climate"
+                //var keywordEmbedding = await generator.GenerateEmbeddingsAsync("Climate");
 
-            ////generate embedding for document content and calculate similarity with keyword 
-            //foreach (var content in textContents)
-            //{
-            //    var embedding = await generator.GenerateEmbeddingsAsync(content);
-            //    float similarity = SimilarityHelper.CalcCosineSimilarityMethod2(embedding, keywordEmbedding);
-            //    Console.WriteLine($"Similarity is {similarity}");
-            //    Console.WriteLine("=========================================");
-            //}
+                ////generate embedding for document content and calculate similarity with keyword 
+                //foreach (var content in textContents)
+                //{
+                //    var embedding = await generator.GenerateEmbeddingsAsync(content);
+                //    float similarity = SimilarityHelper.CalcCosineSimilarityMethod2(embedding, keywordEmbedding);
+                //    Console.WriteLine($"Similarity is {similarity}");
+                //    Console.WriteLine("=========================================");
+                //}
 
-            //try
-            //{
-            //    var contents = InputHelper.TextInputHandler();
-            //    Console.WriteLine("\nYou have entered the following articles:\n");
+                //try
+                //{
+                //    var contents = InputHelper.TextInputHandler();
+                //    Console.WriteLine("\nYou have entered the following articles:\n");
 
-            //    for (int i = 0; i < contents.Count; i++)
-            //    {
-            //        Console.WriteLine($"Article {i + 1}:\n{contents[i]}");
-            //        Console.WriteLine(new string('-', 50));
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine($"Error: {ex.Message}");
-            //}
+                //    for (int i = 0; i < contents.Count; i++)
+                //    {
+                //        Console.WriteLine($"Article {i + 1}:\n{contents[i]}");
+                //        Console.WriteLine(new string('-', 50));
+                //    }
+                //}
+                //catch (Exception ex)
+                //{
+                //    Console.WriteLine($"Error: {ex.Message}");
+                //}
 
-            //// Optional: Handle multiple comparisons
-            //Console.WriteLine("\nDo you want to compare multiple texts? (y/n)");
-            //if (Console.ReadLine().Trim().ToLower() == "y")
-            //{
-            //    Console.WriteLine("Enter texts separated by commas:");
-            //    string[] texts = Console.ReadLine().Split(",").Select(x => x.Trim()).ToArray();
+                //// Optional: Handle multiple comparisons
+                //Console.WriteLine("\nDo you want to compare multiple texts? (y/n)");
+                //if (Console.ReadLine().Trim().ToLower() == "y")
+                //{
+                //    Console.WriteLine("Enter texts separated by commas:");
+                //    string[] texts = Console.ReadLine().Split(",").Select(x => x.Trim()).ToArray();
 
-            //    //Generate embedding for all inputs
-            //    List<ReadOnlyMemory<float>> embeddings = new List<ReadOnlyMemory<float>>();
+                //    //Generate embedding for all inputs
+                //    List<ReadOnlyMemory<float>> embeddings = new List<ReadOnlyMemory<float>>();
 
-            //    foreach (string text in texts)
-            //    {
-            //        OpenAIEmbedding embedding = await client.GenerateEmbeddingAsync(text);
-            //        ReadOnlyMemory<float> vector = embedding.ToFloats();
-            //        embeddings.Add(vector);
-            //    }
+                //    foreach (string text in texts)
+                //    {
+                //        OpenAIEmbedding embedding = await client.GenerateEmbeddingAsync(text);
+                //        ReadOnlyMemory<float> vector = embedding.ToFloats();
+                //        embeddings.Add(vector);
+                //    }
 
-            //    // Calculate pairwise similarity and display results
-            //    Console.WriteLine("\nPairwise Similarity:");
-            //    for (int i = 0; i < texts.Length; i++)
-            //    {
-            //        for (int j = i + 1; j < texts.Length; j++)
-            //        {
-            //            float pairwiseSimilarity = SimilarityHelper.CalcCosineSimilarityMethod2(embeddings[i], embeddings[j]);
-            //            Console.WriteLine($"Similarity between \"{texts[i]}\" and \"{texts[j]}\" is {pairwiseSimilarity:F4}");
-            //        }
-            //    }
-            //}
-        }
+                //    // Calculate pairwise similarity and display results
+                //    Console.WriteLine("\nPairwise Similarity:");
+                //    for (int i = 0; i < texts.Length; i++)
+                //    {
+                //        for (int j = i + 1; j < texts.Length; j++)
+                //        {
+                //            float pairwiseSimilarity = SimilarityHelper.CalcCosineSimilarityMethod2(embeddings[i], embeddings[j]);
+                //            Console.WriteLine($"Similarity between \"{texts[i]}\" and \"{texts[j]}\" is {pairwiseSimilarity:F4}");
+                //        }
+                //    }
+                //}
+            }
 
         
         static async Task Haimanti (string apiKey)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SemanticSimilarity.Utilites;
 
 namespace SemanticSimilarity.Utilites
 {
@@ -68,5 +69,63 @@ namespace SemanticSimilarity.Utilites
 
             return dotProduct / (Math.Sqrt(magnitudeA) * Math.Sqrt(magnitudeB));
         }
+
+        // Calculate cosine similarity between two embeddings
+        // Author: Naeem
+        public static float CalculateCosineSimilarity(float[] embedding1, float[] embedding2)
+        {
+            if (embedding1.Length != embedding2.Length)
+                throw new ArgumentException("Embeddings must have the same length.");
+
+            float dotProduct = 0, magnitude1 = 0, magnitude2 = 0;
+            for (int i = 0; i < embedding1.Length; i++)
+            {
+                dotProduct += embedding1[i] * embedding2[i];
+                magnitude1 += embedding1[i] * embedding1[i];
+                magnitude2 += embedding2[i] * embedding2[i];
+            }
+
+            magnitude1 = (float)Math.Sqrt(magnitude1);
+            magnitude2 = (float)Math.Sqrt(magnitude2);
+
+            if (magnitude1 == 0 || magnitude2 == 0)
+                throw new InvalidOperationException("One of the embeddings has zero magnitude.");
+
+            return dotProduct / (magnitude1 * magnitude2);
+        }
+
+        // Calculate similarity score for a given model and word pair
+        // Author: Naeem
+        public static async Task<float> CalculateSimilarityAsync(string model, string source, string refr)
+        {
+            try
+            {
+                // Get api key
+                string apiKey = Utilities.GetApiKey();
+
+                // initialze Embeddign generator class 
+                var generator = new EmbeddingGenerator(apiKey, "text-embedding-3-large");
+
+                // generate embeddings for source and reference  
+                var embedding1 = await generator.GenerateEmbeddingsAsync(source, model);
+                var embedding2 = await generator.GenerateEmbeddingsAsync(refr, model);
+                return CalculateCosineSimilarity(embedding1, embedding2);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error calculating similarity for model {model}: {ex.Message}");
+                return -1; // Return -1 to indicate an error
+            }
+        }
+    }
+
+    // Class to represent similarity results
+    public class SimilarityResult
+    {
+        public string Source { get; set; }
+        public string Refr { get; set; }
+        public float SimilarityScoreModel1 { get; set; }
+        public float SimilarityScoreModel2 { get; set; }
+        public float SimilarityScoreModel3 { get; set; }
     }
 }
