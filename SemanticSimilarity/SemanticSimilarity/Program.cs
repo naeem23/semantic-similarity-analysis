@@ -81,7 +81,7 @@ namespace SemanticSimilarity
                 (List<string> user1Inputs, List<string> user2Inputs) = InputHelper.GetUserInputs();
 
                 // Specify CSV file path
-                string csvFilePath = "similarity_results.csv";
+                string csvFilePath = "Multiple Inputs Similarity Score.csv";
 
                 // Compare inputs and save results to CSV
                 await inputHelper.CompareUserInputsAndSaveToCSV(user1Inputs, user2Inputs, csvFilePath);
