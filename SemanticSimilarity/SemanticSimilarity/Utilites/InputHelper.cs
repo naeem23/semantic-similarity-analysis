@@ -128,26 +128,26 @@ public class InputHelper
         // Function to take multiple inputs from two users
         public static (List<string>, List<string>) GetUserInputs()
         {
-            List<string> user1Inputs = new List<string>();
-            List<string> user2Inputs = new List<string>();
+            List<string> Enter_Source_Input = new List<string>();
+            List<string> Enter_Reference_Input = new List<string>();
 
-            Console.WriteLine("User 1, enter your inputs (Type 'done' to finish):");
+            Console.WriteLine("Enter Source Input, enter your inputs (Type 'done' to finish):");
             while (true)
             {
                 string input = Console.ReadLine();
                 if (input.ToLower() == "done") break;
-                user1Inputs.Add(input);
+                Enter_Source_Input.Add(input);
             }
 
-            Console.WriteLine("User 2, enter your inputs (Type 'done' to finish):");
+            Console.WriteLine("Enter Reference Input, enter your inputs (Type 'done' to finish):");
             while (true)
             {
                 string input = Console.ReadLine();
                 if (input.ToLower() == "done") break;
-                user2Inputs.Add(input);
+                Enter_Reference_Input.Add(input);
             }
 
-            return (user1Inputs, user2Inputs);
+            return (Enter_Source_Input, Enter_Reference_Input);
         }
 
         // Get embeddings from OpenAI API
@@ -192,14 +192,14 @@ public class InputHelper
         }
 
         // Compare all user inputs and calculate similarity scores
-        public async Task CompareUserInputs(List<string> user1Inputs, List<string> user2Inputs)
+        public async Task CompareUserInputs(List<string> Enter_Source_Input, List<string> Enter_Reference_Input)
         {
-            for (int i = 0; i < user1Inputs.Count; i++)
+            for (int i = 0; i < Enter_Source_Input.Count; i++)
             {
-                for (int j = 0; j < user2Inputs.Count; j++)
+                for (int j = 0; j < Enter_Reference_Input.Count; j++)
                 {
-                    string text1 = user1Inputs[i];
-                    string text2 = user2Inputs[j];
+                    string text1 = Enter_Source_Input[i];
+                    string text2 = Enter_Reference_Input[j];
 
                     List<double> vectorA = await GetEmbeddingAsync(text1);
                     List<double> vectorB = await GetEmbeddingAsync(text2);
