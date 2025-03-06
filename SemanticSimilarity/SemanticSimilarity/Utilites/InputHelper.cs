@@ -131,15 +131,15 @@ public class InputHelper
             List<string> Enter_Source_Input = new List<string>();
             List<string> Enter_Reference_Input = new List<string>();
 
-            Console.WriteLine("Enter Source Input, enter your inputs (Type 'done' to finish):");
+            Console.WriteLine("Enter Source Input(Type 'done' to finish):");
             while (true)
             {
                 string input = Console.ReadLine();
                 if (input.ToLower() == "done") break;
                 Enter_Source_Input.Add(input);
             }
-
-            Console.WriteLine("Enter Reference Input, enter your inputs (Type 'done' to finish):");
+            Console.WriteLine("\n");
+            Console.WriteLine("Enter Reference Input(Type 'done' to finish):");
             while (true)
             {
                 string input = Console.ReadLine();
@@ -171,6 +171,7 @@ public class InputHelper
             var jsonResponse = JsonConvert.DeserializeObject<dynamic>(response.Content);
             var embedding = jsonResponse["data"][0]["embedding"].ToObject<List<double>>();
             return embedding;
+
         }
 
         // Calculate cosine similarity
@@ -205,8 +206,8 @@ public class InputHelper
                     List<double> vectorB = await GetEmbeddingAsync(text2);
 
                     double similarity = CalculateCosineSimilarity(vectorA, vectorB);
-
-                    Console.WriteLine($"Similarity between \"{text1}\" and \"{text2}\" → {similarity:F4}");
+                    Console.WriteLine("\n");
+                    Console.WriteLine($"Similarity Between \"{text1}\" and \"{text2}\" → {similarity:F4}");
                 }
             }
         }
