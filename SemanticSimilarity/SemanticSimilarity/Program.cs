@@ -83,7 +83,7 @@ namespace SemanticSimilarity
 
                 // Specify CSV file path
                 string csvFilePath = "Multiple Inputs Similarity Score.csv";
-                //SemanticSimilarity\bin\Debug\net9.0
+                //SemanticSimilarity\bin\Debug\net9.0 me
 
                 // Compare inputs and save results to CSV
                 await inputHelper.CompareUserInputsAndSaveToCSV(user1Inputs, user2Inputs, csvFilePath);
