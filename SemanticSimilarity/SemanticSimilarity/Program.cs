@@ -35,6 +35,9 @@ namespace SemanticSimilarity
         {
             try // Semantic Similarity Score
             {
+                Console.WriteLine("             ***********************************************");
+                Console.WriteLine("             ******* Single Inputs Similarity Score******");
+                Console.WriteLine("             ***********************************************");
                 Console.WriteLine("Enter the first text:");
                 string text1 = Console.ReadLine();
 
@@ -68,6 +71,10 @@ namespace SemanticSimilarity
             //static async Task Main(string[] args)
             {
                 //string apiKey = "your-api-key-here"; // Replace with your OpenAI API Key
+                Console.WriteLine("\n");
+                Console.WriteLine("             ***********************************************");
+                Console.WriteLine("             ******* Multiple Inputs Similarity Score******");
+                Console.WriteLine("             ***********************************************");
                 InputHelper inputHelper = new InputHelper(apiKey);
 
                 // Get inputs from both users
