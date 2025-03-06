@@ -103,5 +103,114 @@ namespace SemanticSimilarity.Utilites
 
             return contents;
         }
+<<<<<<< Updated upstream
+=======
+
+        //Function to real all .txt files from a directory  
+        //author: Naeem
+        public static async Task<List<string>> ReadAllFilesInFolderAsync(string folderPath)
+        {
+            if (!Directory.Exists(folderPath))
+            {
+                throw new DirectoryNotFoundException($"The directory '{folderPath}' does not exist.");
+            }
+
+            var files = Directory.GetFiles(folderPath, "*.txt");
+            var fileContents = new List<string>();
+
+            foreach (var file in files)
+            {
+                string content = await File.ReadAllTextAsync(file);
+                fileContents.Add(content);
+            }
+
+            return fileContents;
+        }
+
+        // Function to read reference keywords file and split by new line
+        //Author: Naeem23
+        public static async Task<List<string>> ReadRefKeywordsAsync(string filePath)
+        {
+            if (!File.Exists(filePath))
+                throw new FileNotFoundException($"File not found: {filePath}");
+
+            var content = await File.ReadAllTextAsync(filePath);
+            return content.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries).ToList();
+        }
+
+        // Method to read file paths and contents for data1 or data2
+        public static async Task<List<string>> ReadFilesAsync(int numberOfFiles, string dataType)
+        {
+            var fileContents = new List<string>();
+
+            for (int i = 0; i < numberOfFiles; i++)
+            {
+                Console.WriteLine($"Enter the path for {dataType} file {i + 1}:");
+                string filePath = Console.ReadLine();
+
+                if (File.Exists(filePath))
+                {
+                    string content = await File.ReadAllTextAsync(filePath);
+                    fileContents.Add(content);
+                }
+                else
+                {
+                    Console.WriteLine("File does not exist. Please try again.");
+                    i--; // Retry for the same file index
+                }
+            }
+
+            return fileContents;
+        }
+
+        // Method to compare all files from data1 with all files from data2
+        public static void CompareFiles(List<string> data1Files, List<string> data2Files)
+        {
+            // Load a pre-trained Sentence Transformer model
+            var model = new SentenceTransformer("all-MiniLM-L6-v2"); // Lightweight model for semantic similarity
+
+            for (int i = 0; i < data1Files.Count; i++)
+            {
+                for (int j = 0; j < data2Files.Count; j++)
+                {
+                    Console.WriteLine($"Comparing data1 file {i + 1} with data2 file {j + 1}...");
+
+                    // Get embeddings for the texts
+                    var embedding1 = model.Encode(data1Files[i]);
+                    var embedding2 = model.Encode(data2Files[j]);
+
+                    // Calculate cosine similarity
+                    double similarity = CosineSimilarity(embedding1, embedding2);
+
+                    Console.WriteLine($"Semantic similarity: {similarity:P2}");
+                }
+            }
+        }
+        //Faraz
+        // Method to calculate cosine similarity between two vectors
+        private static double CosineSimilarity(float[] vector1, float[] vector2)
+        {
+            double dotProduct = 0.0;
+            double magnitude1 = 0.0;
+            double magnitude2 = 0.0;
+
+            for (int i = 0; i < vector1.Length; i++)
+            {
+                dotProduct += vector1[i] * vector2[i];
+                magnitude1 += Math.Pow(vector1[i], 2);
+                magnitude2 += Math.Pow(vector2[i], 2);
+            }
+
+            magnitude1 = Math.Sqrt(magnitude1);
+            magnitude2 = Math.Sqrt(magnitude2);
+
+            if (magnitude1 == 0 || magnitude2 == 0)
+            {
+                return 0.0; // Avoid division by zero
+            }
+
+            return dotProduct / (magnitude1 * magnitude2);
+        }
+>>>>>>> Stashed changes
     }
 }
