@@ -9,6 +9,7 @@ using System.Formats.Asn1;
 using System.IO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace SemanticSimilarity
 {
@@ -82,6 +83,7 @@ namespace SemanticSimilarity
 
                 // Specify CSV file path
                 string csvFilePath = "Multiple Inputs Similarity Score.csv";
+                //SemanticSimilarity\bin\Debug\net9.0
 
                 // Compare inputs and save results to CSV
                 await inputHelper.CompareUserInputsAndSaveToCSV(user1Inputs, user2Inputs, csvFilePath);
