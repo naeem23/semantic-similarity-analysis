@@ -64,7 +64,7 @@ namespace SemanticSimilarity
                 Console.WriteLine(ex.Message);
             }
 
-            //input Healper start
+            //Input Helper start
             //static async Task Main(string[] args)
             {
                 //string apiKey = "your-api-key-here"; // Replace with your OpenAI API Key
@@ -76,7 +76,7 @@ namespace SemanticSimilarity
                 // Compare user inputs and calculate similarity scores
                 await inputHelper.CompareUserInputs(user1Inputs, user2Inputs);
             }
-            //input Healper End
+            //Input Helper End
 
             //Method to Compare Documents me
             {
