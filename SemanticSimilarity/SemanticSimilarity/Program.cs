@@ -78,10 +78,13 @@ namespace SemanticSimilarity
                 InputHelper inputHelper = new InputHelper(apiKey);
 
                 // Get inputs from both users
-                (List<string> Enter_Source_Input, List<string> Enter_Reference_Input) = InputHelper.GetUserInputs();
+                (List<string> user1Inputs, List<string> user2Inputs) = InputHelper.GetUserInputs();
 
-                // Compare user inputs and calculate similarity scores
-                await inputHelper.CompareUserInputs(Enter_Source_Input, Enter_Reference_Input);
+                // Specify CSV file path
+                string csvFilePath = "similarity_results.csv";
+
+                // Compare inputs and save results to CSV
+                await inputHelper.CompareUserInputsAndSaveToCSV(user1Inputs, user2Inputs, csvFilePath);
             }
             //Input Helper End
 
