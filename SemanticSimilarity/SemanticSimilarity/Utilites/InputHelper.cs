@@ -205,6 +205,7 @@ public class InputHelper
 
                     double similarity = CalculateCosineSimilarity(vectorA, vectorB);
                     Console.WriteLine($"Similarity Between \"{text1}\" and \"{text2}\" → {similarity:F4}");
+                    //I have to generated a csv file
                 }
             }
         }
