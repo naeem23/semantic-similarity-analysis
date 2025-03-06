@@ -130,7 +130,6 @@ public class InputHelper
         {
             List<string> Enter_Source_Input = new List<string>();
             List<string> Enter_Reference_Input = new List<string>();
-
             Console.WriteLine("Enter Source Input(Type 'done' to finish):");
             while (true)
             {
@@ -138,7 +137,6 @@ public class InputHelper
                 if (input.ToLower() == "done") break;
                 Enter_Source_Input.Add(input);
             }
-            Console.WriteLine("\n");
             Console.WriteLine("Enter Reference Input(Type 'done' to finish):");
             while (true)
             {
@@ -206,7 +204,6 @@ public class InputHelper
                     List<double> vectorB = await GetEmbeddingAsync(text2);
 
                     double similarity = CalculateCosineSimilarity(vectorA, vectorB);
-                    Console.WriteLine("\n");
                     Console.WriteLine($"Similarity Between \"{text1}\" and \"{text2}\" → {similarity:F4}");
                 }
             }
