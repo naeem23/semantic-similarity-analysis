@@ -10,8 +10,7 @@ using System.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using RestSharp;
+using System.IO;
 
 namespace SemanticSimilarity.Utilites
 {
@@ -128,24 +127,26 @@ public class InputHelper
         // Function to take multiple inputs from two users
         public static (List<string>, List<string>) GetUserInputs()
         {
-            List<string> Enter_Source_Input = new List<string>();
-            List<string> Enter_Reference_Input = new List<string>();
-            Console.WriteLine("Enter Source Input(Type 'done' to finish):");
+            List<string> user1Inputs = new List<string>();
+            List<string> user2Inputs = new List<string>();
+
+            Console.WriteLine("Enter Source Input (Type 'done' to finish):");
             while (true)
             {
                 string input = Console.ReadLine();
                 if (input.ToLower() == "done") break;
-                Enter_Source_Input.Add(input);
-            }
-            Console.WriteLine("Enter Reference Input(Type 'done' to finish):");
-            while (true)
-            {
-                string input = Console.ReadLine();
-                if (input.ToLower() == "done") break;
-                Enter_Reference_Input.Add(input);
+                user1Inputs.Add(input);
             }
 
-            return (Enter_Source_Input, Enter_Reference_Input);
+            Console.WriteLine("Enter Reference Input (Type 'done' to finish):");
+            while (true)
+            {
+                string input = Console.ReadLine();
+                if (input.ToLower() == "done") break;
+                user2Inputs.Add(input);
+            }
+
+            return (user1Inputs, user2Inputs);
         }
 
         // Get embeddings from OpenAI API
@@ -169,7 +170,6 @@ public class InputHelper
             var jsonResponse = JsonConvert.DeserializeObject<dynamic>(response.Content);
             var embedding = jsonResponse["data"][0]["embedding"].ToObject<List<double>>();
             return embedding;
-
         }
 
         // Calculate cosine similarity
@@ -190,26 +190,41 @@ public class InputHelper
             return dotProduct / (Math.Sqrt(magnitudeA) * Math.Sqrt(magnitudeB));
         }
 
-        // Compare all user inputs and calculate similarity scores
-        public async Task CompareUserInputs(List<string> Enter_Source_Input, List<string> Enter_Reference_Input)
+        // Compare all user inputs, calculate similarity scores, and save to CSV
+        public async Task CompareUserInputsAndSaveToCSV(List<string> user1Inputs, List<string> user2Inputs, string csvFilePath)
         {
-            for (int i = 0; i < Enter_Source_Input.Count; i++)
+            List<string> csvLines = new List<string>
+        {
+            "Source Input,Reference Input,Similarity Score"
+        };
+
+            for (int i = 0; i < user1Inputs.Count; i++)
             {
-                for (int j = 0; j < Enter_Reference_Input.Count; j++)
+                for (int j = 0; j < user2Inputs.Count; j++)
                 {
-                    string text1 = Enter_Source_Input[i];
-                    string text2 = Enter_Reference_Input[j];
+                    string text1 = user1Inputs[i];
+                    string text2 = user2Inputs[j];
 
                     List<double> vectorA = await GetEmbeddingAsync(text1);
                     List<double> vectorB = await GetEmbeddingAsync(text2);
 
                     double similarity = CalculateCosineSimilarity(vectorA, vectorB);
-                    Console.WriteLine($"Similarity Between \"{text1}\" and \"{text2}\" → {similarity:F4}");
-                    //I have to generated a csv file
+
+                    Console.WriteLine($"Similarity between \"{text1}\" and \"{text2}\" → {similarity:F4}");
+
+                    // Add data to CSV
+                    csvLines.Add($"\"{text1}\",\"{text2}\",{similarity:F4}");
                 }
             }
+
+            // Write results to CSV file
+            File.WriteAllLines(csvFilePath, csvLines);
+            Console.WriteLine($"Results saved to: {csvFilePath}");
+            //I have to generated a csv file
         }
-    } 
+            }
+        }
+    
     //end ahad
 
-}
+
