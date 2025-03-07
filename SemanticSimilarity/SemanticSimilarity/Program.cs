@@ -148,11 +148,15 @@ namespace SemanticSimilarity
 
                 // Compare text in each category
                 await CompareTextPairs(processor, names, "Names", results);
+                CsvWriter.SaveResultsToCsv("Compare Documents Similarity Score for Name.csv", results);
+
                 await CompareTextPairs(processor, phrases, "Phrases", results);
+                CsvWriter.SaveResultsToCsv("Compare Documents Similarity Score for Pha.csv", results);
+
                 await CompareTextPairs(processor, documents, "Documents", results);
 
                 // Save results to CSV
-                CsvWriter.SaveResultsToCsv("Compare Documents Similarity Score.csv", results);
+                CsvWriter.SaveResultsToCsv("Compare Documents Similarity Score for doct.csv", results);
             }
 
             static async Task CompareTextPairs(DocumentProcessor processor, List<string> texts, string category, List<(string, string, double)> results)
