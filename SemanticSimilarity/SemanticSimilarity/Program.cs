@@ -23,21 +23,21 @@ namespace SemanticSimilarity
                 throw new InvalidOperationException("API key cannot be null or empty. Please set the OPENAI_API_KEY environment variable.");
             }
 
-<<<<<<< Updated upstream
+
             // await Ahad(apiKey);
-=======
             //await Ahad(apiKey);
             //await Naeem(apiKey);
->>>>>>> Stashed changes
+
             await Faraz(apiKey);
+            await FarazOnyx(apiKey);
         }
 
 
         //ahad
         //static async Task Ahad(string apiKey)
-        {
+        //{
           //  try // Semantic Similarity Score
-            {
+          //  {
             //    Console.WriteLine("Enter the first text:");
               //  string text1 = Console.ReadLine();
 
@@ -150,7 +150,7 @@ namespace SemanticSimilarity
             //}
 
   
-static async Task Main(string[] args)
+static async Task Haimanti(string[] args)
         {
             // Load environment file
             Env.Load();
@@ -221,7 +221,7 @@ static async Task Main(string[] args)
             int data1Count = int.Parse(Console.ReadLine());
 
             // Step 2: Read data1 files
-            var data1Files = await InputHelper.ReadFilesAsync(data1Count, "data1");
+           // var data1Files = await InputHelper.ReadFilesAsync(data1Count, "data1");
 
             // Step 3: Ask for the number of data2 files
             Console.WriteLine("How many data2 files do you want to compare?");
@@ -233,8 +233,34 @@ static async Task Main(string[] args)
             // Step 5: Compare all data1 files with all data2 files
             InputHelper.CompareFiles(data1Files, data2Files);
         }
+
+        static async Task FarazOnyx(string apiKey)
+        {
+            // Load the ONNX model
+            string modelPath = "path/to/your/model.onnx";
+            InputHelper.LoadModel(modelPath);
+
+            // Step 1: Ask for the number of data1 files
+            Console.WriteLine("How many data1 files do you want to compare?");
+            int data1Count = int.Parse(Console.ReadLine());
+
+            // Step 2: Read data1 files
+            //var data1Files = await InputHelper.ReadFilesAsync(data1Count, "data1");
+
+            // Step 3: Ask for the number of data2 files
+            Console.WriteLine("How many data2 files do you want to compare?");
+            int data2Count = int.Parse(Console.ReadLine());
+
+            // Step 4: Read data2 files
+           // var data2Files = await InputHelper.ReadFilesAsync(data2Count, "data2");
+
+            // Step 5: Compare all data1 files with all data2 files
+            InputHelper.CompareFiles(data1Files, data2Files);
+        }
     }
+
 }
+
 
         //try
         //{
