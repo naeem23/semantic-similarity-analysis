@@ -140,34 +140,18 @@ namespace SemanticSimilarity
 
                 // Load text from files
                 List<string> names = FileProcessor.LoadFile("H:\\Frankfurt University\\1st Semester\\Software engineering\\SoftwareEngineeringProject\\semantic-similarity-analysis\\SemanticSimilarity\\SemanticSimilarity\\names.txt");
+                List<string> phrases = FileProcessor.LoadFile("H:\\Frankfurt University\\1st Semester\\Software engineering\\SoftwareEngineeringProject\\semantic-similarity-analysis\\SemanticSimilarity\\SemanticSimilarity\\phrases.txt");
+                List<string> documents = FileProcessor.LoadFile("H:\\Frankfurt University\\1st Semester\\Software engineering\\SoftwareEngineeringProject\\semantic-similarity-analysis\\SemanticSimilarity\\SemanticSimilarity\\documents.txt");
+
+                // Store results for CSV
                 List<(string, string, double)> results = new List<(string, string, double)>();
                 // Compare text in each category
                 await CompareTextPairs(processor, names, "Names", results);
-                CsvWriter.SaveResultsToCsv("Compare Documents Similarity Score Name.csv", results);
-
-          
-
-                List<string> phrases = FileProcessor.LoadFile("H:\\Frankfurt University\\1st Semester\\Software engineering\\SoftwareEngineeringProject\\semantic-similarity-analysis\\SemanticSimilarity\\SemanticSimilarity\\phrases.txt");
-                //List<(string, string, double)> results = new List<(string, string, double)>();
-                // Compare text in each category
                 await CompareTextPairs(processor, phrases, "Phrases", results);
-                CsvWriter.SaveResultsToCsv("Compare Documents Similarity Score Phrases.csv", results);
-
-                List<string> documents = FileProcessor.LoadFile("H:\\Frankfurt University\\1st Semester\\Software engineering\\SoftwareEngineeringProject\\semantic-similarity-analysis\\SemanticSimilarity\\SemanticSimilarity\\documents.txt");
-               // List<(string, string, double)> results = new List<(string, string, double)>();
-                // Compare text in each category
                 await CompareTextPairs(processor, documents, "Documents", results);
-                CsvWriter.SaveResultsToCsv("Compare Documents Similarity Score Documents.csv", results);
-
-                // Store results for CSV
-                //List<(string, string, double)> results = new List<(string, string, double)>();
-                // Compare text in each category
-                //await CompareTextPairs(processor, names, "Names", results);
-                //await CompareTextPairs(processor, phrases, "Phrases", results);
-                //await CompareTextPairs(processor, documents, "Documents", results);
 
                 // Save results to CSV
-                //CsvWriter.SaveResultsToCsv("Compare Documents Similarity Score.csv", results);
+                CsvWriter.SaveResultsToCsv("Compare Documents Similarity Score.csv", results);
             }
 
             static async Task CompareTextPairs(DocumentProcessor processor, List<string> texts, string category, List<(string, string, double)> results)
