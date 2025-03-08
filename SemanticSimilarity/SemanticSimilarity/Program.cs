@@ -107,47 +107,40 @@ namespace SemanticSimilarity
 
         static async Task Naeem(string apiKey)
         {
-            // Define word lists
-            var word1 = new List<string> { "Cat", "Dog", "Car", "Bicycle" };
-            var word2 = new List<string> { "Animal", "Transport" };
 
-            await OutputHelper.GenerateOutputAsync(word1, word2);
-            /*while (true)
+            /*
+            InputHelper.DisplayMenu();
+            int choice = InputHelper.GetUserChoice();
+
+            if (choice == 1)
             {
-                InputHelper.DisplayMenu();
-                int choice = InputHelper.GetUserChoice();
+                Console.WriteLine("\nWord or Phrase Level Comparison");
+                var (input1, input2) = InputHelper.GetWordOrPhraseInput();
+                Console.WriteLine($"\nComparing: '{input1}' and '{input2}'");
+                // Call your embedding and similarity functions here
+            }
 
-                if (choice == 1)
-                {
-                    Console.WriteLine("\nWord or Phrase Level Comparison");
-                    var (input1, input2) = InputHelper.GetWordOrPhraseInput();
-                    Console.WriteLine($"\nComparing: '{input1}' and '{input2}'");
-                    // Call your embedding and similarity functions here
-                }
+            else if (choice == 2)
+            {
+                Console.WriteLine("\nDocument Level Comparison");
+                var (file1, file2) = InputHelper.GetFilePathInput();
+                string content1 = File.ReadAllText(file1);
+                string content2 = File.ReadAllText(file2);
+                Console.WriteLine($"\nComparing documents: '{file1}' and '{file2}'");
+                // Call your embedding and similarity functions here
+            }
 
-                else if (choice == 2)
-                {
-                    Console.WriteLine("\nDocument Level Comparison");
-                    var (file1, file2) = InputHelper.GetFilePathInput();
-                    string content1 = File.ReadAllText(file1);
-                    string content2 = File.ReadAllText(file2);
-                    Console.WriteLine($"\nComparing documents: '{file1}' and '{file2}'");
-                    // Call your embedding and similarity functions here
-                }
-
-                else if (choice == 3)
-                {
-                    Console.WriteLine("Exiting the program. Goodbye!");
-                    break;
-                }
+            else if (choice == 3)
+            {
+                Console.WriteLine("Exiting the program. Goodbye!");
+                break;
             }*/
-            ////set OpenAI api model "text-embedding-3-small/text-embedding-3-large/text-embedding-ada-002"
-            //var model = "text-embedding-3-small";
 
-            //// Initialize the EmbeddingGenerator class with the provided API key and model.
-            //var generator = new EmbeddingGenerator(apiKey, model);
+            //// word or phrase level comparison
+            //var word1 = new List<string> { "Cat", "Dog", "Car", "Bicycle" };
+            //var word2 = new List<string> { "Animal", "Transport" };
 
-            /*// Read all files
+            // Document level comparison
             string projectRoot = Directory.GetParent(AppContext.BaseDirectory).Parent.Parent.Parent.FullName;
             string sourceFilePaths = Path.Combine(projectRoot, "Input", "Sources");
             string refFilePaths = Path.Combine(projectRoot, "Input", "References");
@@ -157,7 +150,12 @@ namespace SemanticSimilarity
             var refContents = await InputHelper.ReadAllFilesInFolderAsync(refFilePaths);
             //var refKeywords = await InputHelper.ReadRefKeywordsAsync(refKeywordsFilePath); // Read and split reference keywords file
 
-            await OutputHelper.GenerateOutputAsync(sourceContents, refContents, apiKey);*/
+            await OutputHelper.GenerateOutputAsync(sourceContents, refContents);
+            ////set OpenAI api model "text-embedding-3-small/text-embedding-3-large/text-embedding-ada-002"
+            //var model = "text-embedding-3-small";
+
+            //// Initialize the EmbeddingGenerator class with the provided API key and model.
+            //var generator = new EmbeddingGenerator(apiKey, model);
 
             ////get document paths from user 
             //var documentPaths = InputHelper.GetFilePaths();

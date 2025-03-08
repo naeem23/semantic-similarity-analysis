@@ -1,7 +1,7 @@
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
-
+import re
 
 def read_csv(file_path):
     """
@@ -18,51 +18,72 @@ def read_csv(file_path):
     return None
 
 
-def create_grouped_scatter_plot(df, output_file):
+def extract_word(text):
+    """
+    Get first word from source and refernce 
+    """
+    stopwords = {"a", "an", "the", "in", "on", "at", "to", "for", "with", "by", "of", "and", 
+    "or", "but", "nor", "so", "yet", "is", "are", "was", "were", "be", "been", "being", "has", 
+    "have", "had", "do", "does", "did", "this", "that", "these", "those", "some", "any", "each", 
+    "every", "either", "neither"}
+    
+    words = re.findall(r"\w+", text)
+    if not words:
+        return ""
+    elif words.count == 1:
+        return words
+    else:
+        return words[0] if words[0].lower() not in stopwords else " ".join(words[:2])
+
+
+def create_grouped_scatter_plot(df):
     """
     Creates a grouped scatter plot using Plotly and saves it as an HTML file.
     """
     try:
+        # Shorten 'Source' and 'Reference' to make labels concise
+        df['Short_Source'] = df['Source'].apply(extract_word)
+        df['Short_Reference'] = df['Reference'].apply(extract_word)
+
         # Combine 'Source' and 'Reference' into a single label for the X-axis
-        df['Source_Reference'] = df['Source'] + '-' + df['Reference']
+        df['Source_Reference'] = df['Short_Source'] + '-' + df['Short_Reference']
 
-        # Create a scatter plot for each model
-        fig = go.Figure()
-
-        # Add traces for each model
-        models = ['Score_Ada', 'Score_Small', 'Score_Large']
-        colors = ['blue', 'green', 'red']  # Different colors for each model
-        for model, color in zip(models, colors):
-            fig.add_trace(
-                go.Scatter(
-                    x=df['Source_Reference'],  # X-axis: Source-Reference pairs
-                    y=df[model],               # Y-axis: Similarity scores
-                    mode='markers',            # Scatter plot
-                    name=model,                # Legend label
-                    marker=dict(color=color),  # Color for the model
-                    text=df.apply(lambda row: f"Source: {row['Source']}<br>Reference: {row['Reference']}<br>Model: {model}<br>Score: {row[model]:.2f}", axis=1),  # Hover text
-                    hoverinfo='text'           # Show custom hover text
-                )
-            )
+        # Melt the DataFrame to long format for Plotly Express
+        df_melted = df.melt(
+            id_vars=['Source_Reference', 'Source', 'Reference'],  # Keep these columns
+            value_vars=['Score_Ada', 'Score_Small', 'Score_Large'],  # Columns to melt
+            var_name='Model',  # New column for model names
+            value_name='Score'  # New column for similarity scores
+        )
+        
+        # Create the scatter plot using Plotly Express
+        fig = px.scatter(
+            df_melted,
+            x='Source_Reference',  # X-axis: Shortened Source-Reference pairs
+            y='Score',             # Y-axis: Similarity scores
+            color='Model',         # Color by model
+            hover_data={'Source': True, 'Reference': True, 'Model': True, 'Score': ':.2f'},  # Hover data
+            title="Grouped Scatter Plot of Similarity Scores",
+            labels={'Source_Reference': 'Source-Reference Pairs', 'Score': 'Similarity Score'},
+            range_y=[-1, 1]  # Set Y-axis range from -1 to 1
+        )
 
         # Update layout for better readability
         fig.update_layout(
-            title="Grouped Scatter Plot of Similarity Scores",
             xaxis_title="Source-Reference Pairs",
             yaxis_title="Similarity Score",
-            yaxis_range=[-1, 1],  # Set Y-axis range from -1 to 1
-            showlegend=True,        # Show legend
-            template="plotly_white" # Use a clean template
+            showlegend=True,  # Show legend
+            template="plotly_white"  # Use a clean template
         )
 
-        # Save the plot as an HTML file
-        fig.write_html(output_file)
-        print(f"Plot saved successfully as '{output_file}'.")
+        # Show the plot directly
+        fig.show()
 
     except KeyError as e:
         print(f"Error: The required column '{e}' is missing in the CSV file.")
     except Exception as e:
         print(f"An error occurred while creating the plot: {e}")
+
 
 def main():
     # File path to the CSV
@@ -73,6 +94,7 @@ def main():
     if df is not None:
         # Create the grouped scatter plot
         create_grouped_scatter_plot(df)
+
 
 if __name__ == "__main__":
     main()
