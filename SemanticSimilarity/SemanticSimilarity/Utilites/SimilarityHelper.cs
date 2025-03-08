@@ -98,15 +98,15 @@ namespace SemanticSimilarity.Utilites
         // Author: Naeem
         public static async Task<float> CalculateSimilarityAsync(string model, string source, string refr)
         {
+            if (string.IsNullOrWhiteSpace(source) || string.IsNullOrWhiteSpace(refr))
+            {
+                throw new ArgumentException("Source and reference texts cannot be null or empty.");
+            }
+
             try
             {
-                // Get api key
-                string apiKey = Utilities.GetApiKey();
-
-                // initialze Embeddign generator class 
-                var generator = new EmbeddingGenerator(apiKey, "text-embedding-3-large");
-
                 // generate embeddings for source and reference  
+                var generator = new EmbeddingGenerator();
                 var embedding1 = await generator.GenerateEmbeddingsAsync(source, model);
                 var embedding2 = await generator.GenerateEmbeddingsAsync(refr, model);
                 return CalculateCosineSimilarity(embedding1, embedding2);
@@ -120,12 +120,13 @@ namespace SemanticSimilarity.Utilites
     }
 
     // Class to represent similarity results
+    //Author: Naeem
     public class SimilarityResult
     {
         public string Source { get; set; }
-        public string Refr { get; set; }
-        public float SimilarityScoreModel1 { get; set; }
-        public float SimilarityScoreModel2 { get; set; }
-        public float SimilarityScoreModel3 { get; set; }
+        public string Reference { get; set; }
+        public float Score_Ada { get; set; }
+        public float Score_Small { get; set; }
+        public float Score_Large { get; set; }
     }
 }
