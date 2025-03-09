@@ -32,8 +32,12 @@ namespace SemanticSimilarity
 
 
         //ahad
+        //make Options start
+
+        //make options end
+
         static async Task Ahad(string apiKey)
-        {
+        {   
             try // Semantic Similarity Score
             {
                 Console.WriteLine("             ***********************************************");
@@ -90,6 +94,7 @@ namespace SemanticSimilarity
             }
             //Input Helper End
 
+            static async Task DocumentProcessor(string apiKey)
             //Method to Compare Documents me
             {
                 var documentProcessor = new DocumentProcessor(apiKey);
