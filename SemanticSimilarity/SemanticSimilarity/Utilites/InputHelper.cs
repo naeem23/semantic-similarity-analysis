@@ -1,11 +1,11 @@
 ﻿using OpenAI.Embeddings;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.IO;
 using SentenceTransformers;
 using Microsoft.ML.OnnxRuntime;
 using Microsoft.ML.OnnxRuntime.Tensors;
