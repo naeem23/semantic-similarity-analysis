@@ -18,7 +18,7 @@ namespace SemanticSimilarity.Utilites
             List<string> phrases = FileProcessor.LoadFile("phrases.txt");
             List<string> documents = FileProcessor.LoadFile("documents.txt");
 
-            // Store results for CSV
+            // Store results for CSV 
             List<(string, string, double)> results = new List<(string, string, double)>();
 
             // Compare text in each category
