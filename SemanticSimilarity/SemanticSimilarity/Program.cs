@@ -159,7 +159,7 @@ namespace SemanticSimilarity
                 Console.Write("Enter the second folder path: ");
                 string folderPath2 = Console.ReadLine();
 
-                string csvFilePath = "document_comparison_results.csv";
+                string csvFilePath = "MultipleFileSimilarityProcessor.csv";
                 await processor.ProcessFilesAndSaveToCSV(folderPath1, folderPath2, csvFilePath);
             }
             //MultipleFileSimilarityProcessor End
