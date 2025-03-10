@@ -151,7 +151,7 @@ namespace SemanticSimilarity.Utilites
             }
 
             File.WriteAllLines(csvFilePath, csvLines);
-            Console.WriteLine($"Results saved to: {csvFilePath}");
+            Console.WriteLine($" Congratulation!!! Results successfully saved to: {csvFilePath}");
         }
     }
 }//end line
