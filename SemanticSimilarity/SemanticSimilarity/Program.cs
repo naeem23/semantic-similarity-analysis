@@ -152,13 +152,16 @@ namespace SemanticSimilarity
                 Console.WriteLine("             ***********************************************");
 
                 MultipleFileSimilarityProcessor processor = new MultipleFileSimilarityProcessor(apiKey);
-
+                Console.WriteLine("\n");
                 Console.Write("Enter the first folder path: ");
                 string folderPath1 = Console.ReadLine();
 
+                Console.WriteLine("\n");
+
                 Console.Write("Enter the second folder path: ");
                 string folderPath2 = Console.ReadLine();
-
+                Console.WriteLine("\n");
+                Console.WriteLine("Processing documents...");
                 string csvFilePath = "MultipleFileSimilarityProcessor.csv";
                 await processor.ProcessFilesAndSaveToCSV(folderPath1, folderPath2, csvFilePath);
             }
