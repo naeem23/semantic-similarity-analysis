@@ -219,7 +219,7 @@ public class InputHelper
 
             // Write results to CSV file
             File.WriteAllLines(csvFilePath, csvLines);
-            Console.WriteLine($"Results saved to: {csvFilePath}");
+            Console.WriteLine($" ongratulation!!! Results successfully Saved to: {csvFilePath}");
             //I have to generated a csv file
         }
             }
