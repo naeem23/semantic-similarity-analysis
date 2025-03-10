@@ -10,6 +10,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace SemanticSimilarity
 {
@@ -94,7 +95,7 @@ namespace SemanticSimilarity
             }
             //Input Helper End
 
-            static async Task DocumentProcessor(string apiKey)
+
             //Method to Compare Documents me
             {
                 var documentProcessor = new DocumentProcessor(apiKey);
@@ -137,10 +138,36 @@ namespace SemanticSimilarity
                     Console.WriteLine("Documents are not related.");
             }
 
+            //MultipleFileSimilarityProcessor Start
+            
+            //static async Task Main(string[] args)
+            {
+
+                //Console.WriteLine("Enter your OpenAI API Key:");
+                // string apiKey = Console.ReadLine();
+                Console.WriteLine("\n");
+                // Load documents
+                Console.WriteLine("             ***********************************************");
+                Console.WriteLine("             *******Multiple File Similarity Score******");
+                Console.WriteLine("             ***********************************************");
+
+                MultipleFileSimilarityProcessor processor = new MultipleFileSimilarityProcessor(apiKey);
+
+                Console.Write("Enter the first folder path: ");
+                string folderPath1 = Console.ReadLine();
+
+                Console.Write("Enter the second folder path: ");
+                string folderPath2 = Console.ReadLine();
+
+                string csvFilePath = "document_comparison_results.csv";
+                await processor.ProcessFilesAndSaveToCSV(folderPath1, folderPath2, csvFilePath);
+            }
+            //MultipleFileSimilarityProcessor End
+
             // other gula akhane add hobe er por thake }selo 3ta reeor komanor jonno barano hoise
             {
                 //string apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");  // Replace with your OpenAI API key
-               // var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
+                // var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
                 DocumentProcessor processor = new DocumentProcessor(apiKey);
 
                 // Load text from files
