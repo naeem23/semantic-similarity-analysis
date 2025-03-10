@@ -1,0 +1,10 @@
+Eagle	
+Duck	
+Parrot
+Pigeon	
+Goose	
+Macaw
+Parakeet	
+Finches	Raven
+Vulture	Hawk	
+Penguin

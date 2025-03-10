@@ -172,18 +172,23 @@ namespace SemanticSimilarity
                 //string apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");  // Replace with your OpenAI API key
                 // var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
                 DocumentProcessor processor = new DocumentProcessor(apiKey);
+                Console.WriteLine("\n");
+                // Load documents
+                Console.WriteLine("             ***********************************************");
+                Console.WriteLine("             *******Compare Documents Similarity Score******");
+                Console.WriteLine("             ***********************************************");
 
                 // Load text from files
                 List<string> names = FileProcessor.LoadFile("H:\\Frankfurt University\\1st Semester\\Software engineering\\SoftwareEngineeringProject\\semantic-similarity-analysis\\SemanticSimilarity\\SemanticSimilarity\\names.txt");
                 List<string> phrases = FileProcessor.LoadFile("H:\\Frankfurt University\\1st Semester\\Software engineering\\SoftwareEngineeringProject\\semantic-similarity-analysis\\SemanticSimilarity\\SemanticSimilarity\\phrases.txt");
                 List<string> documents = FileProcessor.LoadFile("H:\\Frankfurt University\\1st Semester\\Software engineering\\SoftwareEngineeringProject\\semantic-similarity-analysis\\SemanticSimilarity\\SemanticSimilarity\\documents.txt");
-
                 // Store results for CSV
                 List<(string, string, double)> results = new List<(string, string, double)>();
                 // Compare text in each category
                 await CompareTextPairs(processor, names, "Names", results);
                 await CompareTextPairs(processor, phrases, "Phrases", results);
                 await CompareTextPairs(processor, documents, "Documents", results);
+
 
                 // Save results to CSV 
                 CsvWriter.SaveResultsToCsv("Compare Documents Similarity Score.csv", results);
