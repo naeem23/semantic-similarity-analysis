@@ -81,17 +81,17 @@ namespace SemanticSimilarity
                 Console.WriteLine("             ***********************************************");
                 Console.WriteLine("             ******* Multiple Inputs Similarity Score******");
                 Console.WriteLine("             ***********************************************");
-                InputHelper inputHelper = new InputHelper(apiKey);
+                //InputHelper inputHelper = new InputHelper(apiKey);
 
                 // Get inputs from both users
-                (List<string> user1Inputs, List<string> user2Inputs) = InputHelper.GetUserInputs();
+                //(List<string> user1Inputs, List<string> user2Inputs) = InputHelper.GetUserInputs();
 
                 // Specify CSV file path
-                string csvFilePath = "Multiple Inputs Similarity Score.csv";
+                //string csvFilePath = "Multiple Inputs Similarity Score.csv";
                 //SemanticSimilarity\bin\Debug\net9.0 me
 
                 // Compare inputs and save results to CSV
-                await inputHelper.CompareUserInputsAndSaveToCSV(user1Inputs, user2Inputs, csvFilePath);
+                //await inputHelper.CompareUserInputsAndSaveToCSV(user1Inputs, user2Inputs, csvFilePath);
             }
             //Input Helper End
 

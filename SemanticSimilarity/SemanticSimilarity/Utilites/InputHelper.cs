@@ -14,117 +14,107 @@ using System.IO;
 
 namespace SemanticSimilarity.Utilites
 {
-    //public static class InputHelper
-    //{ //from naeem
-    //    public static List<string> TextInputHandler()
-    //    {
-    //        var contents = new List<string>();
-    //        Console.WriteLine("Start entering your content.");
-    //        Console.WriteLine("Type \"END_CONTENT\" to finish a content.");
-    //        Console.WriteLine("Type \"START_PROCESS\" to start similarity calculation.\n");
-
-    //        while (true)
-    //        {
-    //            Console.WriteLine("Enter a new content:");
-    //            var contentBuilder = new System.Text.StringBuilder();
-
-    //            while (true)
-    //            {
-    //                string line = Console.ReadLine();
-    //                if (line?.Trim().ToUpper() == "END_CONTENT")
-    //                {
-    //                    if (contentBuilder.Length > 0)
-    //                    {
-    //                        contents.Add(contentBuilder.ToString().Trim());
-    //                        Console.WriteLine("Content saved.\n");
-    //                    }
-    //                    else
-    //                    {
-    //                        Console.WriteLine("Please add some text.");
-    //                    }
-    //                    break;
-    //                }
-    //                else if (line?.Trim().ToUpper() == "START_PROCESS")
-    //                {
-    //                    if (contents.Count < 2)
-    //                    {
-    //                        Console.WriteLine("Error: You must enter at least two content.\n");
-    //                        break;
-    //                    }
-    //                    if (contentBuilder.Length > 0)
-    //                    { 
-    //                        contents.Add(contentBuilder.ToString().Trim());
-    //                        Console.WriteLine("Last content saved.\n");
-    //                    } 
-    //                    Console.WriteLine("Finished collecting contents.");
-    //                    return contents;
-    //                }
-    //                else
-    //                {
-    //                    contentBuilder.AppendLine(line);
-    //                }
-    //            }
-    //        }
-    //    }
-
-    //    public static List<string> GetFilePaths()
-    //    {
-    //        Console.WriteLine("Please enter document path separated by new line:");
-
-    //        var paths = new List<string>();
-    //        string? path;
-
-    //        while((path = Console.ReadLine()) != string.Empty)
-    //        {
-    //            if (!string.IsNullOrEmpty(path))
-    //            {
-    //                paths.Add(path);
-    //            }
-    //        }
-    //        return paths;
-    //    }
-
-    //    public static List<string> GetTextFileContent(List<string> documentPaths) 
-    //    { 
-    //        var contents = new List<string>();
-
-    //        foreach (var path in documentPaths)
-    //        {
-    //            if (!File.Exists(path))
-    //            {
-    //                throw new FileNotFoundException($"The file '{path}' does not exist.");
-    //            }
-
-    //            if (Path.GetExtension(path).ToLower() != ".txt") 
-    //            {
-    //                throw new InvalidDataException($"The file '{path}' is not a text file.");
-    //            }
-
-    //            var content = File.ReadAllText(path);
-    //            if (!string.IsNullOrWhiteSpace(content))
-    //            {
-    //                contents.Add(content);
-    //            }
-    //        }
-
-    //        return contents;
-    //    }
-    //} //to naeem
-
-        // from Ahad
-
-public class InputHelper
+    public static class InputHelper
     {
-        //private readonly string _apiKey;
-        string apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY"); //use this structure for all
-        private const string BaseUrl = "https://api.openai.com/v1/embeddings";
-
-        public InputHelper(string apiKey)
+        public static List<string> TextInputHandler()
         {
-            apiKey = apiKey;
-        } //
+            var contents = new List<string>();
+            Console.WriteLine("Start entering your content.");
+            Console.WriteLine("Type \"END_CONTENT\" to finish a content.");
+            Console.WriteLine("Type \"START_PROCESS\" to start similarity calculation.\n");
 
-        // Function to take multiple inputs from two users
+            while (true)
+            {
+                Console.WriteLine("Enter a new content:");
+                var contentBuilder = new System.Text.StringBuilder();
+
+                while (true)
+                {
+                    string line = Console.ReadLine();
+                    if (line?.Trim().ToUpper() == "END_CONTENT")
+                    {
+                        if (contentBuilder.Length > 0)
+                        {
+                            contents.Add(contentBuilder.ToString().Trim());
+                            Console.WriteLine("Content saved.\n");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Please add some text.");
+                        }
+                        break;
+                    }
+                    else if (line?.Trim().ToUpper() == "START_PROCESS")
+                    {
+                        if (contents.Count < 2)
+                        {
+                            Console.WriteLine("Error: You must enter at least two content.\n");
+                            break;
+                        }
+                        if (contentBuilder.Length > 0)
+                        {
+                            contents.Add(contentBuilder.ToString().Trim());
+                            Console.WriteLine("Last content saved.\n");
+                        }
+                        Console.WriteLine("Finished collecting contents.");
+                        return contents;
+                    }
+                    else
+                    {
+                        contentBuilder.AppendLine(line);
+                    }
+                }
+            }
+        }
+
+        public static List<string> GetFilePaths()
+        {
+            Console.WriteLine("Please enter document path separated by new line:");
+
+            var paths = new List<string>();
+            string? path;
+
+            while ((path = Console.ReadLine()) != string.Empty)
+            {
+                if (!string.IsNullOrEmpty(path))
+                {
+                    paths.Add(path);
+                }
+            }
+            return paths;
+        }
+
+        public static List<string> GetTextFileContent(List<string> documentPaths)
+        {
+            var contents = new List<string>();
+
+            foreach (var path in documentPaths)
+            {
+                if (!File.Exists(path))
+                {
+                    throw new FileNotFoundException($"The file '{path}' does not exist.");
+                }
+
+                if (Path.GetExtension(path).ToLower() != ".txt")
+                {
+                    throw new InvalidDataException($"The file '{path}' is not a text file.");
+                }
+
+                var content = File.ReadAllText(path);
+                if (!string.IsNullOrWhiteSpace(content))
+                {
+                    contents.Add(content);
+                }
+            }
+
+            return contents;
+        }
+
+        /// <summary>
+        /// Take multiple source and reference inputs from user
+        /// Author: Ahad
+        /// </summary>
+        /// <returns>List of string, list of string</returns>
         public static (List<string>, List<string>) GetUserInputs()
         {
             List<string> user1Inputs = new List<string>();
@@ -148,6 +138,23 @@ public class InputHelper
 
             return (user1Inputs, user2Inputs);
         }
+    }
+}
+
+    /*
+     * //start: ahad test code 
+    public class InputHelper
+    {
+        //private readonly string _apiKey;
+        string apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY"); //use this structure for all
+        private const string BaseUrl = "https://api.openai.com/v1/embeddings";
+
+        public InputHelper(string apiKey)
+        {
+            apiKey = apiKey;
+        } //
+
+        
 
         // Get embeddings from OpenAI API
         public async Task<List<double>> GetEmbeddingAsync(string text, string model = "text-embedding-ada-002")
@@ -222,9 +229,8 @@ public class InputHelper
             Console.WriteLine($" Congratulation!!! Results successfully Saved to: {csvFilePath}");
             //I have to generated a csv file
         }
-            }
-        }
-    
-    //end ahad
+    }
+    // end ahad test code
+    */
 
 
