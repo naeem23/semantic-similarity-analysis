@@ -1,4 +1,5 @@
-﻿using DotNetEnv;
+using DotNetEnv;
+using Newtonsoft.Json.Linq;
 using OpenAI;
 using OpenAI.Audio;
 using OpenAI.Chat;
@@ -28,9 +29,9 @@ namespace SemanticSimilarity
                 throw new InvalidOperationException("API key cannot be null or empty. Please set the OPENAI_API_KEY environment variable.");
             }
 
-            await Ahad(apiKey);
+            //await Ahad(apiKey);
+            await Naeem(apiKey);
         }
-
 
         //ahad
         //make Options start
@@ -142,7 +143,6 @@ namespace SemanticSimilarity
             
             //static async Task Main(string[] args)
             {
-
                 //Console.WriteLine("Enter your OpenAI API Key:");
                 // string apiKey = Console.ReadLine();
                 Console.WriteLine("\n");
@@ -213,11 +213,86 @@ namespace SemanticSimilarity
 
                         results.Add((text1, text2, similarity));
                     }
+                }
+            }
+        }
 
+                  
+        static async Task Naeem(string apiKey)
+        {
+            //set OpenAI api model "text-embedding-3-small/text-embedding-3-large/text-embedding-ada-002"
+            //var model = "text-embedding-3-small";
 
+            // Initialize the EmbeddingGenerator class with the provided API key and model.
+            //var generator = new EmbeddingGenerator(apiKey, model);
 
+            // Read all files
+            string projectRoot = Directory.GetParent(AppContext.BaseDirectory).Parent.Parent.Parent.FullName;
+            string sourceFilePaths = Path.Combine(projectRoot, "Input", "Sources");
+            string refFilePaths = Path.Combine(projectRoot, "Input", "References");
+            //string refKeywordsFilePath = Path.Combine(projectRoot, "Input", "reference_keywords.txt");
+
+            var sourceContents = await InputHelper.ReadAllFilesInFolderAsync(sourceFilePaths);
+            var refContents = await InputHelper.ReadAllFilesInFolderAsync(refFilePaths);
+            //var refKeywords = await InputHelper.ReadRefKeywordsAsync(refKeywordsFilePath); // Read and split reference keywords file
+
+            await OutputHelper.GenerateOutputAsync(sourceContents, refContents, apiKey);
+
+            ////get document paths from user 
+            //var documentPaths = InputHelper.GetFilePaths();
+
+            ////get content of the documents 
+            //var textContents = InputHelper.GetTextFileContent(documentPaths);
+
+            ////embedding value for keyword "Climate"
+            //var keywordEmbedding = await generator.GenerateEmbeddingsAsync("Climate");
+
+            ////generate embedding for document content and calculate similarity with keyword 
+            //foreach (var content in textContents)
+            //{
+            //    var embedding = await generator.GenerateEmbeddingsAsync(content);
+            //    float similarity = SimilarityHelper.CalcCosineSimilarityMethod2(embedding, keywordEmbedding);
+            //    Console.WriteLine($"Similarity is {similarity}");
+            //    Console.WriteLine("=========================================");
+            //}
 
                 }//no cut this line
+            }
+        }
+
+        
+        static async Task Haimanti (string apiKey)
+        {
+            try // Semantic Similarity Score
+            {
+                var openAIClient = new OpenAIClient(apiKey);
+
+                Console.WriteLine("Enter the first text:");
+                string text1 = Console.ReadLine();
+
+                Console.WriteLine("\nEnter the second text:");
+                string text2 = Console.ReadLine();
+                Console.WriteLine("Calculating embeddings...");
+
+                string embeddingResponse1 = await openAIClient.GetEmbedding(text1);
+                string embeddingResponse2 = await openAIClient.GetEmbedding(text2);
+
+                var model = "text-embedding-3-small";
+
+                // Initialize the EmbeddingGenerator class with the provided API key and model.
+                var generator = new EmbeddingGenerator(apiKey, model);
+
+                List<double> embedding1 = EmbeddingGenerator.ParseEmbedding(embeddingResponse1);
+                List<double> embedding2 = EmbeddingGenerator.ParseEmbedding(embeddingResponse2);
+
+                double similarity = openAIClient.CalculateCosineSimilarity(embedding1, embedding2);
+                Console.WriteLine($"\nSemantic Similarity Score: {similarity}");
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred:");
+                Console.WriteLine(ex.Message);
             }
         }
     }
