@@ -57,7 +57,7 @@ namespace SemanticSimilarity
                 var model = "text-embedding-3-small";
 
                 // Initialize the EmbeddingGenerator class with the provided API key and model.
-                var generator = new EmbeddingGenerator(apiKey, model);
+                var generator = new EmbeddingGenerator();
 
                 string embeddingResponse1 = await generator.GetEmbedding(text1);
                 string embeddingResponse2 = await generator.GetEmbedding(text2);
@@ -220,7 +220,6 @@ namespace SemanticSimilarity
 
         static async Task Naeem(string apiKey)
         {
-
             /*
             InputHelper.DisplayMenu();
             int choice = InputHelper.GetUserChoice();
@@ -314,6 +313,52 @@ namespace SemanticSimilarity
             //    //Generate embedding for all inputs
             //    List<ReadOnlyMemory<float>> embeddings = new List<ReadOnlyMemory<float>>();
 
+            // await OutputHelper.GenerateOutputAsync(sourceContents, refContents, apiKey);
+
+            ////get document paths from user 
+            //var documentPaths = InputHelper.GetFilePaths();
+
+            ////get content of the documents 
+            //var textContents = InputHelper.GetTextFileContent(documentPaths);
+
+            ////embedding value for keyword "Climate"
+            //var keywordEmbedding = await generator.GenerateEmbeddingsAsync("Climate");
+
+            ////generate embedding for document content and calculate similarity with keyword 
+            //foreach (var content in textContents)
+            //{
+            //    var embedding = await generator.GenerateEmbeddingsAsync(content);
+            //    float similarity = SimilarityHelper.CalcCosineSimilarityMethod2(embedding, keywordEmbedding);
+            //    Console.WriteLine($"Similarity is {similarity}");
+            //    Console.WriteLine("=========================================");
+            //}
+
+            //try
+            //{
+            //    var contents = InputHelper.TextInputHandler();
+            //    Console.WriteLine("\nYou have entered the following articles:\n");
+
+            //    for (int i = 0; i < contents.Count; i++)
+            //    {
+            //        Console.WriteLine($"Article {i + 1}:\n{contents[i]}");
+            //        Console.WriteLine(new string('-', 50));
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine($"Error: {ex.Message}");
+            //}
+
+            //// Optional: Handle multiple comparisons
+            //Console.WriteLine("\nDo you want to compare multiple texts? (y/n)");
+            //if (Console.ReadLine().Trim().ToLower() == "y")
+            //{
+            //    Console.WriteLine("Enter texts separated by commas:");
+            //    string[] texts = Console.ReadLine().Split(",").Select(x => x.Trim()).ToArray();
+
+            //    //Generate embedding for all inputs
+            //    List<ReadOnlyMemory<float>> embeddings = new List<ReadOnlyMemory<float>>();
+
             //    foreach (string text in texts)
             //    {
             //        OpenAIEmbedding embedding = await client.GenerateEmbeddingAsync(text);
@@ -332,8 +377,19 @@ namespace SemanticSimilarity
             //        }
             //    }
             //}
-        }
 
+            //    // Calculate pairwise similarity and display results
+            //    Console.WriteLine("\nPairwise Similarity:");
+            //    for (int i = 0; i < texts.Length; i++)
+            //    {
+            //        for (int j = i + 1; j < texts.Length; j++)
+            //        {
+            //            float pairwiseSimilarity = SimilarityHelper.CalcCosineSimilarityMethod2(embeddings[i], embeddings[j]);
+            //            Console.WriteLine($"Similarity between \"{texts[i]}\" and \"{texts[j]}\" is {pairwiseSimilarity:F4}");
+            //        }
+            //    }
+            //}
+        }
 
         static async Task Haimanti (string apiKey)
         {
@@ -354,7 +410,7 @@ namespace SemanticSimilarity
                 var model = "text-embedding-3-small";
 
                 // Initialize the EmbeddingGenerator class with the provided API key and model.
-                var generator = new EmbeddingGenerator(apiKey, model);
+                var generator = new EmbeddingGenerator();
 
                 List<double> embedding1 = EmbeddingGenerator.ParseEmbedding(embeddingResponse1);
                 List<double> embedding2 = EmbeddingGenerator.ParseEmbedding(embeddingResponse2);

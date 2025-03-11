@@ -14,26 +14,42 @@ namespace SemanticSimilarity.Utilites
     {
         private readonly string _apiKey;
         private const string BaseUrl = "https://api.openai.com/v1";
-        private EmbeddingClient client;
+        //private EmbeddingClient client;
 
         // Constructor function to set _apikey and create embedding client 
-        public EmbeddingGenerator(string apiKey, string model = "text-embedding-3-large") { 
-            _apiKey = apiKey;
-            client = new EmbeddingClient(model, apiKey);
+        //public EmbeddingGenerator(string apiKey, string model = "text-embedding-3-large") { 
+        //    _apiKey = apiKey;
+        //    client = new EmbeddingClient(model, apiKey);
+        //}
+        public EmbeddingGenerator()
+        {
+            // Get api key
+            string apiKey = Utilities.GetApiKey();
+            _apiKey = apiKey ?? throw new ArgumentNullException(nameof(apiKey));
         }
 
         // Generate embeddings using OpenAI package 
         // Author: Naeem
-        public async Task<ReadOnlyMemory<float>> GenerateEmbeddingsAsync(string content, string model = "text-embedding-3-large")
+        public async Task<float[]> GenerateEmbeddingsAsync(string content, string model = "text-embedding-3-large")
         {
             if (string.IsNullOrWhiteSpace(content))
             {
                 throw new ArgumentException("Content cannot be null or empty");
             }
 
-            OpenAIEmbedding embedding = await client.GenerateEmbeddingAsync(content);
+            try
+            {
+                EmbeddingClient openAIClient = new EmbeddingClient(model, _apiKey);
+                OpenAIEmbedding embedding = await openAIClient.GenerateEmbeddingAsync(content);
 
-            return embedding.ToFloats();
+                return embedding.ToFloats().ToArray();
+            }
+            catch (Exception ex) 
+            {
+                // Log the exception and rethrow a more specific exception
+                Console.WriteLine($"Error generating embeddings: {ex.Message}");
+                throw new InvalidOperationException("Failed to generate embeddings.", ex);
+            }
         }
 
         // Generate embeddings using api call request

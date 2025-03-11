@@ -22,27 +22,43 @@ namespace SemanticSimilarity.Utilites
             try
             {
                 // Define the output file path
-                string outputFilePath = "similarity_results.csv";
+                string projectRoot = Directory.GetParent(AppContext.BaseDirectory).Parent.Parent.Parent.FullName;
+                string outputFilePath = Path.Combine(projectRoot, "Output", "similarity_results.csv");
 
                 // Process content pairs and calculate similarity scores
                 var results = new List<SimilarityResult>();
+                int totalPairs = sourceContents.Count * refContents.Count;
+                int processedPairs = 0;
+
+                Console.WriteLine($"Processing {totalPairs} content pairs...");
+
                 foreach (var source in sourceContents)
                 {
                     foreach (var refr in refContents)
                     {
+                        // Provide feedback for each pair being processed
+                        Console.WriteLine($"Processing pair {processedPairs + 1} of {totalPairs}:");
+                        Console.WriteLine($"Source: {(source.Length > 20 ? source.Substring(0,20) + "..." : source )}");
+                        Console.WriteLine($"Reference: {(refr.Length > 20 ? refr.Substring(0,20) + "..." : refr)}");
+
                         var result = new SimilarityResult
                         {
-                            Source = source,
-                            Refr = refr,
-                            SimilarityScoreModel1 = await SimilarityHelper.CalculateSimilarityAsync("text-embedding-3-small", source, refr),
-                            SimilarityScoreModel2 = await SimilarityHelper.CalculateSimilarityAsync("text-embedding-3-large", source, refr),
-                            SimilarityScoreModel3 = await SimilarityHelper.CalculateSimilarityAsync("text-embedding-ada-002", source, refr)
+                            Source = source.Length > 20 ? source.Substring(0,20) + "..." : source,
+                            Reference = refr.Length > 20 ? refr.Substring(0,20) + "..." : refr,
+                            Score_Ada = await SimilarityHelper.CalculateSimilarityAsync("text-embedding-ada-002", source, refr),
+                            Score_Small = await SimilarityHelper.CalculateSimilarityAsync("text-embedding-3-small", source, refr),
+                            Score_Large = await SimilarityHelper.CalculateSimilarityAsync("text-embedding-3-large", source, refr)
                         };
                         results.Add(result);
+                        
+                        processedPairs++;
+                        Console.WriteLine($"Completed pair {processedPairs} of {totalPairs}.");
+                        Console.WriteLine();
                     }
                 }
 
                 // Write results to CSV
+                Console.WriteLine("Writing results to CSV...");
                 WriteResultsToCsv(outputFilePath, results);
 
                 Console.WriteLine("Similarity scores calculated and saved to CSV successfully.");
@@ -90,6 +106,7 @@ namespace SemanticSimilarity.Utilites
         }
 
         // Write results to CSV
+        // Author: Naeem
         private static void WriteResultsToCsv(string filePath, List<SimilarityResult> results)
         {
             using var writer = new StreamWriter(filePath);
