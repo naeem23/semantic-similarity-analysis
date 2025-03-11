@@ -3,8 +3,15 @@ using Newtonsoft.Json.Linq;
 using OpenAI;
 using OpenAI.Audio;
 using OpenAI.Chat;
+using System;
 using OpenAI.Embeddings;
 using SemanticSimilarity.Utilites;
+using System.Formats.Asn1;
+using System.IO;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace SemanticSimilarity
 {
@@ -15,8 +22,8 @@ namespace SemanticSimilarity
             //load environment file 
             Env.Load();
 
-            //get OpenAI api key if null or empty throw error
-            var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
+            //get OpenAI API key if null or empty throw error
+            var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY"); //use this structure for all
             if (string.IsNullOrEmpty(apiKey))
             {
                 throw new InvalidOperationException("API key cannot be null or empty. Please set the OPENAI_API_KEY environment variable.");
@@ -27,10 +34,17 @@ namespace SemanticSimilarity
         }
 
         //ahad
+        //make Options start
+
+        //make options end
+
         static async Task Ahad(string apiKey)
-        {
+        {   
             try // Semantic Similarity Score
             {
+                Console.WriteLine("             ***********************************************");
+                Console.WriteLine("             ******* Single Inputs Similarity Score******");
+                Console.WriteLine("             ***********************************************");
                 Console.WriteLine("Enter the first text:");
                 string text1 = Console.ReadLine();
 
@@ -59,6 +73,28 @@ namespace SemanticSimilarity
                 Console.WriteLine("An error occurred:");
                 Console.WriteLine(ex.Message);
             }
+
+            //Input Helper start
+            //static async Task Main(string[] args)
+            {
+                //string apiKey = "your-api-key-here"; // Replace with your OpenAI API Key
+                Console.WriteLine("\n");
+                Console.WriteLine("             ***********************************************");
+                Console.WriteLine("             ******* Multiple Inputs Similarity Score******");
+                Console.WriteLine("             ***********************************************");
+                //InputHelper inputHelper = new InputHelper(apiKey);
+
+                // Get inputs from both users
+                //(List<string> user1Inputs, List<string> user2Inputs) = InputHelper.GetUserInputs();
+
+                // Specify CSV file path
+                //string csvFilePath = "Multiple Inputs Similarity Score.csv";
+                //SemanticSimilarity\bin\Debug\net9.0 me
+
+                // Compare inputs and save results to CSV
+                //await inputHelper.CompareUserInputsAndSaveToCSV(user1Inputs, user2Inputs, csvFilePath);
+            }
+            //Input Helper End
 
 
             //Method to Compare Documents me
@@ -103,8 +139,85 @@ namespace SemanticSimilarity
                     Console.WriteLine("Documents are not related.");
             }
 
+            //MultipleFileSimilarityProcessor Start
+            
+            //static async Task Main(string[] args)
+            {
+                //Console.WriteLine("Enter your OpenAI API Key:");
+                // string apiKey = Console.ReadLine();
+                Console.WriteLine("\n");
+                // Load documents
+                Console.WriteLine("             ***********************************************");
+                Console.WriteLine("             *******Multiple File Similarity Score******");
+                Console.WriteLine("             ***********************************************");
+
+                MultipleFileSimilarityProcessor processor = new MultipleFileSimilarityProcessor(apiKey);
+                Console.WriteLine("\n");
+                Console.Write("Enter the first folder path: ");
+                string folderPath1 = Console.ReadLine();
+
+                Console.WriteLine("\n");
+
+                Console.Write("Enter the second folder path: ");
+                string folderPath2 = Console.ReadLine();
+                Console.WriteLine("\n");
+                Console.WriteLine("Processing documents...");
+                string csvFilePath = "MultipleFileSimilarityProcessor.csv";
+                await processor.ProcessFilesAndSaveToCSV(folderPath1, folderPath2, csvFilePath);
+            }
+            //MultipleFileSimilarityProcessor End
+
+            // other gula akhane add hobe er por thake }selo 3ta reeor komanor jonno barano hoise
+            {
+                //string apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");  // Replace with your OpenAI API key
+                // var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
+                DocumentProcessor processor = new DocumentProcessor(apiKey);
+                Console.WriteLine("\n");
+                // Load documents
+                Console.WriteLine("             ***********************************************");
+                Console.WriteLine("             *******Compare Documents Similarity Score******");
+                Console.WriteLine("             ***********************************************");
+
+                // Load text from files
+                List<string> names = FileProcessor.LoadFile("H:\\Frankfurt University\\1st Semester\\Software engineering\\SoftwareEngineeringProject\\semantic-similarity-analysis\\SemanticSimilarity\\SemanticSimilarity\\names.txt");
+                List<string> phrases = FileProcessor.LoadFile("H:\\Frankfurt University\\1st Semester\\Software engineering\\SoftwareEngineeringProject\\semantic-similarity-analysis\\SemanticSimilarity\\SemanticSimilarity\\phrases.txt");
+                List<string> documents = FileProcessor.LoadFile("H:\\Frankfurt University\\1st Semester\\Software engineering\\SoftwareEngineeringProject\\semantic-similarity-analysis\\SemanticSimilarity\\SemanticSimilarity\\documents.txt");
+                // Store results for CSV
+                List<(string, string, double)> results = new List<(string, string, double)>();
+                // Compare text in each category
+                await CompareTextPairs(processor, names, "Names", results);
+                await CompareTextPairs(processor, phrases, "Phrases", results);
+                await CompareTextPairs(processor, documents, "Documents", results);
+
+
+                // Save results to CSV 
+                CsvWriter.SaveResultsToCsv("Compare Documents Similarity Score.csv", results);
+            }
+
+            static async Task CompareTextPairs(DocumentProcessor processor, List<string> texts, string category, List<(string, string, double)> results)
+            {
+                Console.WriteLine($"\n==== {category} Semantic Similarity ====");
+
+                for (int i = 0; i < texts.Count; i++)
+                {
+                    for (int j = i + 1; j < texts.Count; j++)
+                    {
+                        string text1 = texts[i];
+                        string text2 = texts[j];
+
+                        List<double> vectorA = await processor.GetEmbeddingAsync(text1);
+                        List<double> vectorB = await processor.GetEmbeddingAsync(text2);
+
+                        double similarity = processor.CalculateCosineSimilarity(vectorA, vectorB);
+                        Console.WriteLine($"Comparing: \"{text1}\" ↔ \"{text2}\" → Similarity Score: {similarity:F4}");
+
+                        results.Add((text1, text2, similarity));
+                    }
+                }
+            }
         }
 
+                  
         static async Task Naeem(string apiKey)
         {
             //set OpenAI api model "text-embedding-3-small/text-embedding-3-large/text-embedding-ada-002"
@@ -143,50 +256,8 @@ namespace SemanticSimilarity
             //    Console.WriteLine("=========================================");
             //}
 
-            //try
-            //{
-            //    var contents = InputHelper.TextInputHandler();
-            //    Console.WriteLine("\nYou have entered the following articles:\n");
-
-            //    for (int i = 0; i < contents.Count; i++)
-            //    {
-            //        Console.WriteLine($"Article {i + 1}:\n{contents[i]}");
-            //        Console.WriteLine(new string('-', 50));
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine($"Error: {ex.Message}");
-            //}
-
-            //// Optional: Handle multiple comparisons
-            //Console.WriteLine("\nDo you want to compare multiple texts? (y/n)");
-            //if (Console.ReadLine().Trim().ToLower() == "y")
-            //{
-            //    Console.WriteLine("Enter texts separated by commas:");
-            //    string[] texts = Console.ReadLine().Split(",").Select(x => x.Trim()).ToArray();
-
-            //    //Generate embedding for all inputs
-            //    List<ReadOnlyMemory<float>> embeddings = new List<ReadOnlyMemory<float>>();
-
-            //    foreach (string text in texts)
-            //    {
-            //        OpenAIEmbedding embedding = await client.GenerateEmbeddingAsync(text);
-            //        ReadOnlyMemory<float> vector = embedding.ToFloats();
-            //        embeddings.Add(vector);
-            //    }
-
-            //    // Calculate pairwise similarity and display results
-            //    Console.WriteLine("\nPairwise Similarity:");
-            //    for (int i = 0; i < texts.Length; i++)
-            //    {
-            //        for (int j = i + 1; j < texts.Length; j++)
-            //        {
-            //            float pairwiseSimilarity = SimilarityHelper.CalcCosineSimilarityMethod2(embeddings[i], embeddings[j]);
-            //            Console.WriteLine($"Similarity between \"{texts[i]}\" and \"{texts[j]}\" is {pairwiseSimilarity:F4}");
-            //        }
-            //    }
-            //}
+                }//no cut this line
+            }
         }
 
         
@@ -226,3 +297,5 @@ namespace SemanticSimilarity
         }
     }
 }
+
+
