@@ -10,16 +10,52 @@ using System.Threading.Tasks;
 using CsvHelper;
 using CsvHelper.Configuration;
 using SemanticSimilarity.Utilites;
+using Sprache;
+using DotNetEnv;
 
 namespace SemanticSimilarity.Utilites
 {
     public static class OutputHelper
     {
-        public static async Task GenerateOutputAsync(List<string> sourceContents, List<string> refContents, string apiKey)
+        public static async Task GenerateOutputAsync(List<string> sourceContents, List<string> refContents)
         {
+            try
+            {
+                // Define the output file path
+                string outputFilePath = "similarity_results.csv";
+
+                // Process content pairs and calculate similarity scores
+                var results = new List<SimilarityResult>();
+                foreach (var source in sourceContents)
+                {
+                    foreach (var refr in refContents)
+                    {
+                        var result = new SimilarityResult
+                        {
+                            Source = source,
+                            Refr = refr,
+                            SimilarityScoreModel1 = await SimilarityHelper.CalculateSimilarityAsync("text-embedding-3-small", source, refr),
+                            SimilarityScoreModel2 = await SimilarityHelper.CalculateSimilarityAsync("text-embedding-3-large", source, refr),
+                            SimilarityScoreModel3 = await SimilarityHelper.CalculateSimilarityAsync("text-embedding-ada-002", source, refr)
+                        };
+                        results.Add(result);
+                    }
+                }
+
+                // Write results to CSV
+                WriteResultsToCsv(outputFilePath, results);
+
+                Console.WriteLine("Similarity scores calculated and saved to CSV successfully.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+
+            /*
             var generator = new EmbeddingGenerator(apiKey, "text-embedding-3-large");
 
-            // Generate embeddings
+            //Generate embeddings
             var sourceEmbeddings = await Task.WhenAll(sourceContents.Select(text => generator.GenerateEmbeddingsAsync(text)));
             var refEmbeddings = await Task.WhenAll(refContents.Select(text => generator.GenerateEmbeddingsAsync(text)));
 
@@ -50,7 +86,15 @@ namespace SemanticSimilarity.Utilites
             }
 
             // Write CSV
-            WriteToCsv(csvData);
+            WriteToCsv(csvData);*/
+        }
+
+        // Write results to CSV
+        private static void WriteResultsToCsv(string filePath, List<SimilarityResult> results)
+        {
+            using var writer = new StreamWriter(filePath);
+            using var csv = new CsvWriter(writer, System.Globalization.CultureInfo.InvariantCulture);
+            csv.WriteRecords(results);
         }
 
         private static void WriteToCsv(List<string[]> data)

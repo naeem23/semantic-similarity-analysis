@@ -24,7 +24,7 @@ namespace SemanticSimilarity.Utilites
 
         // Generate embeddings using OpenAI package 
         // Author: Naeem
-        public async Task<ReadOnlyMemory<float>> GenerateEmbeddingsAsync(string content)
+        public async Task<ReadOnlyMemory<float>> GenerateEmbeddingsAsync(string content, string model = "text-embedding-3-large")
         {
             if (string.IsNullOrWhiteSpace(content))
             {
