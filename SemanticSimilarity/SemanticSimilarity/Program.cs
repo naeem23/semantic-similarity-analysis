@@ -30,6 +30,7 @@ namespace SemanticSimilarity
 
             await Faraz(apiKey);
             await FarazOnyx(apiKey);
+            await Abbasi(apiKey);
         }
 
 
@@ -257,7 +258,45 @@ static async Task Haimanti(string[] args)
             // Step 5: Compare all data1 files with all data2 files
             InputHelper.CompareFiles(data1Files, data2Files);
         }
+
+        static void Abbasi(string[] args)
+        {
+            // Step 1: Define two sentences for semantic similarity analysis
+            string sentence1 = "I love programming in C#.";
+            string sentence2 = "Coding in C# is fun and exciting.";
+
+            // Step 2: Perform semantic similarity analysis
+            double similarityScore = CalculateSemanticSimilarity(sentence1, sentence2);
+
+            // Step 3: Create a result object
+            var result = new SemanticSimilarityResult
+            {
+                Sentence1 = sentence1,
+                Sentence2 = sentence2,
+                SimilarityScore = similarityScore
+            };
+
+            // Step 4: Add the result to a list
+            var results = new List<SemanticSimilarityResult> { result };
+
+            // Step 5: Save the results to a CSV file
+            string csvFilePath = "semantic_similarity_results.csv";
+            OutputHelper.WriteToCsv(csvFilePath, results);
+
+            Console.WriteLine($"Results saved to {csvFilePath}");
+        }
+
+        // Method to calculate semantic similarity (dummy implementation)
+        private static double CalculateSemanticSimilarity(string sentence1, string sentence2)
+        {
+            // Replace this with your actual semantic similarity logic or API call
+            // For now, it returns a random similarity score between 0 and 1
+            Random random = new Random();
+            return random.NextDouble();
+        }
     }
+
+}
 
 }
 
