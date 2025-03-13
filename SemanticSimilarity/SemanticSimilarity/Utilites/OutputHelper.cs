@@ -27,3 +27,24 @@ public class SemanticSimilarityResult
     public string Sentence2 { get; set; }
     public double SimilarityScore { get; set; }
 }
+
+public static List<T> ReadCsvFile<T>(string filePath)
+{
+    try
+    {
+        using var reader = new StreamReader(filePath);
+        using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
+        var records = csv.GetRecords<T>().ToList();
+        return records;
+    }
+    catch (FileNotFoundException)
+    {
+        Console.WriteLine("Error: File not found.");
+        return new List<T>();
+    }
+    catch (CsvHelperException ex)
+    {
+        Console.WriteLine($"Error reading CSV file: {ex.Message}");
+        return new List<T>();
+    }
+}
