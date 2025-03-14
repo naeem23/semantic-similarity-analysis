@@ -1,71 +1,100 @@
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
+import re
 
-# read csv file
-df = pd.read_csv('similarity_output.csv', skipinitialspace=True)
-
-# Drop unnamed columns (usually with column names like 'Unnamed: x')
-df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
-
-# 2D scatter ploting using plotly express 
-# Convert the wide format to long format using melt()
-"""df_long = df.melt(id_vars=["Source Content"], var_name="Reference", value_name="Similarity")
-fig = px.scatter(
-        df_long, 
-        x='Reference', 
-        y='Similarity', 
-        color="Source Content",
-        labels={'Reference': 'Reference', 'Similarity': 'Similarity Score'},
-        title="2D Similarity Score Plot"
-    )
-
-# Fixing y-axis range for 2d scatter 
-fig.update_layout(yaxis=dict(range=[-1, 1]))"""
+def read_csv(file_path):
+    """
+    Reads the CSV file and returns a DataFrame.
+    Author: Naeem
+    """
+    try:
+        df = pd.read_csv(file_path)
+        return df
+    except FileNotFoundError:
+        print(f"Error: The file '{file_path}' was not found.")
+    except Exception as e:
+        print(f"An error occurred while reading the file: {e}")
+    return None
 
 
-# 3D scatter Ploting using plotly express
-# Store original names for hover info
-df["Source name"] = df["Source Content"]
+def extract_word(text):
+    """
+    Get first word from source and refernce 
+    """
+    stopwords = {"a", "an", "the", "in", "on", "at", "to", "for", "with", "by", "of", "and", 
+    "or", "but", "nor", "so", "yet", "is", "are", "was", "were", "be", "been", "being", "has", 
+    "have", "had", "do", "does", "did", "this", "that", "these", "those", "some", "any", "each", 
+    "every", "either", "neither"}
+    
+    words = re.findall(r"\w+", text)
+    if not words:
+        return ""
+    elif words.count == 1:
+        return words
+    else:
+        return words[0] if words[0].lower() not in stopwords else " ".join(words[:2])
 
-# Rename sources to generic names
-df["Source Content"] = [f"Source {i+1}" for i in range(len(df))]
 
-# Rename references to generic names while storing original names
-reference_columns = df.columns[1:-1]  # Exclude first and last column (source & hover info)
-new_reference_names = {col: f"Ref {i+1}" for i, col in enumerate(reference_columns)}
-df.rename(columns=new_reference_names, inplace=True)
+def create_grouped_scatter_plot(df):
+    """
+    Creates a grouped scatter plot using Plotly and saves it as an HTML file.
+    """
+    try:
+        # Shorten 'Source' and 'Reference' to make labels concise
+        df['Short_Source'] = df['Source'].apply(extract_word)
+        df['Short_Reference'] = df['Reference'].apply(extract_word)
 
-# Convert to long format for plotting
-df_long = df.melt(id_vars=["Source Content", "Source name"], var_name="Reference", value_name="Similarity")
+        # Combine 'Source' and 'Reference' into a single label for the X-axis
+        df['Source_Reference'] = df['Short_Source'] + '-' + df['Short_Reference']
 
-# Map back to original reference names for hover
-df_long["Reference name"] = df_long["Reference"].map({v: k for k, v in new_reference_names.items()})
+        # Melt the DataFrame to long format for Plotly Express
+        df_melted = df.melt(
+            id_vars=['Source_Reference', 'Source', 'Reference'],  # Keep these columns
+            value_vars=['Score_Ada', 'Score_Small', 'Score_Large'],  # Columns to melt
+            var_name='Model',  # New column for model names
+            value_name='Score'  # New column for similarity scores
+        )
+        
+        # Create the scatter plot using Plotly Express
+        fig = px.scatter(
+            df_melted,
+            x='Source_Reference',  # X-axis: Shortened Source-Reference pairs
+            y='Score',             # Y-axis: Similarity scores
+            color='Model',         # Color by model
+            hover_data={'Source': True, 'Reference': True, 'Model': True, 'Score': ':.2f'},  # Hover data
+            title="Grouped Scatter Plot of Similarity Scores",
+            labels={'Source_Reference': 'Source-Reference Pairs', 'Score': 'Similarity Score'},
+            range_y=[-1, 1]  # Set Y-axis range from -1 to 1
+        )
 
-# Use original reference names in legend
-df_long["Legend Reference"] = df_long["Reference"] + ": " + df_long["Reference name"]
+        # Update layout for better readability
+        fig.update_layout(
+            xaxis_title="Source-Reference Pairs",
+            yaxis_title="Similarity Score",
+            showlegend=True,  # Show legend
+            template="plotly_white"  # Use a clean template
+        )
 
-fig = px.scatter_3d(
-        df_long,  
-        x='Source Content',
-        y='Reference', 
-        z='Similarity', 
-        color="Legend Reference", 
-        # symbol='Reference Index',
-        labels={ 'Source Content': 'Source', 'Reference': 'Reference', "Legend Reference": "Reference", 'Similarity': 'Similarity Score',},
-        title="3D Similarity Score Plot",
-        hover_data={"Source name": True, "Reference name": True, "Similarity": True, "Source Content": False, "Reference": False}  # Hide generic names in hover
-    )
+        # Show the plot directly
+        fig.show()
 
-# Update Labels for 3D scatter
-fig.update_layout(
-    scene=dict(
-        xaxis=dict(title='Source Content', tickangle=-30, tickfont=dict(size=12)),  # Hide Source Labels
-        yaxis=dict(title="Reference", tickangle=-30, tickfont=dict(size=12)),  #use "showticklabels=False" to hide label
-        zaxis=dict(title="Similarity Score", range=[-1, 1]),
-    ),
-    margin=dict(l=50, r=50, b=100, t=50),
-    autosize=True
-)
+    except KeyError as e:
+        print(f"Error: The required column '{e}' is missing in the CSV file.")
+    except Exception as e:
+        print(f"An error occurred while creating the plot: {e}")
 
-# Show plot
-fig.show()
+
+def main():
+    # File path to the CSV
+    file_path = "similarity_results.csv"
+
+    # Read the CSV file
+    df = read_csv(file_path)
+    if df is not None:
+        # Create the grouped scatter plot
+        create_grouped_scatter_plot(df)
+
+
+if __name__ == "__main__":
+    main()

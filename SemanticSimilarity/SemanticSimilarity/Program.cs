@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using iText.Layout.Splitting;
+using static System.Net.WebRequestMethods;
 
 namespace SemanticSimilarity
 {
@@ -57,7 +59,7 @@ namespace SemanticSimilarity
                 var model = "text-embedding-3-small";
 
                 // Initialize the EmbeddingGenerator class with the provided API key and model.
-                var generator = new EmbeddingGenerator(apiKey, model);
+                var generator = new EmbeddingGenerator();
 
                 string embeddingResponse1 = await generator.GetEmbedding(text1);
                 string embeddingResponse2 = await generator.GetEmbedding(text2);
@@ -151,7 +153,7 @@ namespace SemanticSimilarity
                 Console.WriteLine("             *******Multiple File Similarity Score******");
                 Console.WriteLine("             ***********************************************");
 
-                MultipleFileSimilarityProcessor processor = new MultipleFileSimilarityProcessor(apiKey);
+                MultipleFileSimilarityProcessor processor = new MultipleFileSimilarityProcessor();
                 Console.WriteLine("\n");
                 Console.Write("Enter the first folder path: ");
                 string folderPath1 = Console.ReadLine();
@@ -191,7 +193,7 @@ namespace SemanticSimilarity
 
 
                 // Save results to CSV 
-                CsvWriter.SaveResultsToCsv("Compare Documents Similarity Score.csv", results);
+                CustomCsvWriter.SaveResultsToCsv("Compare Documents Similarity Score.csv", results);
             }
 
             static async Task CompareTextPairs(DocumentProcessor processor, List<string> texts, string category, List<(string, string, double)> results)
@@ -217,26 +219,67 @@ namespace SemanticSimilarity
             }
         }
 
-                  
+
         static async Task Naeem(string apiKey)
         {
-            //set OpenAI api model "text-embedding-3-small/text-embedding-3-large/text-embedding-ada-002"
+            while (true)
+            {
+                InputHelper.DisplayMenu();
+                int choice = InputHelper.GetUserChoice();
+
+                if (choice == 1)
+                {
+                    Console.WriteLine("\nWord or Phrase Level Comparison");
+                    (List<string> sourceContents, List<string> refContents) = InputHelper.GetUserInputs();
+                    await OutputHelper.GenerateOutputAsync(sourceContents, refContents);
+                    Environment.Exit(0);
+                }
+                else if (choice == 2)
+                {
+                    Console.WriteLine("\nDocument Level Comparison");
+                    Console.Write("Enter source documents folder path: \n");
+                    string sourceFolder = Console.ReadLine()?.Trim() ?? "";
+                    Console.Write("Enter reference documents folder path: \n");
+                    string refFolder = Console.ReadLine()?.Trim() ?? "";
+
+                    var sourceContents = InputHelper.GetFileContents(sourceFolder);
+                    var refContents = InputHelper.GetFileContents(refFolder);
+
+                    await OutputHelper.GenerateOutputAsync(sourceContents, refContents);
+
+                    Environment.Exit(0);
+                }
+                else if (choice == 3)
+                {
+                    Console.WriteLine("Exiting the program. Goodbye!");
+                    Environment.Exit(0);
+                }
+                else
+                {
+                    Console.WriteLine("Invalid choice. Please try again.");
+                }
+            }
+
+            //// word or phrase level comparison
+            //var word1 = new List<string> { "Cat", "Dog", "Car", "Bicycle" };
+            //var word2 = new List<string> { "Animal", "Transport" };
+
+            //// Document level comparison
+            //string projectRoot = Directory.GetParent(AppContext.BaseDirectory).Parent.Parent.Parent.FullName;
+            //string sourceFilePaths = Path.Combine(projectRoot, "Input", "Sources");
+            //string refFilePaths = Path.Combine(projectRoot, "Input", "References");
+            ////string refKeywordsFilePath = Path.Combine(projectRoot, "Input", "reference_keywords.txt");
+
+            //var sourceContents = await InputHelper.ReadAllFilesInFolderAsync(sourceFilePaths);
+            //var refContents = await InputHelper.ReadAllFilesInFolderAsync(refFilePaths);
+            ////var refKeywords = await InputHelper.ReadRefKeywordsAsync(refKeywordsFilePath); // Read and split reference keywords file
+
+            //await OutputHelper.GenerateOutputAsync(sourceContents, refContents);
+            ////set OpenAI api model "text-embedding-3-small/text-embedding-3-large/text-embedding-ada-002"
             //var model = "text-embedding-3-small";
 
-            // Initialize the EmbeddingGenerator class with the provided API key and model.
+            //// Initialize the EmbeddingGenerator class with the provided API key and model.
             //var generator = new EmbeddingGenerator(apiKey, model);
-
-            // Read all files
-            string projectRoot = Directory.GetParent(AppContext.BaseDirectory).Parent.Parent.Parent.FullName;
-            string sourceFilePaths = Path.Combine(projectRoot, "Input", "Sources");
-            string refFilePaths = Path.Combine(projectRoot, "Input", "References");
-            //string refKeywordsFilePath = Path.Combine(projectRoot, "Input", "reference_keywords.txt");
-
-            var sourceContents = await InputHelper.ReadAllFilesInFolderAsync(sourceFilePaths);
-            var refContents = await InputHelper.ReadAllFilesInFolderAsync(refFilePaths);
-            //var refKeywords = await InputHelper.ReadRefKeywordsAsync(refKeywordsFilePath); // Read and split reference keywords file
-
-            await OutputHelper.GenerateOutputAsync(sourceContents, refContents, apiKey);
 
             ////get document paths from user 
             //var documentPaths = InputHelper.GetFilePaths();
@@ -256,11 +299,64 @@ namespace SemanticSimilarity
             //    Console.WriteLine("=========================================");
             //}
 
-                }//no cut this line
-            }
+            //try
+            //{
+            //    var contents = InputHelper.TextInputHandler();
+            //    Console.WriteLine("\nYou have entered the following articles:\n");
+
+            //    for (int i = 0; i < contents.Count; i++)
+            //    {
+            //        Console.WriteLine($"Article {i + 1}:\n{contents[i]}");
+            //        Console.WriteLine(new string('-', 50));
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine($"Error: {ex.Message}");
+            //}
+
+            //// Optional: Handle multiple comparisons
+            //Console.WriteLine("\nDo you want to compare multiple texts? (y/n)");
+            //if (Console.ReadLine().Trim().ToLower() == "y")
+            //{
+            //    Console.WriteLine("Enter texts separated by commas:");
+            //    string[] texts = Console.ReadLine().Split(",").Select(x => x.Trim()).ToArray();
+
+            //    //Generate embedding for all inputs
+            //    List<ReadOnlyMemory<float>> embeddings = new List<ReadOnlyMemory<float>>();
+
+            //    foreach (string text in texts)
+            //    {
+            //        OpenAIEmbedding embedding = await client.GenerateEmbeddingAsync(text);
+            //        ReadOnlyMemory<float> vector = embedding.ToFloats();
+            //        embeddings.Add(vector);
+            //    }
+
+            //    // Calculate pairwise similarity and display results
+            //    Console.WriteLine("\nPairwise Similarity:");
+            //    for (int i = 0; i < texts.Length; i++)
+            //    {
+            //        for (int j = i + 1; j < texts.Length; j++)
+            //        {
+            //            float pairwiseSimilarity = SimilarityHelper.CalcCosineSimilarityMethod2(embeddings[i], embeddings[j]);
+            //            Console.WriteLine($"Similarity between \"{texts[i]}\" and \"{texts[j]}\" is {pairwiseSimilarity:F4}");
+            //        }
+            //    }
+            //}
+
+            //    // Calculate pairwise similarity and display results
+            //    Console.WriteLine("\nPairwise Similarity:");
+            //    for (int i = 0; i < texts.Length; i++)
+            //    {
+            //        for (int j = i + 1; j < texts.Length; j++)
+            //        {
+            //            float pairwiseSimilarity = SimilarityHelper.CalcCosineSimilarityMethod2(embeddings[i], embeddings[j]);
+            //            Console.WriteLine($"Similarity between \"{texts[i]}\" and \"{texts[j]}\" is {pairwiseSimilarity:F4}");
+            //        }
+            //    }
+            //}
         }
 
-        
         static async Task Haimanti (string apiKey)
         {
             try // Semantic Similarity Score
@@ -280,7 +376,7 @@ namespace SemanticSimilarity
                 var model = "text-embedding-3-small";
 
                 // Initialize the EmbeddingGenerator class with the provided API key and model.
-                var generator = new EmbeddingGenerator(apiKey, model);
+                var generator = new EmbeddingGenerator();
 
                 List<double> embedding1 = EmbeddingGenerator.ParseEmbedding(embeddingResponse1);
                 List<double> embedding2 = EmbeddingGenerator.ParseEmbedding(embeddingResponse2);
