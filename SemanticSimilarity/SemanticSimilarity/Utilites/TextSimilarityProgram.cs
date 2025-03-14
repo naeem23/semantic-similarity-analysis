@@ -27,7 +27,7 @@
 //            await CompareTextPairs(processor, documents, "Documents", results);
 
 //            // Save results to CSV
-//            CsvWriter.SaveResultsToCsv("similarity_results.csv", results);
+//            CustomCsvWriter.SaveResultsToCsv("similarity_results.csv", results);
 //        }
 
 //        static async Task CompareTextPairs(DocumentProcessor processor, List<string> texts, string category, List<(string, string, double)> results)

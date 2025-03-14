@@ -11,21 +11,11 @@ using System.Reflection.PortableExecutable;
 
 namespace SemanticSimilarity.Utilites
 {
-
-
-
     public class MultipleFileSimilarityProcessor
     {
-        private readonly string _apiKey;
-        private const string BaseUrl = "https://api.openai.com/v1/embeddings";
-
-        public MultipleFileSimilarityProcessor(string apiKey)
-        {
-            _apiKey = apiKey;
-        }
-
         // Read text from different file formats
-        private string ReadFileText(string filePath)
+        // TO-DO: write test function
+        public string ReadFileText(string filePath)
         {
             string extension = Path.GetExtension(filePath).ToLower();
 
@@ -48,6 +38,7 @@ namespace SemanticSimilarity.Utilites
         }
 
         // Extract text from PDF using iText7
+        // TO-DO: write test function
         private string ExtractTextFromPdf(string filePath)
         {
             using (PdfReader reader = new PdfReader(filePath))
@@ -63,53 +54,13 @@ namespace SemanticSimilarity.Utilites
         }
 
         // Extract text from DOCX using Xceed.Words.NET
+        // TO-DO: write test function
         private string ExtractTextFromDocx(string filePath)
         {
             using (DocX document = DocX.Load(filePath))
             {
                 return document.Text;
             }
-        }
-
-        // Get embeddings from OpenAI API
-        private async Task<List<double>> GetEmbeddingAsync(string text, string model = "text-embedding-ada-002")
-        {
-            var client = new RestClient(BaseUrl);
-            var request = new RestRequest();
-            request.Method = Method.Post;
-            request.AddHeader("Authorization", $"Bearer {_apiKey}");
-            request.AddHeader("Content-Type", "application/json");
-
-            var body = new { input = text, model = model };
-            request.AddJsonBody(body);
-
-            var response = await client.ExecuteAsync(request);
-            if (!response.IsSuccessful)
-            {
-                throw new Exception($"Error: {response.StatusDescription}\n{response.Content}");
-            }
-
-            var jsonResponse = JsonConvert.DeserializeObject<dynamic>(response.Content);
-            var embedding = jsonResponse["data"][0]["embedding"].ToObject<List<double>>();
-            return embedding;
-        }
-
-        // Calculate cosine similarity
-        private double CalculateCosineSimilarity(List<double> vectorA, List<double> vectorB)
-        {
-            if (vectorA.Count != vectorB.Count)
-                throw new ArgumentException("Vectors must be of the same length.");
-
-            double dotProduct = 0.0, magnitudeA = 0.0, magnitudeB = 0.0;
-
-            for (int i = 0; i < vectorA.Count; i++)
-            {
-                dotProduct += vectorA[i] * vectorB[i];
-                magnitudeA += Math.Pow(vectorA[i], 2);
-                magnitudeB += Math.Pow(vectorB[i], 2);
-            }
-
-            return dotProduct / (Math.Sqrt(magnitudeA) * Math.Sqrt(magnitudeB));
         }
 
         // Compare all files from two folders and save results in CSV
@@ -135,13 +86,13 @@ namespace SemanticSimilarity.Utilites
                         string text1 = ReadFileText(file1);
                         string text2 = ReadFileText(file2);
 
-                        List<double> vectorA = await GetEmbeddingAsync(text1);
-                        List<double> vectorB = await GetEmbeddingAsync(text2);
+                        //List<double> vectorA = await GetEmbeddingAsync(text1);
+                        //List<double> vectorB = await GetEmbeddingAsync(text2);
 
-                        double similarity = CalculateCosineSimilarity(vectorA, vectorB);
-                        Console.WriteLine($"Similarity between {Path.GetFileName(file1)} and {Path.GetFileName(file2)} → {similarity:F4}");
+                        //double similarity = CalculateCosineSimilarity(vectorA, vectorB);
+                        //Console.WriteLine($"Similarity between {Path.GetFileName(file1)} and {Path.GetFileName(file2)} → {similarity:F4}");
 
-                        csvLines.Add($"\"{Path.GetFileName(file1)}\",\"{Path.GetFileName(file2)}\",{similarity:F4}");
+                        //csvLines.Add($"\"{Path.GetFileName(file1)}\",\"{Path.GetFileName(file2)}\",{similarity:F4}");
                     }
                     catch (Exception ex)
                     {

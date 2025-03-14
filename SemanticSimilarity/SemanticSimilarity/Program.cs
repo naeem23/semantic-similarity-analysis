@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using iText.Layout.Splitting;
+using static System.Net.WebRequestMethods;
 
 namespace SemanticSimilarity
 {
@@ -151,7 +153,7 @@ namespace SemanticSimilarity
                 Console.WriteLine("             *******Multiple File Similarity Score******");
                 Console.WriteLine("             ***********************************************");
 
-                MultipleFileSimilarityProcessor processor = new MultipleFileSimilarityProcessor(apiKey);
+                MultipleFileSimilarityProcessor processor = new MultipleFileSimilarityProcessor();
                 Console.WriteLine("\n");
                 Console.Write("Enter the first folder path: ");
                 string folderPath1 = Console.ReadLine();
@@ -191,7 +193,7 @@ namespace SemanticSimilarity
 
 
                 // Save results to CSV 
-                CsvWriter.SaveResultsToCsv("Compare Documents Similarity Score.csv", results);
+                CustomCsvWriter.SaveResultsToCsv("Compare Documents Similarity Score.csv", results);
             }
 
             static async Task CompareTextPairs(DocumentProcessor processor, List<string> texts, string category, List<(string, string, double)> results)
@@ -220,49 +222,59 @@ namespace SemanticSimilarity
 
         static async Task Naeem(string apiKey)
         {
-            /*
-            InputHelper.DisplayMenu();
-            int choice = InputHelper.GetUserChoice();
-
-            if (choice == 1)
+            while (true)
             {
-                Console.WriteLine("\nWord or Phrase Level Comparison");
-                var (input1, input2) = InputHelper.GetWordOrPhraseInput();
-                Console.WriteLine($"\nComparing: '{input1}' and '{input2}'");
-                // Call your embedding and similarity functions here
+                InputHelper.DisplayMenu();
+                int choice = InputHelper.GetUserChoice();
+
+                if (choice == 1)
+                {
+                    Console.WriteLine("\nWord or Phrase Level Comparison");
+                    (List<string> sourceContents, List<string> refContents) = InputHelper.GetUserInputs();
+                    await OutputHelper.GenerateOutputAsync(sourceContents, refContents);
+                    Environment.Exit(0);
+                }
+                else if (choice == 2)
+                {
+                    Console.WriteLine("\nDocument Level Comparison");
+                    Console.Write("Enter source documents folder path: \n");
+                    string sourceFolder = Console.ReadLine()?.Trim() ?? "";
+                    Console.Write("Enter reference documents folder path: \n");
+                    string refFolder = Console.ReadLine()?.Trim() ?? "";
+
+                    var sourceContents = InputHelper.GetFileContents(sourceFolder);
+                    var refContents = InputHelper.GetFileContents(refFolder);
+
+                    await OutputHelper.GenerateOutputAsync(sourceContents, refContents);
+
+                    Environment.Exit(0);
+                }
+                else if (choice == 3)
+                {
+                    Console.WriteLine("Exiting the program. Goodbye!");
+                    Environment.Exit(0);
+                }
+                else
+                {
+                    Console.WriteLine("Invalid choice. Please try again.");
+                }
             }
-
-            else if (choice == 2)
-            {
-                Console.WriteLine("\nDocument Level Comparison");
-                var (file1, file2) = InputHelper.GetFilePathInput();
-                string content1 = File.ReadAllText(file1);
-                string content2 = File.ReadAllText(file2);
-                Console.WriteLine($"\nComparing documents: '{file1}' and '{file2}'");
-                // Call your embedding and similarity functions here
-            }
-
-            else if (choice == 3)
-            {
-                Console.WriteLine("Exiting the program. Goodbye!");
-                break;
-            }*/
 
             //// word or phrase level comparison
             //var word1 = new List<string> { "Cat", "Dog", "Car", "Bicycle" };
             //var word2 = new List<string> { "Animal", "Transport" };
 
-            // Document level comparison
-            string projectRoot = Directory.GetParent(AppContext.BaseDirectory).Parent.Parent.Parent.FullName;
-            string sourceFilePaths = Path.Combine(projectRoot, "Input", "Sources");
-            string refFilePaths = Path.Combine(projectRoot, "Input", "References");
-            //string refKeywordsFilePath = Path.Combine(projectRoot, "Input", "reference_keywords.txt");
+            //// Document level comparison
+            //string projectRoot = Directory.GetParent(AppContext.BaseDirectory).Parent.Parent.Parent.FullName;
+            //string sourceFilePaths = Path.Combine(projectRoot, "Input", "Sources");
+            //string refFilePaths = Path.Combine(projectRoot, "Input", "References");
+            ////string refKeywordsFilePath = Path.Combine(projectRoot, "Input", "reference_keywords.txt");
 
-            var sourceContents = await InputHelper.ReadAllFilesInFolderAsync(sourceFilePaths);
-            var refContents = await InputHelper.ReadAllFilesInFolderAsync(refFilePaths);
-            //var refKeywords = await InputHelper.ReadRefKeywordsAsync(refKeywordsFilePath); // Read and split reference keywords file
+            //var sourceContents = await InputHelper.ReadAllFilesInFolderAsync(sourceFilePaths);
+            //var refContents = await InputHelper.ReadAllFilesInFolderAsync(refFilePaths);
+            ////var refKeywords = await InputHelper.ReadRefKeywordsAsync(refKeywordsFilePath); // Read and split reference keywords file
 
-            await OutputHelper.GenerateOutputAsync(sourceContents, refContents);
+            //await OutputHelper.GenerateOutputAsync(sourceContents, refContents);
             ////set OpenAI api model "text-embedding-3-small/text-embedding-3-large/text-embedding-ada-002"
             //var model = "text-embedding-3-small";
 

@@ -18,6 +18,13 @@ namespace SemanticSimilarity.Utilites
 {
     public static class OutputHelper
     {
+        /// <summary>
+        /// Generate embedding, calculate similarity and generate csv
+        /// </summary>
+        /// <param name="sourceContents">list string</param>
+        /// <param name="refContents">list string</param>
+        /// <returns></returns>
+        // TO-DO: write test function
         public static async Task GenerateOutputAsync(List<string> sourceContents, List<string> refContents)
         {
             try
@@ -31,7 +38,7 @@ namespace SemanticSimilarity.Utilites
                 int totalPairs = sourceContents.Count * refContents.Count;
                 int processedPairs = 0;
 
-                Console.WriteLine($"Processing {totalPairs} content pairs...");
+                Console.WriteLine($"\n\nProcessing {totalPairs} content pairs...");
 
                 foreach (var source in sourceContents)
                 {
@@ -59,55 +66,20 @@ namespace SemanticSimilarity.Utilites
                 }
 
                 // Write results to CSV
-                Console.WriteLine("Writing results to CSV...");
+                Console.WriteLine("Writing results to CSV file (Output\\similarity_results.csv)");
                 WriteResultsToCsv(outputFilePath, results);
 
-                Console.WriteLine("Similarity scores calculated and saved to CSV successfully.");
+                Console.WriteLine("Similarity scores calculated and saved to CSV (Output\\similarity_results.csv) successfully.");
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred: {ex.Message}");
             }
-
-            /*
-            var generator = new EmbeddingGenerator(apiKey, "text-embedding-3-large");
-
-            //Generate embeddings
-            var sourceEmbeddings = await Task.WhenAll(sourceContents.Select(text => generator.GenerateEmbeddingsAsync(text)));
-            var refEmbeddings = await Task.WhenAll(refContents.Select(text => generator.GenerateEmbeddingsAsync(text)));
-
-            // Prepare CSV data
-            var csvData = new List<string[]>();
-            string[] headers = new string[1 + (refContents.Count * 3)];
-            headers[0] = "Source Content";
-
-            for (int i = 0; i < refContents.Count; i++)
-            {
-                //headers[1 + i] = $"{refContents[i]}";
-                headers[1 + i] = refContents[i].Length > 20 ? refContents[i].Substring(0, 20) + "..." : refContents[i];
-            }
-            csvData.Add(headers);
-
-            // Compute similarity for each string in A with all strings in B
-            for (int i = 0; i < sourceContents.Count; i++)
-            {
-                var row = new string[1 + refContents.Count];
-                row[0] = sourceContents[i].Length > 20 ? sourceContents[i].Substring(0,20) + "..." : sourceContents[i];
-
-                for (int j = 0; j < refContents.Count; j++)
-                {
-                    row[1 + j] = SimilarityHelper.CalcCosineSimilarityMethod2(sourceEmbeddings[i], refEmbeddings[j]).ToString("F4");
-                }
-
-                csvData.Add(row);
-            }
-
-            // Write CSV
-            WriteToCsv(csvData);*/
         }
 
         // Write results to CSV
         // Author: Naeem
+        // TO-DO: write test function
         private static void WriteResultsToCsv(string filePath, List<SimilarityResult> results)
         {
             using var writer = new StreamWriter(filePath);
