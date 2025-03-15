@@ -10,8 +10,8 @@ namespace SemanticSimilarity.Utilites
 {
     public class Utilities
     {
-         // Get api key from .env file
-         // Author: Naeem
+        // Get api key from .env file
+        // Author: Naeem
         public static string GetApiKey()
         {
             // Load environment variables from .env file (if applicable)

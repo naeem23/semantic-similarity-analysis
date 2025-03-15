@@ -72,7 +72,6 @@ namespace SemanticSimilarity.Utilites
 
         // Calculate cosine similarity between two embeddings
         // Author: Naeem
-        // TO-DO: write test function
         public static float CalculateCosineSimilarity(float[] embedding1, float[] embedding2)
         {
             if (embedding1.Length != embedding2.Length)
@@ -97,7 +96,6 @@ namespace SemanticSimilarity.Utilites
 
         // Calculate similarity score for a given model and word pair
         // Author: Naeem
-        // TO-DO: write test function
         public static async Task<float> CalculateSimilarityAsync(string model, string source, string refr)
         {
             if (string.IsNullOrWhiteSpace(source) || string.IsNullOrWhiteSpace(refr))

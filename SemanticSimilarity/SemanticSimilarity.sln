@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SemanticSimilarity", "SemanticSimilarity\SemanticSimilarity.csproj", "{E7AD131C-7576-4A57-B8A6-C69CD016DD33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SemanticSimilarity", "SemanticSimilarity\SemanticSimilarity.csproj", "{E7AD131C-7576-4A57-B8A6-C69CD016DD33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject", "UnitTestProject\UnitTestProject.csproj", "{DF29C45F-2774-481F-AE9C-D1F4BCBC059C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSemanticSimilarity", "TestSemanticSimilarity\TestSemanticSimilarity.csproj", "{3CF04CEC-156E-4CA8-BBEE-B9D80A4CDB7A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{E7AD131C-7576-4A57-B8A6-C69CD016DD33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7AD131C-7576-4A57-B8A6-C69CD016DD33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7AD131C-7576-4A57-B8A6-C69CD016DD33}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DF29C45F-2774-481F-AE9C-D1F4BCBC059C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DF29C45F-2774-481F-AE9C-D1F4BCBC059C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DF29C45F-2774-481F-AE9C-D1F4BCBC059C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DF29C45F-2774-481F-AE9C-D1F4BCBC059C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CF04CEC-156E-4CA8-BBEE-B9D80A4CDB7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CF04CEC-156E-4CA8-BBEE-B9D80A4CDB7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CF04CEC-156E-4CA8-BBEE-B9D80A4CDB7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CF04CEC-156E-4CA8-BBEE-B9D80A4CDB7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
