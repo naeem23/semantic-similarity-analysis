@@ -24,7 +24,6 @@ namespace SemanticSimilarity.Utilites
         /// 3. exit the program
         /// Author: Naeem
         /// </summary>
-        // TO-DO: write test function
         public static void DisplayMenu()
         {
             Console.WriteLine("\nWelcome to Semantic Similarity Analysis!");
@@ -39,7 +38,6 @@ namespace SemanticSimilarity.Utilites
         /// Author: Naeem
         /// </summary>
         /// <returns>a integer value range from 1 - 3</returns>
-        // TO-DO: write test function
         public static int GetUserChoice()
         {
             while (true)
@@ -58,7 +56,6 @@ namespace SemanticSimilarity.Utilites
         /// Author: Naeem
         /// </summary>
         /// <returns>two string</returns>
-        // TO-DO: write test function
         public static (string, string) GetWordOrPhraseInput()
         {
             Console.Write("Enter the first word or phrase: ");
@@ -76,10 +73,10 @@ namespace SemanticSimilarity.Utilites
 
         /// <summary>
         /// Gets the contents of all .txt and .pdf files in the specified folder.
+        /// Author: Naeem
         /// </summary>
         /// <param name="folderPath">The path to the folder.</param>
         /// <returns>A list of file contents.</returns>
-        // TO-DO: write test function
         public static List<string> GetFileContents(string folderPath)
         {
             // Validate the folder path
@@ -237,6 +234,7 @@ namespace SemanticSimilarity.Utilites
         /// Author: Ahad
         /// </summary>
         /// <returns>List of string, list of string</returns>
+        /// TO-DO: do unit test
         public static (List<string>, List<string>) GetUserInputs()
         {
             List<string> sourceContents = new List<string>();

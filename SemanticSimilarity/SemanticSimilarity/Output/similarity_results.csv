@@ -1,11 +1,3 @@
 Source,Reference,Score_Ada,Score_Small,Score_Large
-"Jane Smith
-456 Elm ...","Emily Davis
-321 Pin...",0.8929906,0.7167925,0.7043622
-"Jane Smith
-456 Elm ...",Job Title: Full Stac...,0.88331026,0.7112162,0.70428884
-"Se7en 
--Movie Review...","Emily Davis
-321 Pin...",0.67167777,0.12787586,0.14040704
-"Se7en 
--Movie Review...",Job Title: Full Stac...,0.6731154,0.13349397,0.14091803
+cat,animal,-1,-1,-1
+dog,animal,-1,-1,-1
