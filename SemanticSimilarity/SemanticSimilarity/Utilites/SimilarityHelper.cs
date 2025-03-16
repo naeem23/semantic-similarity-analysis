@@ -71,7 +71,7 @@ namespace SemanticSimilarity.Utilites
         }
 
         // Calculate cosine similarity between two embeddings
-        // Author: Naeem
+        // Author: Naeem/Ahad
         public static float CalculateCosineSimilarity(float[] embedding1, float[] embedding2)
         {
             if (embedding1.Length != embedding2.Length)

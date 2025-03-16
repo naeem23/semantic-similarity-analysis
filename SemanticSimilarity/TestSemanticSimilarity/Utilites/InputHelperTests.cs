@@ -82,5 +82,7 @@ namespace TestSemanticSimilarity.Utilites
 
             Directory.Delete(tempFolder, true);
         }
+
+        //pest here
     }
 }
