@@ -12,7 +12,7 @@ namespace SemanticSimilarity.Utilites
    public class CustomCsvWriter
     {
         public static void SaveResultsToCsv(string fileName, List<(string, string, double)> results)
-        //List<(string, string, double)> results = new List<(string, string, double)>(); // for me Note
+        //List<(string, string, double)> results = new List<(string, string, double)>(); // for me Note it could be update
 
         {
             try

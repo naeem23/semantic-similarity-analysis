@@ -10,7 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BouncyCastle" Version="1.8.9" />
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
+    <PackageReference Include="itext7" Version="9.1.0" />
+    <PackageReference Include="itext7.bouncy-castle-adapter" Version="9.1.0" />
+    <PackageReference Include="itext7.bouncy-castle-fips-adapter" Version="9.1.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="3.1.1" />
     <PackageReference Include="MSTest.TestFramework" Version="3.1.1" />
