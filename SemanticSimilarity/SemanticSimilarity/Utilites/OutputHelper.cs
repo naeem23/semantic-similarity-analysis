@@ -16,7 +16,7 @@ using DotNetEnv;
 
 namespace SemanticSimilarity.Utilites
 {
-    public static class OutputHelper
+    public class OutputHelper
     {
         /// <summary>
         /// Generate embedding, calculate similarity and generate csv
@@ -25,7 +25,7 @@ namespace SemanticSimilarity.Utilites
         /// <param name="refContents">list string</param>
         /// <returns></returns>
         // TO-DO: write test function
-        public static async Task GenerateOutputAsync(List<string> sourceContents, List<string> refContents)
+        public async Task GenerateOutputAsync(List<string> sourceContents, List<string> refContents)
         {
             try
             {
@@ -49,13 +49,14 @@ namespace SemanticSimilarity.Utilites
                         Console.WriteLine($"Source: {(source.Length > 20 ? source.Substring(0,20) + "..." : source )}");
                         Console.WriteLine($"Reference: {(refr.Length > 20 ? refr.Substring(0,20) + "..." : refr)}");
 
+                        SimilarityHelper similarityHelper = new SimilarityHelper();
                         var result = new SimilarityResult
                         {
                             Source = source.Length > 20 ? source.Substring(0,20) + "..." : source,
                             Reference = refr.Length > 20 ? refr.Substring(0,20) + "..." : refr,
-                            Score_Ada = await SimilarityHelper.CalculateSimilarityAsync("text-embedding-ada-002", source, refr),
-                            Score_Small = await SimilarityHelper.CalculateSimilarityAsync("text-embedding-3-small", source, refr),
-                            Score_Large = await SimilarityHelper.CalculateSimilarityAsync("text-embedding-3-large", source, refr)
+                            Score_Ada = await similarityHelper.CalculateSimilarityAsync("text-embedding-ada-002", source, refr),
+                            Score_Small = await similarityHelper.CalculateSimilarityAsync("text-embedding-3-small", source, refr),
+                            Score_Large = await similarityHelper.CalculateSimilarityAsync("text-embedding-3-large", source, refr)
                         };
                         results.Add(result);
                         
@@ -79,34 +80,11 @@ namespace SemanticSimilarity.Utilites
 
         // Write results to CSV
         // Author: Naeem
-        // TO-DO: write test function
-        private static void WriteResultsToCsv(string filePath, List<SimilarityResult> results)
+        private void WriteResultsToCsv(string filePath, List<SimilarityResult> results)
         {
             using var writer = new StreamWriter(filePath);
             using var csv = new CsvWriter(writer, System.Globalization.CultureInfo.InvariantCulture);
             csv.WriteRecords(results);
-        }
-
-        private static void WriteToCsv(List<string[]> data)
-        {
-            string projectRoot = Directory.GetParent(AppContext.BaseDirectory).Parent.Parent.Parent.FullName;
-            string outputFilePath = Path.Combine(projectRoot, "Output", "similarity_output.csv");
-
-            using (var writer = new StreamWriter(outputFilePath))
-            using (var csv = new CsvWriter(writer, new CsvConfiguration(CultureInfo.InvariantCulture)))
-            {
-                foreach (var row in data)
-                {
-                    if (row != null) // Check if the row is not null
-                    {
-                        foreach (var field in row)
-                        {
-                            csv.WriteField(field); // Write each field individually
-                        }
-                        csv.NextRecord();
-                    }
-                }
-            }
         }
     }
 }

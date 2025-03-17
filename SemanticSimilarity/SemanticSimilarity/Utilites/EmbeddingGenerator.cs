@@ -14,23 +14,17 @@ namespace SemanticSimilarity.Utilites
     {
         private readonly string _apiKey;
         private const string BaseUrl = "https://api.openai.com/v1";
-        //private EmbeddingClient client;
 
-        // Constructor function to set _apikey and create embedding client 
-        //public EmbeddingGenerator(string apiKey, string model = "text-embedding-3-large") { 
-        //    _apiKey = apiKey;
-        //    client = new EmbeddingClient(model, apiKey);
-        //}
         public EmbeddingGenerator()
         {
             // Get api key
-            string apiKey = Utilities.GetApiKey();
+            ApiKeyProvider apiKeyProvider = new ApiKeyProvider();
+            string apiKey = apiKeyProvider.GetApiKey();
             _apiKey = apiKey ?? throw new ArgumentNullException(nameof(apiKey));
         }
 
         // Generate embeddings using OpenAI package 
         // Author: Naeem
-        // TO-DO: write test function
         public async Task<float[]> GenerateEmbeddingsAsync(string content, string model = "text-embedding-3-large")
         {
             if (string.IsNullOrWhiteSpace(content))
@@ -51,46 +45,6 @@ namespace SemanticSimilarity.Utilites
                 Console.WriteLine($"Error generating embeddings: {ex.Message}");
                 throw new InvalidOperationException("Failed to generate embeddings.", ex);
             }
-        }
-
-        // Generate embeddings using api call request
-        // Author: Ahad
-        public async Task<string> GetEmbedding(string text, string model = "text-embedding-ada-002")
-        {
-            var client = new RestClient($"{BaseUrl}/embeddings");
-            //var request = new RestRequest(Method.Post); // Updated Syntax
-            var request = new RestRequest();
-            request.Method = Method.Post;
-            // request.AddHeader("Authorization", $"Bearer {_apiKey}");
-            //var request = new RestRequest();  //calling post method different way Hit API
-            // request.AddHeader("Authorization", $"Bearer {_apiKey}"); // REMOVE
-            //var request = new RestRequest();  //calling post method different way Hit API
-            request.Method = Method.Post;
-            request.AddHeader("Authorization", $"Bearer {_apiKey}");
-            request.AddHeader("Content-Type", "application/json");
-
-            var body = new
-            {
-                input = text,
-                model = model
-            };
-
-            request.AddJsonBody(body);
-
-            var response = await client.ExecuteAsync(request);
-            if (response.IsSuccessful)
-            {
-                return response.Content;
-            }
-
-            throw new Exception($"Error: {response.StatusDescription}\n{response.Content}");
-        }
-
-        public static List<double> ParseEmbedding(string jsonResponse)
-        {
-            var json = JObject.Parse(jsonResponse);
-            var embeddings = json["data"][0]["embedding"].ToObject<List<double>>();
-            return embeddings;
         }
     }
 }

@@ -17,20 +17,23 @@ using static System.Net.WebRequestMethods;
 
 namespace SemanticSimilarity
 {
-    internal class Program
+    public class Program
     {
         static async Task Main(string[] args)
         {
             while (true)
             {
-                InputHelper.DisplayMenu();
-                int choice = InputHelper.GetUserChoice();
+                var inputHelper = new InputHelper();
+                var outputHelper = new OutputHelper();
+
+                inputHelper.DisplayMenu();
+                int choice = inputHelper.GetUserChoice();
 
                 if (choice == 1)
                 {
                     Console.WriteLine("\nWord or Phrase Level Comparison");
-                    (List<string> sourceContents, List<string> refContents) = InputHelper.GetUserInputs();
-                    await OutputHelper.GenerateOutputAsync(sourceContents, refContents);
+                    (List<string> sourceContents, List<string> refContents) = inputHelper.GetUserInputs();
+                    await outputHelper.GenerateOutputAsync(sourceContents, refContents);
                     Environment.Exit(0);
                 }
                 else if (choice == 2)
@@ -41,10 +44,11 @@ namespace SemanticSimilarity
                     Console.Write("Enter reference documents folder path: \n");
                     string refFolder = Console.ReadLine()?.Trim() ?? "";
 
-                    var sourceContents = InputHelper.GetFileContents(sourceFolder);
-                    var refContents = InputHelper.GetFileContents(refFolder);
+                    Console.WriteLine("\nReading file contents...");
+                    var sourceContents = inputHelper.GetFileContents(sourceFolder);
+                    var refContents = inputHelper.GetFileContents(refFolder);
 
-                    await OutputHelper.GenerateOutputAsync(sourceContents, refContents);
+                    await outputHelper.GenerateOutputAsync(sourceContents, refContents);
 
                     Environment.Exit(0);
                 }

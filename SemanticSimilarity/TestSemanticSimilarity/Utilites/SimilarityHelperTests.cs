@@ -10,6 +10,7 @@ namespace TestSemanticSimilarity.Utilites
     [TestClass]
     public class SimilarityHelperTests
     {
+        public SimilarityHelper similarityHelper = new SimilarityHelper();
         [TestMethod]
         public void CalculateCosineSimilarity_ValidEmbeddings_ReturnsCorrectSimilarity()
         {
@@ -18,7 +19,7 @@ namespace TestSemanticSimilarity.Utilites
             float[] embedding2 = { 4, 5, 6 };
 
             // Act
-            float similarity = SimilarityHelper.CalculateCosineSimilarity(embedding1, embedding2);
+            float similarity = similarityHelper.CalculateCosineSimilarity(embedding1, embedding2);
 
             // Assert
             Assert.IsTrue(similarity >= -1 && similarity <= 1);
@@ -33,7 +34,7 @@ namespace TestSemanticSimilarity.Utilites
             float[] embedding2 = { 4, 5 };
 
             // Act
-            SimilarityHelper.CalculateCosineSimilarity(embedding1, embedding2);
+            similarityHelper.CalculateCosineSimilarity(embedding1, embedding2);
 
             // Assert is handled by ExpectedException
         }
@@ -47,7 +48,7 @@ namespace TestSemanticSimilarity.Utilites
             float[] embedding2 = { 1, 2, 3 };
 
             // Act
-            SimilarityHelper.CalculateCosineSimilarity(embedding1, embedding2);
+            similarityHelper.CalculateCosineSimilarity(embedding1, embedding2);
 
             // Assert is handled by ExpectedException
         }
@@ -61,7 +62,7 @@ namespace TestSemanticSimilarity.Utilites
             string reference = "Pet";
 
             // Act
-            float similarity = await SimilarityHelper.CalculateSimilarityAsync(model, source, reference);
+            float similarity = await similarityHelper.CalculateSimilarityAsync(model, source, reference);
 
             // Assert
             Assert.IsTrue(similarity >= -1 && similarity <= 1);
@@ -77,7 +78,7 @@ namespace TestSemanticSimilarity.Utilites
             string reference = "";
 
             // Act
-            await SimilarityHelper.CalculateSimilarityAsync(model, source, reference);
+            await similarityHelper.CalculateSimilarityAsync(model, source, reference);
 
             // Assert is handled by ExpectedException
         }
@@ -91,7 +92,7 @@ namespace TestSemanticSimilarity.Utilites
             string reference = "Pet";
 
             // Act
-            float similarity = await SimilarityHelper.CalculateSimilarityAsync(model, source, reference);
+            float similarity = await similarityHelper.CalculateSimilarityAsync(model, source, reference);
 
             // Assert
             Assert.AreEqual(-1, similarity);
