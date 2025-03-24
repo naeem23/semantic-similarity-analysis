@@ -99,22 +99,23 @@ The project uses the OpenAI NuGet package. Restore the packages using:
 
 # Example
 Input:
-  * Word/Phrase Level:
-    Source: "machine learning", "artificial intelligence"
-    Reference: "deep learning", "neural networks"
-    ![image](https://github.com/user-attachments/assets/37bc3e02-4136-4552-8334-a61a609cb88f)
+* Word/Phrase Level:
+  Source: "machine learning", "artificial intelligence"
+  Reference: "deep learning", "neural networks"
+  ![image](https://github.com/user-attachments/assets/37bc3e02-4136-4552-8334-a61a609cb88f)
 
-  * Document Level:
-    Source Folder: G:\FUAS\SE\semantic-similarity-analysis\SemanticSimilarity\SemanticSimilarity\Input\Sources
-    Reference Folder: G:\FUAS\SE\semantic-similarity-analysis\SemanticSimilarity\SemanticSimilarity\Input\References
-    ![image](https://github.com/user-attachments/assets/4b73bd81-0781-454e-9719-568f94ed9511)
+* Document Level:
+  Source Folder: `G:\FUAS\SE\semantic-similarity-analysis\SemanticSimilarity\SemanticSimilarity\Input\Sources`
+  Reference Folder: `G:\FUAS\SE\semantic-similarity-analysis\SemanticSimilarity\SemanticSimilarity\Input\References`
+  ![image](https://github.com/user-attachments/assets/4b73bd81-0781-454e-9719-568f94ed9511)
 
 
 # Output:
 The similarity_results.csv file will contain:
-Source,Reference,Score_ada,Score_small,Score_large
-"machine learning","deep learning",0.92,0.89,0.91
-"artificial intelligence","neural networks",0.88,0.85,0.87
+| Source  | Reference | Score_Ada | Score_Small | Score_Large |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| machine learning  | deep learning  | 0.92 | 0.89 | 0.91 | 
+| artificial intelligence  | neural networks | 0.88 | 0.85 | 0.87 |
 
 
 # Visualization:
