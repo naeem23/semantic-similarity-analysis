@@ -31,26 +31,26 @@ Before running the project, ensure you have the following installed:
 
 # Installation
 
-   1. Clone the repository:
-      ```
-      git clone https://github.com/naeem23/semantic-similarity-analysis.git
-      cd semantic-similarity-analysis
-      ```
+1. Clone the repository:
+   ```
+   git clone https://github.com/naeem23/semantic-similarity-analysis.git
+   cd semantic-similarity-analysis
+   ```
 
-   2. Set Up Environment Variables:
-    Copy the .env.example file to .env in both the main project and test project directories.
-    Replace YOUR_API_KEY_HERE with your actual OpenAI API key in both .env files.
-    ```
-    OPENAI_API_KEY=your_api_key_here
-    ```
+2. Set Up Environment Variables:
+Copy the .env.example file to .env in both the main project and test project directories.
+Replace YOUR_API_KEY_HERE with your actual OpenAI API key in both .env files.
+   ```
+   OPENAI_API_KEY=your_api_key_here
+   ```
 
-   4. Install the required .NET packages:
-    The project uses the OpenAI NuGet package. Restore the packages using:
+4. Install the required .NET packages:
+The project uses the OpenAI NuGet package. Restore the packages using:
     ```
     dotnet restore
     ```
 
-   6. Install Python dependencies:
+6. Install Python dependencies:
    ```
    pip install -r python-requirements.txt
    ```
@@ -98,28 +98,27 @@ Before running the project, ensure you have the following installed:
 
 
 # Example
-   Input:
-      * Word/Phrase Level:
-        Source: "machine learning", "artificial intelligence"
-        Reference: "deep learning", "neural networks"
-        ![image](https://github.com/user-attachments/assets/37bc3e02-4136-4552-8334-a61a609cb88f)
+Input:
+  * Word/Phrase Level:
+    Source: "machine learning", "artificial intelligence"
+    Reference: "deep learning", "neural networks"
+    ![image](https://github.com/user-attachments/assets/37bc3e02-4136-4552-8334-a61a609cb88f)
 
-
-      * Document Level:
-        Source Folder: G:\FUAS\SE\semantic-similarity-analysis\SemanticSimilarity\SemanticSimilarity\Input\Sources
-        Reference Folder: G:\FUAS\SE\semantic-similarity-analysis\SemanticSimilarity\SemanticSimilarity\Input\References
-        ![image](https://github.com/user-attachments/assets/4b73bd81-0781-454e-9719-568f94ed9511)
+  * Document Level:
+    Source Folder: G:\FUAS\SE\semantic-similarity-analysis\SemanticSimilarity\SemanticSimilarity\Input\Sources
+    Reference Folder: G:\FUAS\SE\semantic-similarity-analysis\SemanticSimilarity\SemanticSimilarity\Input\References
+    ![image](https://github.com/user-attachments/assets/4b73bd81-0781-454e-9719-568f94ed9511)
 
 
 # Output:
-   The similarity_results.csv file will contain:
-      Source,Reference,Score_ada,Score_small,Score_large
-      "machine learning","deep learning",0.92,0.89,0.91
-      "artificial intelligence","neural networks",0.88,0.85,0.87
+The similarity_results.csv file will contain:
+Source,Reference,Score_ada,Score_small,Score_large
+"machine learning","deep learning",0.92,0.89,0.91
+"artificial intelligence","neural networks",0.88,0.85,0.87
 
 
 # Visualization:
-   The scatter plot will display the similarity scores for each model.
+The scatter plot will display the similarity scores for each model.
 
 
 # Test Project
