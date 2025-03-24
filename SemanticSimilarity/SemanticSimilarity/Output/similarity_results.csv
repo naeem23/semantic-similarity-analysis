@@ -1,17 +1,5 @@
 Source,Reference,Score_Ada,Score_Small,Score_Large
-"Se7en 
--Movie Review...",Development aid’s fu...,0.70455945,0.13578798,0.16271591
-"Se7en 
--Movie Review...",Development aid�s fu...,0.7047168,0.12022991,0.15010405
-"Se7en 
--Movie Review...","""Women are being sub...",0.72627336,0.31148535,0.21291614
-"Se7en 
--Movie Review...",Role of men and wome...,0.70389944,0.17197357,0.105738446
-Bangladesh's pharmac...,Development aid’s fu...,0.78672874,0.3894408,0.35514146
-Bangladesh's pharmac...,Development aid�s fu...,0.7865563,0.41474506,0.3666216
-Bangladesh's pharmac...,"""Women are being sub...",0.7261033,0.24934487,0.28169537
-Bangladesh's pharmac...,Role of men and wome...,0.70471275,0.1668032,0.13290074
-Reserves drop to $19...,Development aid’s fu...,0.7765482,0.34362948,0.29064363
-Reserves drop to $19...,Development aid�s fu...,0.7751415,0.3471185,0.2816213
-Reserves drop to $19...,"""Women are being sub...",0.7160998,0.19087848,0.21964969
-Reserves drop to $19...,Role of men and wome...,0.69208217,0.16688582,0.14601967
+machine learning,deep learning,0.8898693,0.6549414,0.7141139
+machine learning,neural networks,0.8329781,0.5110471,0.5102708
+artificial intellige...,deep learning,0.8459686,0.4654475,0.49373087
+artificial intellige...,neural networks,0.8216303,0.4128362,0.42556828

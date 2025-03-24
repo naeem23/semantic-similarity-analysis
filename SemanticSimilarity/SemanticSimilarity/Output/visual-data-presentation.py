@@ -46,7 +46,7 @@ def create_grouped_scatter_plot(df):
         df['Short_Reference'] = df['Reference'].apply(extract_word)
 
         # Combine 'Source' and 'Reference' into a single label for the X-axis
-        df['Source_Reference'] = df['Short_Source'] + '-' + df['Short_Reference']
+        df['Source_Reference'] = df['Short_Source'] + ' vs ' + df['Short_Reference']
 
         # Melt the DataFrame to long format for Plotly Express
         df_melted = df.melt(
