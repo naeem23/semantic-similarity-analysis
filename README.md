@@ -32,27 +32,37 @@ Before running the project, ensure you have the following installed:
 # Installation
 
    1. Clone the repository:
+      ```
       git clone https://github.com/naeem23/semantic-similarity-analysis.git
       cd semantic-similarity-analysis
+      ```
 
    2. Set Up Environment Variables:
     Copy the .env.example file to .env in both the main project and test project directories.
     Replace YOUR_API_KEY_HERE with your actual OpenAI API key in both .env files.
+    ```
     OPENAI_API_KEY=your_api_key_here
+    ```
 
-   3. Install the required .NET packages:
+   4. Install the required .NET packages:
     The project uses the OpenAI NuGet package. Restore the packages using:
+    ```
     dotnet restore
+    ```
 
-   4. Install Python dependencies:
+   6. Install Python dependencies:
+   ```
    pip install -r python-requirements.txt
+   ```
 
 
 # Usage
 
    1. Run the .NET Project:
       *  Navigate to the project directory and run the project:
+      ```
       dotnet run
+      ```
       
       * The program will prompt you to choose between word/phrase level or document level comparison.
 
@@ -64,15 +74,20 @@ Before running the project, ensure you have the following installed:
 
    2. Visualize the Results:
       * Navigate to the Output folder:
-         cd Output
+        ```
+        cd Output
+        ```
          
       * Run the Python script to generate the scatter plot:
-         python visual-data-presentation.py
+        ```
+        python visual-data-presentation.py
+        ```
 
       * A web server will open in your browser, displaying the scatter plot of the similarity scores.
 
 
-# Project Structure
+# Project Folder Structure
+  ![image](https://github.com/user-attachments/assets/d6177a2d-5e3b-4945-8ec2-0cc494ceb4eb)
 
 
 # Configuration
@@ -87,10 +102,13 @@ Before running the project, ensure you have the following installed:
       * Word/Phrase Level:
         Source: "machine learning", "artificial intelligence"
         Reference: "deep learning", "neural networks"
+        ![image](https://github.com/user-attachments/assets/37bc3e02-4136-4552-8334-a61a609cb88f)
+
 
       * Document Level:
         Source Folder: G:\FUAS\SE\semantic-similarity-analysis\SemanticSimilarity\SemanticSimilarity\Input\Sources
         Reference Folder: G:\FUAS\SE\semantic-similarity-analysis\SemanticSimilarity\SemanticSimilarity\Input\References
+        ![image](https://github.com/user-attachments/assets/4b73bd81-0781-454e-9719-568f94ed9511)
 
 
 # Output:
@@ -109,7 +127,9 @@ The test project is included to ensure the correctness of the main project. It u
 
    1. Run Tests:
         Navigate to the tests directory and run the tests:
+        ```
         dotnet test
+        ```
 
 
 # Contributing
