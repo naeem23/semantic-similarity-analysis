@@ -27,26 +27,27 @@ Before running the project, ensure you have the following installed:
    * Python: Required for running the visualization script. This project uses Python 3.10.6.
    
    * NuGet Packages: The project uses the following packages. Install them via ```dotnet add package``` or restore them automatically with ```dotnet restore```:  
-      Core Packages  
+
+     Core Packages  
       `
-        CsvHelper by Josh Close (for reading writing CSV files)
-        DotNetEnv by DotNetEnv (to load environment variable from .env files)
-        itext7 by Apryse Software (for PDF parsing)
-        Newtonsoft.Json by James Newton-King (for JSON serialization)
-        OpenAI by OpenAI (for OpenAI service API)
-        RestSharp by .NET Foundation and Contributors (Simple REST and HTTP API Client)
-        Xceed.Words.NET by Xceed (for Microsoft Word documents parsing)
+        CsvHelper by Josh Close (for reading writing CSV files)  
+        DotNetEnv by DotNetEnv (to load environment variable from .env files)  
+        itext7 by Apryse Software (for PDF parsing)  
+        Newtonsoft.Json by James Newton-King (for JSON serialization)  
+        OpenAI by OpenAI (for OpenAI service API)  
+        RestSharp by .NET Foundation and Contributors (Simple REST and HTTP API Client)  
+        Xceed.Words.NET by Xceed (for Microsoft Word documents parsing)  
       `  
 
-      Testing Packages (for test projects)
+      Testing Packages (for test projects)  
       `
-        Microsoft.NET.Test.Sdk (by Microsoft)
-        MSTest.TestAdapter (by Microsoft)
-        MSTest.TestFramework (by Microsoft)
-        xunit (by jnewkirk,bradwilson)
-        xunit.runner.visualstudio (by jnewkirk,bradwilson)
-        Moq (by Daniel Cazzulino, kzu)
-        coverlet.collector (by tonerdo)
+        Microsoft.NET.Test.Sdk (by Microsoft)  
+        MSTest.TestAdapter (by Microsoft)  
+        MSTest.TestFramework (by Microsoft)  
+        xunit (by jnewkirk,bradwilson)  
+        xunit.runner.visualstudio (by jnewkirk,bradwilson)  
+        Moq (by Daniel Cazzulino, kzu)  
+        coverlet.collector (by tonerdo)  
       `  
     
    * Python Dependencies: Install the required Python packages using the python-requirements.txt file.
