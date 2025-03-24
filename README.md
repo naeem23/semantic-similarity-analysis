@@ -26,28 +26,28 @@ Before running the project, ensure you have the following installed:
 
    * Python: Required for running the visualization script. This project uses Python 3.10.6.
    
-   * NuGet Packages: The project uses the following packages. Install them via ```dotnet add package``` or restore them automatically with ```dotnet restore```:
-  Core Packages
-  `
-    CsvHelper by Josh Close (for reading writing CSV files)
-    DotNetEnv by DotNetEnv (to load environment variable from .env files)
-    itext7 by Apryse Software (for PDF parsing)
-    Newtonsoft.Json by James Newton-King (for JSON serialization)
-    OpenAI by OpenAI (for OpenAI service API)
-    RestSharp by .NET Foundation and Contributors (Simple REST and HTTP API Client)
-    Xceed.Words.NET by Xceed (for Microsoft Word documents parsing)
-  `
+   * NuGet Packages: The project uses the following packages. Install them via ```dotnet add package``` or restore them automatically with ```dotnet restore```:  
+      Core Packages  
+      `
+        CsvHelper by Josh Close (for reading writing CSV files)
+        DotNetEnv by DotNetEnv (to load environment variable from .env files)
+        itext7 by Apryse Software (for PDF parsing)
+        Newtonsoft.Json by James Newton-King (for JSON serialization)
+        OpenAI by OpenAI (for OpenAI service API)
+        RestSharp by .NET Foundation and Contributors (Simple REST and HTTP API Client)
+        Xceed.Words.NET by Xceed (for Microsoft Word documents parsing)
+      `  
 
-  Testing Packages (for test projects)
-  `
-    Microsoft.NET.Test.Sdk (by Microsoft)
-    MSTest.TestAdapter (by Microsoft)
-    MSTest.TestFramework (by Microsoft)
-    xunit (by jnewkirk,bradwilson)
-    xunit.runner.visualstudio (by jnewkirk,bradwilson)
-    Moq (by Daniel Cazzulino, kzu)
-    coverlet.collector (by tonerdo)
-  `
+      Testing Packages (for test projects)
+      `
+        Microsoft.NET.Test.Sdk (by Microsoft)
+        MSTest.TestAdapter (by Microsoft)
+        MSTest.TestFramework (by Microsoft)
+        xunit (by jnewkirk,bradwilson)
+        xunit.runner.visualstudio (by jnewkirk,bradwilson)
+        Moq (by Daniel Cazzulino, kzu)
+        coverlet.collector (by tonerdo)
+      `  
     
    * Python Dependencies: Install the required Python packages using the python-requirements.txt file.
 
@@ -72,8 +72,8 @@ Restore the packages using:
     ```
     dotnet restore
     ```
-Alternatively, install packages manually (if needed):
-Core packages:
+Alternatively, install packages manually (if needed):  
+Core packages:  
 ```
 dotnet add package CsvHelper
 dotnet add package DotNetEnv
@@ -82,9 +82,9 @@ dotnet add package Newtonsoft.Json
 dotnet add package OpenAI
 dotnet add package RestSharp
 dotnet add package Xceed.Words.NET
-```
+```  
 
-Testing packages:
+Testing packages:  
 ```
 dotnet add package Microsoft.NET.Test.Sdk
 dotnet add package MSTest.TestAdapter
@@ -144,19 +144,19 @@ dotnet add package coverlet.collector
 
 # Example
 Input:
-* Word/Phrase Level:
-Source: "machine learning", "artificial intelligence"
-Reference: "deep learning", "neural networks"
-![image](https://github.com/user-attachments/assets/37bc3e02-4136-4552-8334-a61a609cb88f)
+* Word/Phrase Level:  
+Source: "machine learning", "artificial intelligence"  
+Reference: "deep learning", "neural networks"  
+![image](https://github.com/user-attachments/assets/37bc3e02-4136-4552-8334-a61a609cb88f)  
 
-* Document Level:
-Source Folder: `G:\FUAS\SE\semantic-similarity-analysis\SemanticSimilarity\SemanticSimilarity\Input\Sources`
-Reference Folder: `G:\FUAS\SE\semantic-similarity-analysis\SemanticSimilarity\SemanticSimilarity\Input\References`
-![image](https://github.com/user-attachments/assets/4b73bd81-0781-454e-9719-568f94ed9511)
+* Document Level:  
+Source Folder: `G:\FUAS\SE\semantic-similarity-analysis\SemanticSimilarity\SemanticSimilarity\Input\Sources`  
+Reference Folder: `G:\FUAS\SE\semantic-similarity-analysis\SemanticSimilarity\SemanticSimilarity\Input\References`  
+![image](https://github.com/user-attachments/assets/4b73bd81-0781-454e-9719-568f94ed9511)  
 
 
 # Output:
-The similarity_results.csv file will contain:
+The similarity_results.csv file will contain:  
 | Source  | Reference | Score_Ada | Score_Small | Score_Large |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | machine learning  | deep learning  | 0.89 | 0.65 | 0.71 |
@@ -166,7 +166,7 @@ The similarity_results.csv file will contain:
 
 
 # Visualization:
-The scatter plot will display the similarity scores for each model.
+The scatter plot will display the similarity scores for each model.  
 ![image](https://github.com/user-attachments/assets/4391d5cd-08cb-446c-a8f7-65b96e85b483)
 
 
