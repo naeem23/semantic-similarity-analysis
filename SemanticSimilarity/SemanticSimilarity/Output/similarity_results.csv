@@ -1,5 +1,10 @@
 Source,Reference,Score_Ada,Score_Small,Score_Large
-machine learning,deep learning,0.8898693,0.6549414,0.7141139
-machine learning,neural networks,0.8329781,0.5110471,0.5102708
-artificial intellige...,deep learning,0.8459686,0.4654475,0.49373087
-artificial intellige...,neural networks,0.8216303,0.4128362,0.42556828
+Football,Pet Animal,0.7862166,0.23906985,0.20552027
+Football,Sports,0.93554693,0.62033314,0.7578689
+Football,Car Brand,0.77151793,0.21300676,0.22525528
+Cat,Pet Animal,0.838213,0.5549407,0.5201695
+Cat,Sports,0.8064559,0.26283845,0.2918959
+Cat,Car Brand,0.7848908,0.30388415,0.30453056
+Tesla,Pet Animal,0.7709857,0.22475627,0.15101987
+Tesla,Sports,0.80071145,0.18879884,0.20942417
+Tesla,Car Brand,0.8452942,0.3763231,0.3542521
