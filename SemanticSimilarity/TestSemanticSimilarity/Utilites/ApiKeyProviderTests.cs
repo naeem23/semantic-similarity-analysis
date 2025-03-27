@@ -23,7 +23,7 @@ namespace TestSemanticSimilarity.Utilites
         }
 
         [Fact]
-        public void Constructor_WithoutApiKey_LoadsFromEnvironmentVariable()
+        public void Constructor_WithoutApiKey()
         {
             // Arrange
             string projectRoot = Directory.GetParent(AppContext.BaseDirectory).Parent.Parent.Parent.FullName;

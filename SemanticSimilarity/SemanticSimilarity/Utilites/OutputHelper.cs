@@ -24,7 +24,6 @@ namespace SemanticSimilarity.Utilites
         /// <param name="sourceContents">list string</param>
         /// <param name="refContents">list string</param>
         /// <returns></returns>
-        // TO-DO: write test function
         public async Task GenerateOutputAsync(List<string> sourceContents, List<string> refContents)
         {
             try
