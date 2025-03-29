@@ -208,7 +208,7 @@ def create_combined_visualization(df):
 
 def main():
     # File path to the CSV
-    file_path = "similarity_results.csv"
+    file_path = input(r"Please enter the file path for the similarity results CSV: \n")
 
     # Read the CSV file
     df = read_csv(file_path)
