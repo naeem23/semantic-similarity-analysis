@@ -24,7 +24,7 @@ namespace SemanticSimilarity
             while (true)
             {
                 var inputHelper = new InputHelper();
-                var outputHelper = new OutputHelper();
+                var outputHelper = new OutputGenerator();
 
                 inputHelper.DisplayMenu();
                 int choice = inputHelper.GetUserChoice();

@@ -16,13 +16,13 @@ using DotNetEnv;
 
 namespace SemanticSimilarity.Utilites
 {
-    public class OutputHelper
+    public class OutputGenerator
     {
         /// <summary>
         /// Generate embedding, calculate similarity and generate csv
         /// </summary>
-        /// <param name="sourceContents">list string</param>
-        /// <param name="refContents">list string</param>
+        /// <param name="sourceContents"></param>
+        /// <param name="refContents"></param>
         /// <returns></returns>
         public async Task GenerateOutputAsync(List<string> sourceContents, List<string> refContents)
         {
@@ -48,17 +48,26 @@ namespace SemanticSimilarity.Utilites
                         Console.WriteLine($"Source: {(source.Length > 20 ? source.Substring(0,20) + "..." : source )}");
                         Console.WriteLine($"Reference: {(refr.Length > 20 ? refr.Substring(0,20) + "..." : refr)}");
 
-                        SimilarityHelper similarityHelper = new SimilarityHelper();
+                        SimilarityCalculator similarityCalculator = new SimilarityCalculator();
+
+                        string shortSource = source.Length > 20 ? source.Substring(0, 20) + "..." : source;
+                        string shortReference = refr.Length > 20 ? refr.Substring(0, 20) + "..." : refr;
+                        float scoreAda = await similarityCalculator.CalculateSimilarityAsync("text-embedding-ada-002", source, refr);
+                        float scoreSmall = await similarityCalculator.CalculateSimilarityAsync("text-embedding-3-small", source, refr);
+                        float scoreLarge = await similarityCalculator.CalculateSimilarityAsync("text-embedding-3-large", source, refr);
+
+                        Console.WriteLine($"Similarity Score for Ada: {scoreAda}");
+                        Console.WriteLine($"Similarity Score for Small: {scoreSmall}");
+                        Console.WriteLine($"Similarity Score for Large: {scoreLarge}");
                         var result = new SimilarityResult
                         {
-                            Source = source.Length > 20 ? source.Substring(0,20) + "..." : source,
-                            Reference = refr.Length > 20 ? refr.Substring(0,20) + "..." : refr,
-                            Score_Ada = await similarityHelper.CalculateSimilarityAsync("text-embedding-ada-002", source, refr),
-                            Score_Small = await similarityHelper.CalculateSimilarityAsync("text-embedding-3-small", source, refr),
-                            Score_Large = await similarityHelper.CalculateSimilarityAsync("text-embedding-3-large", source, refr)
+                            Source = shortSource,
+                            Reference = shortReference,
+                            ScoreAda = scoreAda,
+                            ScoreSmall = scoreSmall,
+                            ScoreLarge = scoreLarge,
                         };
                         results.Add(result);
-                        
                         processedPairs++;
                         Console.WriteLine($"Completed pair {processedPairs} of {totalPairs}.");
                         Console.WriteLine();
@@ -66,10 +75,10 @@ namespace SemanticSimilarity.Utilites
                 }
 
                 // Write results to CSV
-                Console.WriteLine("Writing results to CSV file (Output\\similarity_results.csv)");
+                Console.WriteLine("Writing results to CSV file (similarity_results.csv)");
                 WriteResultsToCsv(outputFilePath, results);
 
-                Console.WriteLine("Similarity scores calculated and saved to CSV (Output\\similarity_results.csv) successfully.");
+                Console.WriteLine("Similarity scores calculated and saved to CSV (similarity_results.csv) successfully.");
             }
             catch (Exception ex)
             {
@@ -81,9 +90,15 @@ namespace SemanticSimilarity.Utilites
         // Author: Naeem
         private void WriteResultsToCsv(string filePath, List<SimilarityResult> results)
         {
+            // save in the project Output folder
             using var writer = new StreamWriter(filePath);
             using var csv = new CsvWriter(writer, System.Globalization.CultureInfo.InvariantCulture);
             csv.WriteRecords(results);
+
+            // create a csv file in the root directory 
+            using var writer1 = new StreamWriter("similarity_results.csv");
+            using var csv1 = new CsvWriter(writer1, System.Globalization.CultureInfo.InvariantCulture);
+            csv1.WriteRecords(results);
         }
     }
 }

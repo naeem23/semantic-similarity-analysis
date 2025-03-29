@@ -55,7 +55,7 @@ namespace SemanticSimilarity.Utilites
         /// Gets the contents of all .txt and .pdf files in the specified folder.
         /// Author: Naeem
         /// </summary>
-        /// <param name="folderPath">The path to the folder.</param>
+        /// <param name="folderPath"></param>
         /// <returns>A list of file contents.</returns>
         public List<string> GetFileContents(string folderPath)
         {
@@ -82,8 +82,8 @@ namespace SemanticSimilarity.Utilites
             {
                 try
                 {
-                    var multiFileProcessor = new MultipleFileSimilarityProcessor();
-                    string content = multiFileProcessor.ReadFileText(file);
+                    FileProcessor fileProcessor = new FileProcessor();
+                    string content = fileProcessor.ReadFileText(file);
                     fileContents.Add(content);
                 }
                 catch (Exception ex)

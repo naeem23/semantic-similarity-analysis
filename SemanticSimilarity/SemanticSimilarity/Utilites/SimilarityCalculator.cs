@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ using SemanticSimilarity.Utilites;
 
 namespace SemanticSimilarity.Utilites
 {
-    public class SimilarityHelper
+    public class SimilarityCalculator
     {
         // Calculate cosine similarity between two embeddings
         // Author: Naeem
@@ -60,13 +61,12 @@ namespace SemanticSimilarity.Utilites
 
     // Class to represent similarity results
     //Author: Naeem
-    // TO-DO: write test function
     public class SimilarityResult
     {
         public string Source { get; set; }
         public string Reference { get; set; }
-        public float Score_Ada { get; set; }
-        public float Score_Small { get; set; }
-        public float Score_Large { get; set; }
+        public float ScoreAda { get; set; }
+        public float ScoreSmall { get; set; }
+        public float ScoreLarge { get; set; }
     }
 }

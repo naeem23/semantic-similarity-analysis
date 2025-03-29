@@ -5,7 +5,7 @@ VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SemanticSimilarity", "SemanticSimilarity\SemanticSimilarity.csproj", "{E7AD131C-7576-4A57-B8A6-C69CD016DD33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSemanticSimilarity", "TestSemanticSimilarity\TestSemanticSimilarity.csproj", "{3CF04CEC-156E-4CA8-BBEE-B9D80A4CDB7A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SemanticSimilarityTest", "TestSemanticSimilarity\SemanticSimilarityTest.csproj", "{3CF04CEC-156E-4CA8-BBEE-B9D80A4CDB7A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

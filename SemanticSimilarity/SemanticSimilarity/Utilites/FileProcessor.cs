@@ -11,10 +11,9 @@ using System.Reflection.PortableExecutable;
 
 namespace SemanticSimilarity.Utilites
 {
-    public class MultipleFileSimilarityProcessor
+    public class FileProcessor
     {
         // Read text from different file formats
-
         // Author: Ahad
         public string ReadFileText(string filePath)
         {
@@ -39,7 +38,6 @@ namespace SemanticSimilarity.Utilites
         }
 
         // Extract text from PDF using iText7
-
         // Author: Ahad
         private string ExtractTextFromPdf(string filePath)
         {
@@ -57,7 +55,6 @@ namespace SemanticSimilarity.Utilites
 
         // Extract text from DOCX using Xceed.Words.NET
         // Problem: Function is not working. asking for license
-
         // Author: Ahad
         private string ExtractTextFromDocx(string filePath)
         {

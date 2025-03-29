@@ -13,7 +13,7 @@ namespace TestSemanticSimilarity.Utilites
 {
     public class OutputHelperTests
     {
-        public OutputHelper outputHelper = new OutputHelper();
+        public OutputGenerator outputHelper = new OutputGenerator();
         private static readonly string ProjectRoot = Directory.GetParent(AppContext.BaseDirectory).Parent.Parent.Parent.FullName;
         private static readonly string OutputFilePath = Path.Combine(ProjectRoot, "Output", "similarity_results.csv");
 
