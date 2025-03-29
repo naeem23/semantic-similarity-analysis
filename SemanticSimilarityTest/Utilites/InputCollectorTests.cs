@@ -12,16 +12,16 @@ using XAssert = Xunit.Assert;
 namespace TestSemanticSimilarity.Utilites
 {
     [TestClass]
-    public class InputHelperTests
+    public class InputCollectorTests
     {
-        public InputHelper inputHelper = new InputHelper();
+        public InputCollector inputCollector = new InputCollector();
         [TestMethod]
         public void DisplayMenu_ShouldDisplayCorrectMenu()
         {
             using (var sw = new StringWriter())
             {
                 Console.SetOut(sw);
-                inputHelper.DisplayMenu();
+                inputCollector.DisplayMenu();
                 var result = sw.ToString().Trim();
                 Assert.IsTrue(result.Contains("Welcome to Semantic Similarity Analysis!"));
                 Assert.IsTrue(result.Contains("1. Word or Phrase Level Comparison"));
@@ -39,7 +39,7 @@ namespace TestSemanticSimilarity.Utilites
                 using (var sr = new StringReader(i.ToString()))
                 {
                     Console.SetIn(sr);
-                    int choice = inputHelper.GetUserChoice();
+                    int choice = inputCollector.GetUserChoice();
                     Assert.AreEqual(i, choice);
                 }
             }
@@ -51,7 +51,7 @@ namespace TestSemanticSimilarity.Utilites
             using (var sr = new StringReader("5\n3"))
             {
                 Console.SetIn(sr);
-                int choice = inputHelper.GetUserChoice();
+                int choice = inputCollector.GetUserChoice();
                 Assert.AreEqual(3, choice);
             }
         }
@@ -60,7 +60,7 @@ namespace TestSemanticSimilarity.Utilites
         [ExpectedException(typeof(ArgumentException))]
         public void GetFileContents_InvalidFolderPath()
         {
-            inputHelper.GetFileContents("invalid/path");
+            inputCollector.GetFileContents("invalid/path");
         }
 
         [TestMethod]
@@ -69,7 +69,7 @@ namespace TestSemanticSimilarity.Utilites
         {
             string tempFolder = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
             Directory.CreateDirectory(tempFolder);
-            inputHelper.GetFileContents(tempFolder);
+            inputCollector.GetFileContents(tempFolder);
             Directory.Delete(tempFolder);
         }
 
@@ -81,7 +81,7 @@ namespace TestSemanticSimilarity.Utilites
             string filePath = Path.Combine(tempFolder, "test.txt");
             File.WriteAllText(filePath, "Hello, World!");
 
-            var result = inputHelper.GetFileContents(tempFolder);
+            var result = inputCollector.GetFileContents(tempFolder);
             Assert.AreEqual(1, result.Count);
             Assert.AreEqual("Hello, World!", result[0]);
 
@@ -97,7 +97,7 @@ namespace TestSemanticSimilarity.Utilites
             Console.SetIn(consoleInput);
 
             // Act
-            var (sourceContents, refContents) = inputHelper.GetUserInputs();
+            var (sourceContents, refContents) = inputCollector.GetUserInputs();
 
             // Assert
             XAssert.Empty(sourceContents);
@@ -113,7 +113,7 @@ namespace TestSemanticSimilarity.Utilites
             Console.SetIn(consoleInput);
 
             // Act
-            var (sourceContents, refContents) = inputHelper.GetUserInputs();
+            var (sourceContents, refContents) = inputCollector.GetUserInputs();
 
             // Assert
             XAssert.Equal(new List<string> { "source1", "source2" }, sourceContents);
@@ -129,7 +129,7 @@ namespace TestSemanticSimilarity.Utilites
             Console.SetIn(consoleInput);
 
             // Act
-            var (sourceContents, refContents) = inputHelper.GetUserInputs();
+            var (sourceContents, refContents) = inputCollector.GetUserInputs();
 
             // Assert
             XAssert.Empty(sourceContents);
@@ -145,7 +145,7 @@ namespace TestSemanticSimilarity.Utilites
             Console.SetIn(consoleInput);
 
             // Act
-            var (sourceContents, refContents) = inputHelper.GetUserInputs();
+            var (sourceContents, refContents) = inputCollector.GetUserInputs();
 
             // Assert
             XAssert.Equal(new List<string> { "source1", "source2" }, sourceContents);
@@ -161,7 +161,7 @@ namespace TestSemanticSimilarity.Utilites
             Console.SetIn(consoleInput);
 
             // Act
-            var (sourceContents, refContents) = inputHelper.GetUserInputs();
+            var (sourceContents, refContents) = inputCollector.GetUserInputs();
 
             // Assert
             XAssert.Equal(new List<string> { "source1" }, sourceContents);
@@ -177,7 +177,7 @@ namespace TestSemanticSimilarity.Utilites
             Console.SetIn(consoleInput);
 
             // Act & Assert
-            XAssert.Throws<InvalidOperationException>(() => inputHelper.GetUserInputs());
+            XAssert.Throws<InvalidOperationException>(() => inputCollector.GetUserInputs());
         }
     }
 

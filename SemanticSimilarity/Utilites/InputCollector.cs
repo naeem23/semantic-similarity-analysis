@@ -15,7 +15,7 @@ using static System.Net.WebRequestMethods;
 
 namespace SemanticSimilarity.Utilites
 {
-    public class InputHelper
+    public class InputCollector
     {
         /// <summary>
         /// Display menu to user with following options 

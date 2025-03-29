@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace TestSemanticSimilarity.Utilites
 {
     [TestClass]
-    public class SimilarityHelperTests
+    public class SimilarityCalculatorTests
     {
-        public SimilarityHelper similarityHelper = new SimilarityHelper();
+        public SimilarityCalculator similarityHelper = new SimilarityCalculator();
         [TestMethod]
         public void CalculateCosineSimilarity_ValidEmbeddings_ReturnsCorrectSimilarity()
         {

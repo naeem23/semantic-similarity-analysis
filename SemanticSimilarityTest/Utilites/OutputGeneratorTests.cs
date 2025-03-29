@@ -11,7 +11,7 @@ using Assert = Xunit.Assert;
 
 namespace TestSemanticSimilarity.Utilites
 {
-    public class OutputHelperTests
+    public class OutputGeneratorTests
     {
         public OutputGenerator outputHelper = new OutputGenerator();
         private static readonly string ProjectRoot = Directory.GetParent(AppContext.BaseDirectory).Parent.Parent.Parent.FullName;

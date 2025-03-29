@@ -23,17 +23,17 @@ namespace SemanticSimilarity
         {
             while (true)
             {
-                var inputHelper = new InputHelper();
-                var outputHelper = new OutputGenerator();
+                InputCollector inputCollector = new InputCollector();
+                OutputGenerator outputGenerator = new OutputGenerator();
 
-                inputHelper.DisplayMenu();
-                int choice = inputHelper.GetUserChoice();
+                inputCollector.DisplayMenu();
+                int choice = inputCollector.GetUserChoice();
 
                 if (choice == 1)
                 {
                     Console.WriteLine("\nWord or Phrase Level Comparison");
-                    (List<string> sourceContents, List<string> refContents) = inputHelper.GetUserInputs();
-                    await outputHelper.GenerateOutputAsync(sourceContents, refContents);
+                    (List<string> sourceContents, List<string> refContents) = inputCollector.GetUserInputs();
+                    await outputGenerator.GenerateOutputAsync(sourceContents, refContents);
                     Environment.Exit(0);
                 }
                 else if (choice == 2)
@@ -45,10 +45,10 @@ namespace SemanticSimilarity
                     string refFolder = Console.ReadLine()?.Trim() ?? "";
 
                     Console.WriteLine("\nReading file contents...");
-                    var sourceContents = inputHelper.GetFileContents(sourceFolder);
-                    var refContents = inputHelper.GetFileContents(refFolder);
+                    var sourceContents = inputCollector.GetFileContents(sourceFolder);
+                    var refContents = inputCollector.GetFileContents(refFolder);
 
-                    await outputHelper.GenerateOutputAsync(sourceContents, refContents);
+                    await outputGenerator.GenerateOutputAsync(sourceContents, refContents);
 
                     Environment.Exit(0);
                 }
