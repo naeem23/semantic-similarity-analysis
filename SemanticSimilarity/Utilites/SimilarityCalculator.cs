@@ -36,7 +36,7 @@ namespace SemanticSimilarity.Utilites
 
         // Calculate similarity score for a given model and word pair
         // Author: Naeem
-        public async Task<float> CalculateSimilarityAsync(string model, string source, string refr)
+        public async Task<(float Score, float[] Embedding1, float[] Embedding2)> CalculateSimilarityAsync(string model, string source, string refr)
         {
             if (string.IsNullOrWhiteSpace(source) || string.IsNullOrWhiteSpace(refr))
             {
@@ -49,12 +49,14 @@ namespace SemanticSimilarity.Utilites
                 var generator = new EmbeddingGenerator();
                 var embedding1 = await generator.GenerateEmbeddingsAsync(source, model);
                 var embedding2 = await generator.GenerateEmbeddingsAsync(refr, model);
-                return CalculateCosineSimilarity(embedding1, embedding2);
+                var score = CalculateCosineSimilarity(embedding1, embedding2);
+
+                return (score, embedding1, embedding2);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error calculating similarity for model {model}: {ex.Message}");
-                return -1; // Return -1 to indicate an error
+                return (-1, Array.Empty<float>(), Array.Empty<float>()); // Return -1 to indicate an error
             }
         }
     }
