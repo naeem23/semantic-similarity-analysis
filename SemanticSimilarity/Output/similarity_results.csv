@@ -1,2 +1,5 @@
 Source,Reference,ScoreAda,ScoreSmall,ScoreLarge
-Algebra,Mathematics,0.9272585,0.573225,0.64415044
+cat,pet animal,0.81535625,0.54642516,0.46787477
+cat,AI,0.7931276,0.37102762,0.23551801
+dog,pet animal,0.8454314,0.55793864,0.5120472
+dog,AI,0.817507,0.2992183,0.2296698

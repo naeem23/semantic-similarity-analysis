@@ -11,9 +11,9 @@ This project is designed to analyze the semantic similarity between textual data
    
    * Similarity Score: Calculates similarity scores using cosine similarity for three embedding models.
 
-   * CSV Output: Saves similarity scores in a CSV file (`similarity_results.csv`) in the `Output` folder with columns: Source, Reference, Score_Ada, Score_Small, Score_Large.
+   * CSV Output: Saves similarity scores in a CSV file (`similarity_results.csv`) in the `Output` folder and in `bin\Debug\net9.0` folder with columns: Source, Reference, Score_Ada, Score_Small, Score_Large. Also creates two other CSV files name `source_scalar_values.csv` and `reference_scalar_values.csv` in the same directory to store scalar value of sources and references.
 
-   * Visualization: Provides a Python script to generate a scatter plot to visualize the similarity scores.
+   * Visualization: Provides a Python script (`similarity-score-visualization.py`) to generate a bar chart to visualize the similarity scores of a reference (word/phrase or document) with other sources (word/phrases or documents) in terms of 3 different models. Another python script (`scalar-value-visualization.py`) to visualize scalar values of source vs reference. 
 
 
 # Prerequisites
@@ -112,20 +112,27 @@ dotnet add package coverlet.collector
 
       * For document level, provide the paths to the source and reference folders.
 
-      * The similarity scores will be calculated and saved in the Output/similarity_results.csv file.
+      * The similarity scores will be calculated and saved in the `similarity_results.csv` file.
+
+      * Scalar values of each source and reference embedding will be saved in `source_scalar_values.csv` and `reference_scalar_values.csv` repectively.
 
    2. Visualize the Results:
-      * Navigate to the Output folder:
+      * Navigate to the Python folder:
         ```
-        cd Output
+        cd Python
         ```
          
-      * Run the Python script to generate the scatter plot:
+      * Run following python command to visualize similarity score of a reference word/phrase or documents against some source word/phrase or documents:
         ```
-        python visual-data-presentation.py
+        python similarity-score-visualization.py
         ```
 
-      * A web server will open in your browser, displaying the scatter plot of the similarity scores.
+      * Run python command to visualize scalar values of source and reference word/phrase or documents:
+        ```
+        python scalar-value-visualization.py
+        ```
+
+      * Each time you run the python script a web server will open in your browser, displaying bar chart for similarity scores and  scatter plot for scalar values.
 
 
 # Project Folder Structure
@@ -147,8 +154,8 @@ Reference: "deep learning", "neural networks"
 ![image](https://github.com/user-attachments/assets/37bc3e02-4136-4552-8334-a61a609cb88f)  
 
 * Document Level:  
-Source Folder: `G:\FUAS\SE\semantic-similarity-analysis\SemanticSimilarity\SemanticSimilarity\Input\Sources`  
-Reference Folder: `G:\FUAS\SE\semantic-similarity-analysis\SemanticSimilarity\SemanticSimilarity\Input\References`  
+Source Folder: `G:\FUAS\SE\semantic-similarity-analysis\SemanticSimilarity\Input\Sources`  
+Reference Folder: `G:\FUAS\SE\semantic-similarity-analysis\SemanticSimilarity\Input\References`  
 ![image](https://github.com/user-attachments/assets/4b73bd81-0781-454e-9719-568f94ed9511)  
 
 

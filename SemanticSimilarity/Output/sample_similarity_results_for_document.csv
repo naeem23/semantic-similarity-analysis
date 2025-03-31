@@ -1,5 +1,5 @@
-Source,Reference,Score_Ada,Score_Small,Score_Large
-Climate Change and I...,The Changing Landsca...,0.78913444,0.4596518,0.42664108
-Climate Change and I...,The Impact of Climat...,0.91867894,0.7916713,0.80425364
-The Evolution of Mod...,The Changing Landsca...,0.79791015,0.43901798,0.38495022
-The Evolution of Mod...,The Impact of Climat...,0.74473417,0.34345588,0.31029943
+Source,Reference,ScoreAda,ScoreSmall,ScoreLarge
+Climate Change and I...,Global politics ...,0.79,0.46,0.43
+Climate Change and I...,The Impact of Climat...,0.92,0.79,0.80
+Modern Football ...,Global politics ...,0.80,0.44,0.38
+Modern Football ...,The Impact of Climat...,0.74,0.34,0.31

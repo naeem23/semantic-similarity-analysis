@@ -127,29 +127,36 @@ namespace SemanticSimilarity.Utilites
                 return;
             }
 
-            var defaultFilePath = type == "Source" ? "source_scalar_values.csv" : "reference_scalar_values";
+            var defaultFilePath = type == "Source" ? "source_scalar_values.csv" : "reference_scalar_values.csv";
 
-            using var writer = new StreamWriter(filePath);
-            using var csv = new CsvWriter(writer, System.Globalization.CultureInfo.InvariantCulture);
-
-            // Write header
-            csv.WriteField(type);
-            for (int i = 0; i < embeddingPairs.First().Embedding.Length; i++)
+            void WriteCsv(string path)
             {
-                csv.WriteField($"Dim_{i + 1}"); // Column names for embedding dimensions
-            }
-            csv.NextRecord();
+                using var writer = new StreamWriter(path);
+                using var csv = new CsvWriter(writer, System.Globalization.CultureInfo.InvariantCulture);
 
-            // Write records
-            foreach (var (title, embedding) in embeddingPairs)
-            {
-                csv.WriteField(title);
-                foreach (var value in embedding)
+                // Write header
+                csv.WriteField(type);
+                for (int i = 0; i < embeddingPairs.First().Embedding.Length; i++)
                 {
-                    csv.WriteField(value);
+                    csv.WriteField($"Dim_{i + 1}"); // Column names for embedding dimensions
                 }
                 csv.NextRecord();
+
+                // Write records
+                foreach (var (title, embedding) in embeddingPairs)
+                {
+                    csv.WriteField(title);
+                    foreach (var value in embedding)
+                    {
+                        csv.WriteField(value);
+                    }
+                    csv.NextRecord();
+                }
             }
+
+            // Write to both filePath and defaultFilePath
+            WriteCsv(filePath);
+            WriteCsv(defaultFilePath);
         }
     }
 }
