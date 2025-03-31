@@ -136,7 +136,7 @@ dotnet add package coverlet.collector
 
 
 # Project Folder Structure
-  ![image](https://github.com/user-attachments/assets/d6177a2d-5e3b-4945-8ec2-0cc494ceb4eb)
+  ![image](https://github.com/user-attachments/assets/e9f0f9d7-8fcd-4293-b861-c938889db977)
 
 
 # Configuration
@@ -170,8 +170,11 @@ The similarity_results.csv file will contain:
 
 
 # Visualization:
-The scatter plot will display the similarity scores for each model.  
-![image](https://github.com/user-attachments/assets/4391d5cd-08cb-446c-a8f7-65b96e85b483)
+The bar chart will display the similarity scores for each model.  
+![image](https://github.com/user-attachments/assets/f655b644-5d26-4e22-8e23-b5f008be6e3f)
+
+The scatter plot will display the scalar value for a source-reference pair.
+![image](https://github.com/user-attachments/assets/7dd272ec-78f3-4582-9eca-437a2398dd31)
 
 
 # Test Project
