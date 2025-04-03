@@ -174,6 +174,7 @@ Reference Folder: `G:\FUAS\SE\semantic-similarity-analysis\SemanticSimilarity\In
 ![image](https://github.com/user-attachments/assets/4b73bd81-0781-454e-9719-568f94ed9511)  
 Figure: Document level input collection from user using command prompt
 
+
 # Output:
 The similarity_results.csv file will contain:  
 | Source  | Reference | Score_Ada | Score_Small | Score_Large |
@@ -182,6 +183,7 @@ The similarity_results.csv file will contain:
 | machine learning | neural networks | 0.83 | 0.51 | 0.51 | 
 | artificial intelligence | deep learning | 0.85 | 0.47 | 0.49 |
 | artificial intelligence  | neural networks | 0.82 | 0.41 | 0.43 |  
+
 Figrue: 3 different model similarity score of source and reference words/phrase
 
 
@@ -190,9 +192,11 @@ The bar chart will display the similarity scores for each model.
 ![image](https://github.com/user-attachments/assets/f655b644-5d26-4e22-8e23-b5f008be6e3f)  
 Figure: Similarity score analysis of a reference word/phrase/documents with other source word/phrase/documents
 
+
 The scatter plot will display the scalar value for a source-reference pair.
 ![image](https://github.com/user-attachments/assets/7dd272ec-78f3-4582-9eca-437a2398dd31)  
 Figure: Scalar value analysis of a source and reference pair using scatter plot
+
 
 # Test Project
 The test project is included to ensure the correctness of the main project. It uses the same .env file for the OpenAI API key.
@@ -206,7 +210,3 @@ The test project is included to ensure the correctness of the main project. It u
 
 # Contributing
    Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
-
-
-# License
-   This project is licensed under the MIT License. See the LICENSE file for details.
