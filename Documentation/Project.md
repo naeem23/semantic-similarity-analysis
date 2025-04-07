@@ -137,14 +137,14 @@ dotnet add package coverlet.collector
 
 # Project Folder Structure
   ![image](https://github.com/user-attachments/assets/e9f0f9d7-8fcd-4293-b861-c938889db977)  
-  Figure: Project folder structure
+  Fig 1: Project folder structure
 
 
 # Configuration
 
    * Add your OpenAI API key to the appropriate configuration file (e.g., .env).
      ![image](https://github.com/user-attachments/assets/4d1367cb-26e8-4c1a-bd44-a26d21aa3229)   
-    Figure: .env file with env variable format
+    Fig 2: .env file with env variable format
 
    * Modify the Output folder path in the code if needed. Go to `\SemanticSimilarity\Utilites\OutputGenerator.cs` file and modify following line of code. Create a folder in the root directory `\SemanticSimilarity\` and replace `"Output"` with your folder name.  
      ```
@@ -166,36 +166,30 @@ Input:
 Source: "machine learning", "artificial intelligence"  
 Reference: "deep learning", "neural networks"  
 ![image](https://github.com/user-attachments/assets/37bc3e02-4136-4552-8334-a61a609cb88f)  
-Figure: Word/pharse level input collection from user using command prompt
+Fig 3: Word/pharse level input collection from user using command prompt
 
 * Document Level:  
 Source Folder: `G:\FUAS\SE\semantic-similarity-analysis\SemanticSimilarity\Input\Sources`  
 Reference Folder: `G:\FUAS\SE\semantic-similarity-analysis\SemanticSimilarity\Input\References`  
 ![image](https://github.com/user-attachments/assets/4b73bd81-0781-454e-9719-568f94ed9511)  
-Figure: Document level input collection from user using command prompt
+Fig 4: Document level input collection from user using command prompt
 
 
 # Output:
-The similarity_results.csv file will contain:  
-| Source  | Reference | Score_Ada | Score_Small | Score_Large |
-| ------------- | ------------- | ------------- | ------------- | ------------- |
-| machine learning  | deep learning  | 0.89 | 0.65 | 0.71 |
-| machine learning | neural networks | 0.83 | 0.51 | 0.51 | 
-| artificial intelligence | deep learning | 0.85 | 0.47 | 0.49 |
-| artificial intelligence  | neural networks | 0.82 | 0.41 | 0.43 |  
-
-Figrue: 3 different model similarity score of source and reference words/phrase
+Similarity score of different source and reference word/phrase pair produce following output for 3 different embedding model of OpenAI and saves in `similarity_results.csv`. Where ScoreAda refer to similarity score generated using text-embedding-ada-002 model, ScoreSmall refer to text-embedding-3-small, and ScoreLarge refer to text-embedding-3-large.    
+![image](https://github.com/user-attachments/assets/8f16d85e-6a93-4249-aec5-b557d6b496d1)  
+Fig 5: Similarity score of source and reference word/phrase pair for 3 different model
 
 
 # Visualization:
 The bar chart will display the similarity scores for each model.  
 ![image](https://github.com/user-attachments/assets/f655b644-5d26-4e22-8e23-b5f008be6e3f)  
-Figure: Similarity score analysis of a reference word/phrase/documents with other source word/phrase/documents
+Fig 6: Similarity score analysis of a reference word/phrase/documents with other source word/phrase/documents
 
 
 The scatter plot will display the scalar value for a source-reference pair.
 ![image](https://github.com/user-attachments/assets/7dd272ec-78f3-4582-9eca-437a2398dd31)  
-Figure: Scalar value analysis of a source and reference pair using scatter plot
+Fig 7: Scalar value analysis of a source and reference pair using scatter plot
 
 
 # Test Project
