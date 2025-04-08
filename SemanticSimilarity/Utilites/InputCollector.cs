@@ -15,14 +15,20 @@ using static System.Net.WebRequestMethods;
 
 namespace SemanticSimilarity.Utilites
 {
+    /// <summary>
+    /// Handles user interaction and input collection for semantic similarity analysis.
+    /// Provides methods for displaying menus, collecting user choices, and gathering input content
+    /// from both direct user input and files. Supports text and PDF file processing.
+    /// Author: Naeem
+    /// </summary>
     public class InputCollector
     {
         /// <summary>
-        /// Display menu to user with following options 
-        /// 1. word or phrase level comparison, 
-        /// 2. document level comparison
-        /// 3. exit the program
-        /// Author: Naeem
+        /// Displays the main menu options for semantic similarity analysis.
+        /// Presents three options:
+        /// 1. Word/phrase level comparison
+        /// 2. Document level comparison
+        /// 3. Program exit
         /// </summary>
         public void DisplayMenu()
         {
@@ -34,10 +40,11 @@ namespace SemanticSimilarity.Utilites
         }
 
         /// <summary>
-        /// Get user choice for options from menu
-        /// Author: Naeem
+        /// Collects and validates the user's menu choice.
+        /// Continuously prompts the user until a valid input (1, 2, or 3) is provided.
+        /// Handles non-numeric and out-of-range inputs.
         /// </summary>
-        /// <returns>a integer value range from 1 - 3</returns>
+        /// <returns>Integer value between 1-3 representing the user's selection</returns>
         public int GetUserChoice()
         {
             while (true)
@@ -52,14 +59,21 @@ namespace SemanticSimilarity.Utilites
         }
 
         /// <summary>
-        /// Gets the contents of all .txt and .pdf files in the specified folder.
-        /// Author: Naeem
+        /// Retrieves text content from all supported files in a specified folder.
+        /// Processes both .txt and .pdf files in the specified folder.
+        /// Skips unsupported file types automatically.
         /// </summary>
-        /// <param name="folderPath"></param>
-        /// <returns>A list of file contents.</returns>
+        /// <param name="folderPath">Path to the folder containing files to process</param>
+        /// <returns>List of strings containing each file's text content</returns>
+        /// <exception cref="ArgumentException">
+        /// Thrown when the folder doesn't exist or contains no supported files
+        /// </exception>
+        /// <exception cref="IOException">
+        /// Thrown when there are problems reading any of the files
+        /// </exception>
         public List<string> GetFileContents(string folderPath)
         {
-            // Validate the folder path
+            // Validate folder existence
             if (!Directory.Exists(folderPath))
             {
                 throw new ArgumentException("The specified folder path is invalid or does not exist.");
@@ -70,13 +84,13 @@ namespace SemanticSimilarity.Utilites
                                  .Where(file => file.EndsWith(".txt", StringComparison.OrdinalIgnoreCase) || file.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase))
                                  .ToList();
 
-            // Check if there are any valid files
+            // Check if any supported files were found
             if (files.Count == 0)
             {
                 throw new ArgumentException("The folder does not contain any .txt or .pdf files.");
             }
 
-            // Read the contents of the files
+            // Process each file and collect contents
             var fileContents = new List<string>();
             foreach (var file in files)
             {
@@ -96,10 +110,19 @@ namespace SemanticSimilarity.Utilites
         }
 
         /// <summary>
-        /// Take multiple source and reference inputs from user
+        /// Collects multiple text inputs from the user interactively.
+        /// Guides the user to enter:
+        /// 1. Source inputs (type 'done' to finish)
+        /// 2. Reference inputs (type 'done' to finish)
+        /// Returns both collections separately for comparison purposes.
+        /// Empty inputs are allowed and preserved in the returned lists.
         /// Author: Ahad
         /// </summary>
-        /// <returns>List of string, list of string</returns>
+        /// <returns>
+        /// Tuple containing:
+        /// - List of source inputs
+        /// - List of reference inputs
+        /// </returns>
         public (List<string>, List<string>) GetUserInputs()
         {
             List<string> sourceContents = new List<string>();
