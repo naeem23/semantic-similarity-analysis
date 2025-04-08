@@ -177,8 +177,7 @@ Fig 4: Document level input collection from user using command prompt
 
 # Output:
 Similarity score of different source and reference word/phrase pair produce following output for 3 different embedding model of OpenAI and saves in `similarity_results.csv`. Where ScoreAda refer to similarity score generated using text-embedding-ada-002 model, ScoreSmall refer to text-embedding-3-small, and ScoreLarge refer to text-embedding-3-large.    
-
-
+![image](https://github.com/user-attachments/assets/8f16d85e-6a93-4249-aec5-b557d6b496d1)  
 Fig 5: Similarity score of source and reference word/phrase pair for 3 different model
 
 
