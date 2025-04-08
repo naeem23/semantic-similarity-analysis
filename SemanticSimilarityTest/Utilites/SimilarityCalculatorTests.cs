@@ -62,7 +62,7 @@ namespace TestSemanticSimilarity.Utilites
             string reference = "Pet";
 
             // Act
-            float similarity = await similarityHelper.CalculateSimilarityAsync(model, source, reference);
+            var (similarity, srcEmbedding, refEmbedding) = await similarityHelper.CalculateSimilarityAsync(model, source, reference);
 
             // Assert
             Assert.IsTrue(similarity >= -1 && similarity <= 1);
@@ -92,7 +92,7 @@ namespace TestSemanticSimilarity.Utilites
             string reference = "Pet";
 
             // Act
-            float similarity = await similarityHelper.CalculateSimilarityAsync(model, source, reference);
+            var (similarity, srcEmbedding, refEmbedding) = await similarityHelper.CalculateSimilarityAsync(model, source, reference);
 
             // Assert
             Assert.AreEqual(-1, similarity);
