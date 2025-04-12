@@ -4,7 +4,7 @@ import plotly.subplots as sp
 import plotly.graph_objects as go
 import os
 
-def read_csv(file_path):
+def readCsv(file_path):
     """Reads a CSV file and returns a DataFrame."""
     try:
         df = pd.read_csv(file_path)
@@ -16,7 +16,7 @@ def read_csv(file_path):
         return None
 
 
-def cosine_similarity(vec1, vec2):
+def cosineSimilarity(vec1, vec2):
     """Computes cosine similarity between two vectors."""
     try:
         vec1, vec2 = np.array(vec1), np.array(vec2)
@@ -30,7 +30,7 @@ def cosine_similarity(vec1, vec2):
         return None
 
 
-def plot_scatter_graph(source, reference, source_name, reference_name, subplot_row, subplot_col, fig, index):
+def plotScatterGraph(source, reference, source_name, reference_name, subplot_row, subplot_col, fig, index):
     """Creates scatter plots for a source-reference pair."""
     x_values = np.linspace(0, 536, len(source))
     y_values = np.interp(source, (min(source), max(source)), (-1, 1))
@@ -61,8 +61,8 @@ def plot_scatter_graph(source, reference, source_name, reference_name, subplot_r
 
 def main(source_file, reference_file):
     """Main function to read CSVs, compute similarity, and plot graphs."""
-    source_df = read_csv(source_file)
-    reference_df = read_csv(reference_file)
+    source_df = readCsv(source_file)
+    reference_df = readCsv(reference_file)
     
     if source_df is None or reference_df is None:
         print("Error reading CSV files. Exiting.")
@@ -90,9 +90,9 @@ def main(source_file, reference_file):
         for j, reference in enumerate(references):
             row = plot_index + 1  # Each plot in its own row
             col = 1  # Always one column
-            similarity = cosine_similarity(source, reference)
+            similarity = cosineSimilarity(source, reference)
             print(f"Cosine Similarity (Source {i+1}, Reference {j+1}): {similarity:.4f}")
-            plot_scatter_graph(source, reference, source_names[i], reference_names[j], row, col, fig, plot_index)
+            plotScatterGraph(source, reference, source_names[i], reference_names[j], row, col, fig, plot_index)
             plot_index += 1  # Move to the next row
 
             # Set x-axis and y-axis titles for each subplot

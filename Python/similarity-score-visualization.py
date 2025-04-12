@@ -4,7 +4,7 @@ import plotly.express as px
 from plotly.subplots import make_subplots
 import os
 
-def read_csv(file_path):
+def readCsv(file_path):
     """Reads CSV file and returns a pandas DataFrame"""
     if not os.path.exists(file_path):
         raise FileNotFoundError(f"File {file_path} does not exist.")
@@ -14,7 +14,7 @@ def read_csv(file_path):
         raise Exception(f"Error reading the CSV file: {e}")
     return df
 
-def generate_bar_chart(df, reference):
+def generateBarChart(df, reference):
     """Generates a bar chart for a specific reference"""
     # Filter rows for the given reference
     ref_data = df[df['Reference'] == reference]
@@ -90,7 +90,7 @@ def generate_bar_chart(df, reference):
     return fig
 
 
-def plot_all_charts(df):
+def plotAllCharts(df):
     """Generates subplots with one chart per reference"""
     unique_references = df['Reference'].unique()
     
@@ -105,7 +105,7 @@ def plot_all_charts(df):
     row = 1
     for reference in unique_references:
         # Generate bar chart for each reference and add it to the subplot
-        bar_chart = generate_bar_chart(df, reference)
+        bar_chart = generateBarChart(df, reference)
         for trace in bar_chart.data:
             trace.showlegend = row == 1  # Show legend only for the first subplot
             fig.add_trace(trace, row=row, col=1)
@@ -130,13 +130,13 @@ def plot_all_charts(df):
 def main(csv_file_path):
     """Main function to read CSV and plot all charts"""
     try:
-        df = read_csv(csv_file_path)
+        df = readCsv(csv_file_path)
     except Exception as e:
         print(f"Error: {e}")
         return
     
     try:
-        plot_all_charts(df)
+        plotAllCharts(df)
     except Exception as e:
         print(f"Error during plotting: {e}")
 
