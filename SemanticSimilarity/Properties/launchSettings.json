@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "SemanticSimilarity": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
