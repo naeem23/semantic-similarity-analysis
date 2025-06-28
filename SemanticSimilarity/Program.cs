@@ -18,6 +18,7 @@ using static System.Net.WebRequestMethods;
 namespace SemanticSimilarity
 {
     /// <summary>
+    /// cloud Project
     /// Main program class that serves as the entry point for the similarity comparison application.
     /// Provides a menu-driven interface for comparing text content at either word/phrase or document level.
     /// </summary>
