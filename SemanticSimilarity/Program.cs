@@ -5,6 +5,10 @@ using OpenAI.Audio;
 using OpenAI.Chat;
 using System;
 using OpenAI.Embeddings;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using System;
+using System.IO;
 using SemanticSimilarity.Utilites;
 using System.Formats.Asn1;
 using System.IO;
@@ -35,6 +39,13 @@ namespace SemanticSimilarity
         /// <returns>Task representing the asynchronous operation</returns>
         static async Task Main(string[] args)
         {
+            Env.Load();
+            // testing azure storage blob
+            string connectionString = Environment.GetEnvironmentVariable("AZURE_CONNECTION_STRING");
+
+            // Create a BlobServiceClient object 
+            var blobServiceClient = new BlobServiceClient(connectionString);
+
             // Main program loop - continues until user chooses to exit
             while (true)
             {
