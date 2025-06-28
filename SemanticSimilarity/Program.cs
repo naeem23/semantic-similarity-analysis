@@ -100,6 +100,12 @@ namespace SemanticSimilarity
                 }
             }
         }
+
+        // Retrieve the connection string for use with the application. 
+        string connectionString = Environment.GetEnvironmentVariable("AZURE_STORAGE_CONNECTION_STRING");
+
+        // Create a BlobServiceClient object 
+        var blobServiceClient = new BlobServiceClient(connectionString);
     }
 }
 
