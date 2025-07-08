@@ -20,9 +20,7 @@ namespace MyCloudProject.Common
         /// </summary>
         public string ExperimentId { get; set; }
 
-        /// <summary>
-        /// The URI of the file that contains the input arguments for your experiment.
-        /// </summary>
+
         public string InputFile { get; set; }
 
         public string Name { get; set; }
